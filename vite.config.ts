@@ -6,7 +6,23 @@ import path from 'path'
 export default defineConfig({
   plugins: [vue()],  // 注册插件
   server: {
-    open: true
+    host: "localhost",
+    port: 8080,
+    open: true,
+    proxy: {// 跨域代理
+      '/api': {
+        // target: 'http://' + env.VUE_APP_BASE_API,
+        target: 'http://43.143.214.146:8001', // 
+        changeOrigin: true, // 允许跨域
+        rewrite: (path) => path.replace(/^\/api/, '') // 重写路径把路径变成空字符
+      },
+      // 代理 WebSocket 或 socket
+      // '/socket.io': {
+      //   target: 'ws://localhost:3000',
+      //   ws: true
+      //  }
+    },
+
   },
   resolve: {
     alias: {

@@ -1,10 +1,11 @@
 <template>
-  12222
+  
 </template>
 
-<script setup lang="ts">
+<script lang="ts" setup>
+
 </script>
 
-<style>
+<style lang="scss" scoped>
 
 </style>
