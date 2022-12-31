@@ -1,4 +1,5 @@
-import  request  from "../utils/request";
+import { CancelToken } from 'axios';
+import  request  from "../utils/service";
 // 登录
 export function loginApi(    
     param: {
@@ -6,7 +7,8 @@ export function loginApi(
         userAccount: string;
         //密码
         passWord:string;
-}
+},
+ cancelToken?: CancelToken
 ) {
     return request({
       url: '/login/login',

@@ -9,8 +9,8 @@
             label-width="100px"
             class="demo-loginForm"
           >
-            <el-form-item label="账号" prop="userName">
-              <el-input v-model.userName="loginForm.userName"></el-input>
+            <el-form-item label="账号" prop="userAccount">
+              <el-input v-model.userAccount="loginForm.userAccount"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="passWord">
               <el-input
@@ -34,16 +34,23 @@ import { ref } from 'vue';
 import { reactive } from 'vue-demi';
 import { loginApi } from '../../api/login';
 import router from '../../router';
+import store from '../../store';
+import useCancelToken from '../../utils/useCancelToken';
 const loginFormRef = ref<FormInstance>();
 const loginForm = reactive({
-            userName: '',
+            userAccount: '',
             passWord: '',
         });
+const { setCancelToken } = useCancelToken();
  const submitForm = async(loginFormRef:any) => {
-        try {
+  await store.dispatch("appLogin", {
+                    ...loginForm,
+                    cancelToken: setCancelToken(),
+                });
+/*         try {
         const res = await loginApi({
         //账号
-        userAccount: loginForm.userName,
+        userAccount: loginForm.userAccount,
         //密码
         passWord:loginForm.passWord,
         })
@@ -59,7 +66,7 @@ const loginForm = reactive({
 
     } catch (error) {
 
-    }
+    } */
 }
 
 </script>
