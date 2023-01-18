@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@element-plus/icons": "0.0.11",
-    "axios": "^0.21.1",
+    "axios": "^1.2.3",
     "element-plus": "^2.2.26",
     "js-cookie": "^3.0.1",
     "mitt": "^3.0.0",
@@ -20,6 +20,7 @@
     "vuex": "^4.0.2"
   },
   "devDependencies": {
+    "@types/js-cookie": "^3.0.2",
     "@types/node": "^18.11.13",
     "@vitejs/plugin-vue": "^4.0.0",
     "sass": "^1.57.1",
