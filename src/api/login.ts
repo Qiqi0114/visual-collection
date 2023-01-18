@@ -1,5 +1,5 @@
 import { CancelToken } from 'axios';
-import  request  from "../utils/service";
+import request from '../utils/request';
 // 登录
 export function loginApi(    
     param: {
