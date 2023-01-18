@@ -97,38 +97,36 @@ if (isCollapse.value===true){
 
 <style lang="scss" scoped>
 .menu{
-    width: 200px;
-    top: 0;
-    bottom: 0;
-    position: absolute;
-    left: 0;
-    bottom: 0px;
-  }
-  .el-menu-vertical {
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-    margin: 10px;
-    text-align: center;
-    border-radius: 4px;
-    margin: 0px;
-  }
-  
-  .router-container{
-    overflow: hidden;
-    position: absolute;
-    right: 0;
-    width: calc(100% - 200px);
-    margin-bottom: 0px;
-    height: 100%;
-    overflow-y: scroll;
-    z-index: 88;
-  }
-  .collapse-bg{
-    padding:30px 0px 430px 25px;
-    background: #545c64;
-  }
-  :deep(.el-scrollbar__view){
-    height: 100%;
-  }
+  width: 200px;
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  left: 0;
+  bottom: 0px;
+}
+.el-menu-vertical {
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+  margin: 10px;
+  text-align: center;
+  border-radius: 4px;
+  margin: 0px;
+}
+
+.router-container{
+  overflow: hidden;
+  right: 0;
+  width: 1000px;
+  margin-bottom: 0px;
+  height: 100%;
+  z-index: 88;
+}
+.collapse-bg{
+  padding:30px 0px 430px 25px;
+  background: #545c64;
+}
+:deep(.el-scrollbar__view){
+  height: 100%;
+}
 </style>
