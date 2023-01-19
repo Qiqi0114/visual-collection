@@ -18,7 +18,7 @@ export function AccountManagementAPI(
   })
 }
 //根据id查询账号信息
-export function getUserManagementAPI(
+export function getUserManagementByIdAPI(
   param: {
     //用户id
     id:string,
@@ -77,8 +77,6 @@ export function addUserManagementAPI(
   param: {
     //用户名称
     userName:string,
-    //性别
-    userSex:string,
     //电话
     userPhone:string,
     //邮箱
