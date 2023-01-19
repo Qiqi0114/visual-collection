@@ -3,5 +3,6 @@ export interface RootState {
   }
   // 登录信息
 export interface AccountState {
+    token: any;
 
   }
