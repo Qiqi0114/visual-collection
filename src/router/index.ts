@@ -22,7 +22,7 @@ const routes: Array<RouteRecordRaw> = [
               title: "账号管理",
               key:"sub1",
           },
-          component: () => import("../views/accountManagement/accountManagement.vue"),
+        
           children: [
             {
                 path: "/home/administrator",
@@ -42,7 +42,7 @@ const routes: Array<RouteRecordRaw> = [
             title: "教学工作量",
             key:"sub3",
         },
-        component: () => import("../views/teachingwokingload/teachingwokingload.vue"),
+        
         children: [
           {
               path: "/home/ImportWorkload",
