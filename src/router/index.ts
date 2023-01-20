@@ -28,10 +28,10 @@ const routes: Array<RouteRecordRaw> = [
                 path: "/home/administrator",
                 name: "administrator",
                 meta: {
-                    title: "管理员管理",
+                    title: "账号管理",
                     key:"sub1-1",
                 },
-                component: () => import("../views/accountManagement/administrator.vue"),
+                component: () => import("../views/accountManagement/accountManagement.vue"),
             },
           ]
       },
