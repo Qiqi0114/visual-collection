@@ -149,7 +149,6 @@ onMounted(() => {
 
   console.log(store.getters.gettoken);
 });
-const router = useRouter();
 </script>
 
 <style lang="scss" scoped>
