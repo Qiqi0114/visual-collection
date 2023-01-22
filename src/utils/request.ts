@@ -12,7 +12,7 @@ const service = axios.create({
 
 // 请求前置拦截器
 service.interceptors.request.use((config) => {
-  config.headers.token = 'xdclasseyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4ZGNsYXNzIiwidXNlckpzb24iOiJ7XCJpZFwiOjEsXCJwYXNzV29yZFwiOlwiOUFDMDE3NzVDRTJDNjcwOTg2Q0NEQ0JBOTQ5REQzQzFcIixcInJvbGVJZFwiOjEsXCJyb2xlTmFtZVwiOlwi6LaF57qn566h55CG5ZGYXCIsXCJ1c2VyQWNjb3VudFwiOlwiYWRtaW5pc3RyYXRvclwiLFwidXNlck5hbWVcIjpcIui2hee6p-euoeeQhuWRmFwifSIsImlhdCI6MTY3NDA1Mzk4OCwiZXhwIjoxNjc0NjU4Nzg4fQ.WRyOe1iN7Rs9UE-0G3pwl64UqG0ZxOFe343o6cERKq0'
+  config.headers.token = 'xdclasseyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ4ZGNsYXNzIiwidXNlckpzb24iOiJ7XCJpZFwiOjE2MTY0MzI2NzQ5NDg3MTQ1NDksXCJwYXNzV29yZFwiOlwiOUFDMDE3NzVDRTJDNjcwOTg2Q0NEQ0JBOTQ5REQzQzFcIixcInJvbGVJZFwiOjMsXCJyb2xlTmFtZVwiOlwi55So5oi3XCIsXCJ1c2VyQWNjb3VudFwiOlwieWFuZ3ppaGFuXCIsXCJ1c2VyTmFtZVwiOlwi5p2o5a2Q5ra1IOaIkeWcqOWKquWKm-eahOWGmeS7o-eggSDkvaDkuI3kvJrlnKjmkbjpsbzlkKdcIn0iLCJpYXQiOjE2NzQzODAwNzMsImV4cCI6MTY3NDk4NDg3M30.oBK7oFx-fxrJy8vGPBTKdyqAICKUFJYMXhWWACbODWM'
   if (config.method === 'post' && !config.data) {
     config.data = config.params
     config.params = null
