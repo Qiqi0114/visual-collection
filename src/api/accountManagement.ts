@@ -37,7 +37,7 @@ export function updateUserManagementAPI(
     //用户账号
     user_account:string,
     //性别
-    userSex:string,
+    userSex:number,
     //电话
     userPhone:string,
     //邮箱
@@ -92,7 +92,7 @@ export function addUserManagementAPI(
     //用户账号
     userAccount:string,
     //性别
-    userSex:string,
+    userSex:number,
     //电话
     userPhone:string,
     //邮箱

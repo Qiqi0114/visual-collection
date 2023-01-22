@@ -73,7 +73,7 @@
                   <el-form-item label="性别">
                         <el-select v-model="addForm.userForm.userSex"
                                     placeholder="请选择" style="width:90%">
-                            <el-option v-for="item in userSexList.options" :key="item.value" :label="item.label"
+                            <el-option v-for="item in userSexList" :key="item.value" :label="item.label"
                                 :value="item.value" />
                         </el-select>
                   </el-form-item>
@@ -115,7 +115,7 @@
                   <el-form-item label="性别">
                         <el-select v-model="addForm.userForm.userSex"
                                     placeholder="请选择" style="width:90%">
-                            <el-option v-for="item in userSexList.options" :key="item.value" :label="item.label"
+                            <el-option v-for="item in userSexList" :key="item.value" :label="item.label"
                                 :value="item.value" />
                         </el-select>
                   </el-form-item>
@@ -206,15 +206,14 @@ const addForm = reactive({
 userForm:{
   userName:'',
   userAccount:'',
-  userSex:'',
+  userSex:1,
   userPhone:'',
   userEmail:'',
   departmentId:'',
 }
 });
 //性别选择
-const userSexList = reactive({
-    options: [
+const userSexList = [
         {
             value: 1,
             label: "男",
@@ -223,48 +222,54 @@ const userSexList = reactive({
             value: 0,
             label: "女",
         },
-    ],
-});
+]
+
 //添加用户信息
 const addUserManagement = async() =>{
     dialogAddFormVisible.value = true;
     //获取系列表
-    getDepartmentList()
+    await getDepartmentList()
 }
 //确认添加用户信息
 const addConfirm = async() =>{
-    addUserManagementById()
+    await addUserManagementById()
     dialogAddFormVisible.value = false;
-    loadUserManagementInfoList()
+    await loadUserManagementInfoList()
 }
 //添加用户
 const addUserManagementById = async() =>{
     try{
-    const res = await addUserManagementAPI({
-        userName:addForm.userForm.userName,
-        userPhone:addForm.userForm.userPhone,
-        userEmail:addForm.userForm.userEmail,
-        userAccount:addForm.userForm.userAccount,
-        userSex:addForm.userForm.userSex,
-        departmentId:addForm.userForm.departmentId
-    })
-        if (res.data.code == "200") {
-        ElMessage({
-            message: res.data.msg,
-            duration: 5000,
-            type: "success",
-        });
-    } else {
-        //失败
-        ElMessage({
-            message: res.data.msg,
-            duration: 5000,
-            type: "error",
-        });
-    }
+        const res = await addUserManagementAPI({
+            userName:addForm.userForm.userName,
+            userPhone:addForm.userForm.userPhone,
+            userEmail:addForm.userForm.userEmail,
+            userAccount:addForm.userForm.userAccount,
+            userSex:addForm.userForm.userSex,
+            departmentId:addForm.userForm.departmentId
+        })
+            if (res.data.code == "200") {
+            ElMessage({
+                message: res.data.msg,
+                duration: 5000,
+                type: "success",
+            });
+        } else {
+            //失败
+            ElMessage({
+                message: res.data.msg,
+                duration: 5000,
+                type: "error",
+            });
+        }
     }catch(error){
     console.log('error');
     }
+    addForm.userForm.userName = '';
+    addForm.userForm.userPhone = '';
+    addForm.userForm.userEmail = '';
+    addForm.userForm.userAccount = '';
+    addForm.userForm.userSex = 1;
+    addForm.userForm.departmentId = '';
 }
 //修改用户信息对话框开关
 const dialogFormVisible = ref<boolean>(false);
@@ -273,7 +278,7 @@ userForm:{
   id:'',
   userName:'',
   userAccount:'',
-  userSex:'',
+  userSex:1,
   userPhone:'',
   userEmail:'',
   departmentId:'',
@@ -283,15 +288,15 @@ userForm:{
 const updateUserManagement = async(row:any) =>{
 dialogFormVisible.value = true;
 //根据id获取用户信息
-loadUserManagementById(row.id)
+await loadUserManagementById(row.id)
 //获取系列表
-getDepartmentList()
+await getDepartmentList()
 }
 //确认修改用户信息
 const updateConfirm = async() =>{
-updateUserManagementById()
+await updateUserManagementById()
 dialogFormVisible.value = false;
-loadUserManagementInfoList()
+await loadUserManagementInfoList()
 }
 
 //修改密码
@@ -386,7 +391,8 @@ const loadUserManagementById = async (id:string) => {
         id:id,
     })
     updateForm.userForm = res.data.data;
-    updateForm.userForm.userEmail = res.data.data.userEmail
+    updateForm.userForm.userSex = res.data.data.userSex;
+    updateForm.userForm.userEmail = res.data.data.userEmail;
     }catch(error){
     console.log('error');
     
