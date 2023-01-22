@@ -8,11 +8,9 @@ export function AccountManagementAPI(
     pageSize:number,
     //用户名称
     userName:string,
-    //用户账号
-    userAccount:string
   }) {
   return request({
-    url: '/userService/getUserPageList',
+    url: '/userService/user/getUserPageList',
     method: 'post',
     data:param
   })
@@ -24,8 +22,9 @@ export function getUserManagementByIdAPI(
     id:string,
   }) {
   return request({
-    url: '/userService/'+ param.id,
+    url: '/userService/user/getUserById',
     method: 'get',
+    params:param
   })
 }
 //修改用户信息
@@ -36,38 +35,51 @@ export function updateUserManagementAPI(
     //用户名称
     userName:string,
     //用户账号
-    userAccount:string,
+    user_account:string,
+    //性别
+    userSex:string,
     //电话
     userPhone:string,
     //邮箱
     userEmail:string,
-    //用户状态
-    userStatic:boolean,
+    //系
+    departmentId:string,
   }) {
   return request({
-    url: '/user_service/server/user',
+    url: '/userService/user/',
     method: 'put',
     data:param
   })
 }
-//修改密码
+
+//获取系列表
+export function DepartmentListAPI() {
+  return request({
+    url: '/userService/user/departmentList',
+    method: 'get',
+  })
+}
+
+//重置密码
 export function PasswordResetAPI(
     param: {
       //用户id
       id:string,
     }) {
     return request({
-      url: '/userService/passwordReset',
-      method: 'put',
-      data:param
+      url: '/userService/user/passWordCZ',
+      method: 'get',
+      params:param
     })
-  }
+}
+
+
 //删除用户
 export function deleteUserManagementAPI(
   param: any
   ) {
   return request({
-    url: '/user_service/server/user/',
+    url: '/userService/user/',
     method: 'delete',
     params:param
   })
@@ -77,15 +89,19 @@ export function addUserManagementAPI(
   param: {
     //用户名称
     userName:string,
+    //用户账号
+    userAccount:string,
+    //性别
+    userSex:string,
     //电话
     userPhone:string,
     //邮箱
     userEmail:string,
-    //用户状态
-    userStatic:boolean,
+    //系
+    departmentId:string,
   }) {
   return request({
-    url: '/user_service/server/user/',
+    url: '/userService/user/',
     method: 'post',
     params:param
   })

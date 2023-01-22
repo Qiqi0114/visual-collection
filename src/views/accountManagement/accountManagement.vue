@@ -13,17 +13,11 @@
                                           placeholder="请输入姓名" />
                                   </el-form-item>
                               </el-col>
-                              <el-col :span="6">
-                                  <el-form-item label="账号" prop="userAccount">
-                                      <el-input v-model.userAccount="searchForm.userAccount"
-                                          placeholder="请输入姓名" />
-                                  </el-form-item>
-                              </el-col>
                               <el-col :span="12">
                                   <el-form-item style="float: right;">
                                       <el-button type="success" @click="selectForm(searchFormRef)">查询</el-button>
                                       <el-button @click="resetForm()" type="info">重置</el-button>
-                                      <el-button type="primary" @click="dialogAddFormVisible = true">添加</el-button>
+                                      <el-button type="primary" @click="addUserManagement()">添加</el-button>
                                   </el-form-item>
                               </el-col>
                           </el-row>
@@ -38,34 +32,25 @@
               <el-table :data="baseInfoTableData" :border="true" 
                   ref="baseInfoTableDataRef" v-loading="loading" :header-cell-style="{ background: '#F5F6FA' }"
                   :height="500">
-                  <el-table-column label="操作" min-width="100">
+                  <el-table-column label="操作" min-width="170">
                       <template #default="scope">
                           <el-button type="text"
                               @click="updateUserManagement(scope.row)">编辑
                           </el-button>
+                          <el-button type="text"
+                              @click="updateUserPassWd(scope.row)">重置密码
+                          </el-button>
                           <el-button type="text" @click="deleteUserManagement(scope.row)">删除</el-button>
                       </template>
                   </el-table-column>
-                  <el-table-column prop="id" label="用户id" min-width="130" />
+                  <el-table-column prop="id" label="用户id" min-width="200" />
                   <el-table-column prop="userName" label="用户全称" min-width="120" />
-                  <el-table-column prop="userAccount" label="用户账号" min-width="120" />
-                  <el-table-column prop="passWord" label="密码" min-width="120" />
-                  <el-table-column prop="userPhone" label="手机号" min-width="120" />
-                  <el-table-column prop="userEmail" label="用户邮箱" min-width="120" />
-<!--                   <el-table-column prop="userStatic" label="用户状态" min-width="120">
-                      <template #default="scope">
-                          <el-button type="text" :disabled="scope.row.userStatic ? false : true"
-                              @click="updateActivationStatus(scope.row,true)">激活</el-button>
-                          <el-button type="text" :disabled="scope.row.userStatic ? true : false"
-                              @click="updateActivationStatus(scope.row,false)">封禁</el-button>
-                      </template>
-                  </el-table-column> -->
-                  <el-table-column prop="roleId" label="角色id" min-width="85">
-                      <template #default="scope">
-                        <span v-if="scope.row.roleId === '1'">管理员</span>
-                        <span v-if="scope.row.roleId === '2'">用户</span>
-                      </template>
-                  </el-table-column>
+                  <el-table-column prop="user_account" label="用户账号" min-width="120" />
+                  <el-table-column prop="passWord" label="密码" min-width="120" :show-overflow-tooltip="true"/>
+                  <el-table-column prop="userPhone" label="手机号" min-width="130" />
+                  <el-table-column prop="userEmail" label="用户邮箱" min-width="180" />
+                  <el-table-column prop="departmentName" label="系" min-width="140" />
+                  <el-table-column prop="roleName" label="角色" min-width="100"/>
               </el-table>
           </div>
           <!--分页器 start-->
@@ -82,14 +67,28 @@
                   <el-form-item label="用户名称">
                       <el-input v-model="addForm.userForm.userName"></el-input>
                   </el-form-item>
+                  <el-form-item label="用户账号">
+                      <el-input v-model="addForm.userForm.userAccount"></el-input>
+                  </el-form-item>
+                  <el-form-item label="性别">
+                        <el-select v-model="addForm.userForm.userSex"
+                                    placeholder="请选择" style="width:90%">
+                            <el-option v-for="item in userSexList.options" :key="item.value" :label="item.label"
+                                :value="item.value" />
+                        </el-select>
+                  </el-form-item>
                   <el-form-item label="电话">
                       <el-input v-model="addForm.userForm.userPhone"></el-input>
                   </el-form-item>
                   <el-form-item label="邮箱">
                       <el-input v-model="addForm.userForm.userEmail"></el-input>
                   </el-form-item>
-                  <el-form-item label="用户状态">
-                      <el-switch v-model="addForm.userForm.userStatic"></el-switch>
+                  <el-form-item label="系">
+                      <el-select v-model="addForm.userForm.departmentId"
+                                    placeholder="请选择" style="width:90%">
+                            <el-option v-for="item in departmentList.departmentListCode" :key="item.value" :label="item.label"
+                                :value="item.value" />
+                      </el-select>
                   </el-form-item>
               </el-form>
               <template #footer>
@@ -104,11 +103,21 @@
           <!-- 修改用户信息对话框 -->
           <el-dialog title="修改用户" v-model="dialogFormVisible">
               <el-form :model="updateForm">
-                  <el-form-item label="用户id">
+                  <el-form-item label="id">
                       <el-input v-model="updateForm.userForm.id"></el-input>
                   </el-form-item>
                   <el-form-item label="用户名称">
                       <el-input v-model="updateForm.userForm.userName"></el-input>
+                  </el-form-item>
+                  <el-form-item label="用户账号">
+                      <el-input v-model="updateForm.userForm.userAccount"></el-input>
+                  </el-form-item>
+                  <el-form-item label="性别">
+                        <el-select v-model="addForm.userForm.userSex"
+                                    placeholder="请选择" style="width:90%">
+                            <el-option v-for="item in userSexList.options" :key="item.value" :label="item.label"
+                                :value="item.value" />
+                        </el-select>
                   </el-form-item>
                   <el-form-item label="电话">
                       <el-input v-model="updateForm.userForm.userPhone"></el-input>
@@ -116,8 +125,12 @@
                   <el-form-item label="邮箱">
                       <el-input v-model="updateForm.userForm.userEmail"></el-input>
                   </el-form-item>
-                  <el-form-item label="用户状态">
-                      <el-switch v-model="updateForm.userForm.userStatic"></el-switch>
+                  <el-form-item label="系">
+                      <el-select v-model="updateForm.userForm.departmentId"
+                                    placeholder="请选择" style="width:90%">
+                            <el-option v-for="item in departmentList.departmentListCode" :key="item.value" :label="item.label"
+                                :value="item.value" />
+                      </el-select>
                   </el-form-item>
               </el-form>
               <template #footer>
@@ -128,7 +141,8 @@
                   >
                   </span>
               </template>
-          </el-dialog>
+          </el-dialog>      
+
       </div>
   </div>
 </template>
@@ -137,7 +151,7 @@
 import { reactive } from "@vue/reactivity";
 import { ElMessage, ElMessageBox, FormInstance } from "element-plus";
 import { onMounted, ref } from "vue";
-import { AccountManagementAPI, addUserManagementAPI, deleteUserManagementAPI, getUserManagementByIdAPI, updateUserManagementAPI } from "../../api/accountManagement";
+import { AccountManagementAPI, addUserManagementAPI, deleteUserManagementAPI, DepartmentListAPI, getUserManagementByIdAPI, PasswordResetAPI, updateUserManagementAPI } from "../../api/accountManagement";
 //加载
 const loading = ref<boolean>(false)
 //table赋值
@@ -163,13 +177,11 @@ const searchFormRef = ref<FormInstance>()
 //查询参数
 const searchForm = reactive({
 userName:"",
-userAccount:""
 })
 // 重置查询条件
 const resetForm = () => {
 //清空查询框数据
 searchForm.userName = "";
-searchForm.userAccount = "";
 //分页器重置为第一页
 pCurrentPage.value = 1;
 pPageSize.value = 10;
@@ -192,41 +204,67 @@ formEl.validate((valid) => {
 const dialogAddFormVisible = ref<boolean>(false);
 const addForm = reactive({
 userForm:{
-  id:'',
   userName:'',
   userAccount:'',
+  userSex:'',
   userPhone:'',
   userEmail:'',
-  userStatic:false,
+  departmentId:'',
 }
 });
-//添加用户
-const addConfirm = async() =>{
-try{
-  const res = await addUserManagementAPI({
-      userName:addForm.userForm.userName,
-      userPhone:addForm.userForm.userPhone,
-      userEmail:addForm.userForm.userEmail,
-      userStatic:addForm.userForm.userStatic,
-  })
-          if (res.data.code === "200") {
-      ElMessage({
-          message: res.data.msg,
-          duration: 5000,
-          type: "success",
-      });
-  } else {
-      //失败
-      ElMessage({
-          message: res.data.msg,
-          duration: 5000,
-          type: "error",
-      });
-  }
-}catch(error){
-  console.log('error');
+//性别选择
+const userSexList = reactive({
+    options: [
+        {
+            value: 1,
+            label: "男",
+        },
+        {
+            value: 0,
+            label: "女",
+        },
+    ],
+});
+//添加用户信息
+const addUserManagement = async() =>{
+    dialogAddFormVisible.value = true;
+    //获取系列表
+    getDepartmentList()
 }
-dialogAddFormVisible.value = false;
+//确认添加用户信息
+const addConfirm = async() =>{
+    addUserManagementById()
+    dialogAddFormVisible.value = false;
+    loadUserManagementInfoList()
+}
+//添加用户
+const addUserManagementById = async() =>{
+    try{
+    const res = await addUserManagementAPI({
+        userName:addForm.userForm.userName,
+        userPhone:addForm.userForm.userPhone,
+        userEmail:addForm.userForm.userEmail,
+        userAccount:addForm.userForm.userAccount,
+        userSex:addForm.userForm.userSex,
+        departmentId:addForm.userForm.departmentId
+    })
+        if (res.data.code == "200") {
+        ElMessage({
+            message: res.data.msg,
+            duration: 5000,
+            type: "success",
+        });
+    } else {
+        //失败
+        ElMessage({
+            message: res.data.msg,
+            duration: 5000,
+            type: "error",
+        });
+    }
+    }catch(error){
+    console.log('error');
+    }
 }
 //修改用户信息对话框开关
 const dialogFormVisible = ref<boolean>(false);
@@ -235,15 +273,19 @@ userForm:{
   id:'',
   userName:'',
   userAccount:'',
+  userSex:'',
   userPhone:'',
   userEmail:'',
-  userStatic:false,
+  departmentId:'',
 }
 });
 //编辑用户信息
 const updateUserManagement = async(row:any) =>{
 dialogFormVisible.value = true;
+//根据id获取用户信息
 loadUserManagementById(row.id)
+//获取系列表
+getDepartmentList()
 }
 //确认修改用户信息
 const updateConfirm = async() =>{
@@ -251,6 +293,48 @@ updateUserManagementById()
 dialogFormVisible.value = false;
 loadUserManagementInfoList()
 }
+
+//修改密码
+const updateUserPassWd = async(row:any) =>{
+    try{
+        const res = await PasswordResetAPI({
+        id:row.id,
+    })
+        if(res.data.code == '200'){
+            ElMessage({
+                message: "重置密码成功，邮箱手机查看密码",
+                duration: 1500,
+                type: "success",
+            });
+        }else{
+            ElMessage.error('重置失败')
+        }
+    }catch(e){
+        console.log(e,'e');
+    }
+}
+let departmentList = reactive({departmentListCode:[] as any})
+//获取系列表
+const getDepartmentList = async() => {
+    try{
+        const res = await DepartmentListAPI()
+        if(res.data.code == '200'){
+            const codeValue = res.data.data;
+            let departmentCode: { value: any; label: any }[] = [];
+            codeValue.forEach((val:{id:string,departmentName:string}) => {
+                departmentCode.push({value:val.id,label:val.departmentName})
+            })
+            console.log(departmentCode);
+            
+            departmentList.departmentListCode = departmentCode
+        }else{
+            ElMessage.error('获取失败')
+        }
+    }catch(e){
+        console.log(e,'e');
+    }
+}
+
 //删除用户信息
 const deleteUserManagement = async(row:any) => {
 ElMessageBox.confirm("确认删除?", {
@@ -262,7 +346,7 @@ ElMessageBox.confirm("确认删除?", {
       //删除的过渡效果
       loading.value = true;
       const res = await deleteUserManagementAPI({id:row.id});
-      if (res.data.code === "200") {
+      if (res.data.code == "200") {
           ElMessage({
               message: "删除成功",
               duration: 1500,
@@ -274,33 +358,9 @@ ElMessageBox.confirm("确认删除?", {
       }
       loading.value = false;
   })
-  .catch(() => {console.log('erroe');});
+  .catch(() => {console.log('error');});
 }
-/* //激活封禁用户状态 getUserActivationStatusAPI
-const updateActivationStatus = async(row,type) => {
-loading.value = true;
-try{
-  const res = await getUserActivationStatusAPI({
-      id:row.id,
-      userStatic:type
-  })
-  if (res.data.code === "200") {
-      ElMessage({
-          message: res.data.msg,
-          duration: 5000,
-          type: "success",
-      });
-  } else {
-      //失败
-      ElMessage({
-          message: res.data.msg,
-          duration: 5000,
-          type: "error",
-      });
-  }
-}catch(error){}
-loading.value = false;
-} */
+
 //获取列表
 const loadUserManagementInfoList = async () => {
 loading.value = true;
@@ -309,7 +369,6 @@ try{
          pageNum:pCurrentPage.value,
          pageSize:pPageSize.value,
          userName:searchForm.userName,
-         userAccount:searchForm.userAccount
     })
     console.log(res.data.data.records);
     baseInfoTableData.value = res.data.data.records;
@@ -319,30 +378,34 @@ try{
 }
 loading.value = false;
 }
+
 //根据id获取用户信息 getUserManagementAPI
 const loadUserManagementById = async (id:string) => {
-try{
-  const res = await getUserManagementByIdAPI({
-      id:id,
-  })
-  updateForm.userForm = res.data.data;
-}catch(error){
-  console.log('error');
-  
+    try{
+    const res = await getUserManagementByIdAPI({
+        id:id,
+    })
+    updateForm.userForm = res.data.data;
+    updateForm.userForm.userEmail = res.data.data.userEmail
+    }catch(error){
+    console.log('error');
+    
+    }
 }
-}
+
 //修改用户信息 updateUserManagementAPI
 const updateUserManagementById = async () => {
 try{
   const res = await updateUserManagementAPI({
       id:updateForm.userForm.id,//用户id
       userName:updateForm.userForm.userName,//用户名称
-      userAccount:updateForm.userForm.userAccount,//用户账号
+      user_account:updateForm.userForm.userAccount,//用户账号
+      userSex:updateForm.userForm.userSex,//性别
       userPhone:updateForm.userForm.userPhone,//电话
       userEmail:updateForm.userForm.userEmail,//邮箱
-      userStatic:updateForm.userForm.userStatic,//用户状态
+      departmentId:updateForm.userForm.departmentId,//用户状态
   })
-  if (res.data.code === "200") {
+  if (res.data.code == "200") {
       ElMessage({
           message: res.data.msg,
           duration: 5000,
