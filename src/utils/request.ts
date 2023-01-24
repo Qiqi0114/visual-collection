@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { TOKEN_KEY } from '../lib/util'
 import menu from '../store/account'
 
 let url: any = import.meta.env // 配置不同环境的域名信息等
@@ -13,7 +14,7 @@ const service = axios.create({
 
 // 请求前置拦截器
 service.interceptors.request.use((config) => {
-  config.headers.token = menu.state.token
+  config.headers.token = sessionStorage.getItem(TOKEN_KEY);
   if (config.method === 'post' && !config.data) {
     config.data = config.params
     config.params = null
