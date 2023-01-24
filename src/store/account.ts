@@ -44,6 +44,7 @@ const menu: Module<AccountState, RootState> = {
                   type: 'success',
                 })
               }else{
+                await router.push({name: 'Login'});
                 ElMessage.error('账号或密码错误')
               }
             commit("SET_TOKEN", {
