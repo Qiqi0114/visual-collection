@@ -17,8 +17,13 @@ const menu: Module<AccountState, RootState> = {
             setToken(token);
             state.token = token;
         },
+        CLEAR_LOGIN_INFO(state) {
+            state.token = undefined;
+            setToken();
+        },
     },
     actions: {
+        //登录
         async appLogin(
             {dispatch, commit},
             payload: {
@@ -56,9 +61,13 @@ const menu: Module<AccountState, RootState> = {
 /*             commit("SET_ROUTES",data.data.orgBusionessListDTOS) */
             return data;
         },
-        CLEAR_LOGIN_INFO(state) {
-            state.token = undefined;
-            setToken();
+        //退出清空
+        async clearLoginInfo({commit}, redirect?: string): Promise<void> {
+            commit("CLEAR_LOGIN_INFO");
+                await router.push({
+                    name: "Login",
+                    query: {redirect},
+                });
         },
     },
 };
