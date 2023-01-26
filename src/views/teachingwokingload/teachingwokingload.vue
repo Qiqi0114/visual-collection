@@ -12,15 +12,16 @@
               style="width: 100%"
             >
               <el-row>
-                <el-col :span="4">
+                <el-col :span="6">
                   <el-form-item label="姓名" prop="userName">
                     <el-input
                       v-model.userName="searchForm.userName"
                       placeholder="请输入姓名"
+                      clearable
                     />
                   </el-form-item>
                 </el-col>
-                <el-col :span="4">
+                <el-col :span="6">
                   <el-form-item label="系" prop="xId">
                     <el-select v-model="searchForm.xId"
                                     placeholder="请选择系" style="width:90%">
@@ -29,7 +30,7 @@
                     </el-select>
                   </el-form-item>
                 </el-col>
-                <el-col :span="4">
+                <el-col :span="6">
                   <el-form-item label="年" prop="yId">
                     <el-input
                       v-model.yId="searchForm.yId"
@@ -37,12 +38,13 @@
                     />
                   </el-form-item>
                 </el-col>
-                <el-col :span="12">
+                <el-col :span="6">
                   <el-form-item style="float: right">
                     <el-button type="success" @click="selectForm(searchFormRef)"
                       >查询</el-button
                     >
                     <el-button @click="resetForm()" type="info">重置</el-button>
+                    <el-button @click="deleteXYWoking()" type="danger">删除</el-button>
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -59,33 +61,23 @@
           ref="baseInfoTableDataRef"
           v-loading="loading"
           :header-cell-style="{ background: '#F5F6FA' }"
-          :height="500"
+          :height="450"
         >
+          <el-table-column fixed="right" label="操作" min-width="120">
+            <template #default="scope">
+              <el-button type="text" @click="deleteUserWoking(scope.row)">删除</el-button>
+              <el-button type="text" @click="seeUserWoking(scope.row)">查看</el-button>
+            </template>
+          </el-table-column>
           <el-table-column prop="id" label="用户id" min-width="130" />
-          <el-table-column prop="teachCourse" label="讲授课程" min-width="120" />
-          <el-table-column prop="openingSchool" label="开课学院" min-width="120" />
-          <el-table-column prop="schoolAccounting" label="核算学院" min-width="90" />
-          <el-table-column prop="natureCurriculum" label="课程性质" min-width="120" />
-          <el-table-column prop="teachingTerm" label="授课学期" min-width="120" />
-          <el-table-column prop="classRoom" label="班级" min-width="120" />
-          <el-table-column prop="k1" label="k1" min-width="120" />
-          <el-table-column prop="k2" label="k2" min-width="120" />
-          <el-table-column prop="k3" label="k3" min-width="120" />
-          <el-table-column prop="K4" label="K4" min-width="120" />
-          <el-table-column prop="K5" label="K5" min-width="120" />
-          <el-table-column prop="K6" label="K6" min-width="120" />
-          <el-table-column prop="J" label="J-计划学时" min-width="120" />
-          <el-table-column prop="f" label="F" min-width="120" />
-          <el-table-column prop="r" label="R-人数" min-width="120" />
+          <el-table-column prop="numberYears" label="年限" min-width="120" />
+          <el-table-column prop="userName" fixed="left" label="人员名称" min-width="120" />
+          <el-table-column prop="departmentName" label="系" min-width="90" />
+          <el-table-column prop="f" label="教学业绩分值F" min-width="120" />
           <el-table-column prop="y1" label="Y（用于考核）" min-width="120" />
           <el-table-column prop="y2" label="Y（计算津贴）" min-width="120" />
-          <el-table-column prop="classRoom2" label="班级" min-width="120" />
-          <el-table-column prop="teachingContent" label="教学内容" min-width="120" />
-          <el-table-column prop="jj" label="J-计划周数" min-width="120" />
-          <el-table-column prop="k7" label="k7" min-width="120" />
-          <el-table-column prop="s1" label="S1" min-width="120" />
-          <el-table-column prop="workloadCorrelationId" label="id" min-width="120" />
-          <el-table-column prop="rstudent" label="学生人数" min-width="120" />
+          <el-table-column prop="s1" label="s1合计" min-width="120" />
+          <el-table-column prop="z" label="未乘就业率系数的总工作量Z" min-width="120" />
         </el-table>
       </div>
       <!--分页器 start-->
@@ -104,17 +96,47 @@
         />
       </div>
       <!--分页器 end-->
+      <!--删除对话框-->
+      <el-dialog title="添加用户" v-model="dialogDelFormVisible">
+              <el-form :model="delForm">
+                <el-row>
+                  <el-col :span="10">
+                    <el-form-item label="系">
+                        <el-select v-model="delForm.searForm.xId"
+                                      placeholder="请选择系" style="width:90%">
+                              <el-option v-for="item in departmentList.departmentListCode" :key="item.value" :label="item.label"
+                                  :value="item.value" />
+                        </el-select>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="8">
+                    <el-form-item label="年">
+                        <el-input v-model="delForm.searForm.yId"></el-input>
+                    </el-form-item>
+                  </el-col>
+                </el-row>
+              </el-form>
+              <template #footer>
+                  <span class="dialog-footer">
+                  <el-button @click="dialogDelFormVisible = false">取 消</el-button>
+                  <el-button type="primary" @click="delXYConfirm()"
+                      >确 定</el-button
+                  >
+                  </span>
+              </template>
+          </el-dialog>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { ElMessage, FormInstance } from "element-plus";
+import { ElMessage, ElMessageBox, FormInstance } from "element-plus";
 import { reactive } from "vue";
 import { onMounted, ref } from "vue-demi";
 import { useRouter } from "vue-router";
 import { DepartmentListAPI } from "../../api/accountManagement";
-import { getTeachingWokingInfoList } from "../../api/teachingwokingload";
+import { deleteUserWokingAPI, deleteXYWokingAPI, getTeachingWokingInfoList } from "../../api/teachingwokingload";
+import router from "../../router";
 import store from "../../store";
 //加载
 const loading = ref<boolean>(false)
@@ -154,9 +176,7 @@ const getDepartmentList = async() => {
             let departmentCode: { value: any; label: any }[] = [];
             codeValue.forEach((val:{id:string,departmentName:string}) => {
                 departmentCode.push({value:val.id,label:val.departmentName})
-            })
-            console.log(departmentCode);
-            
+            }) 
             departmentList.departmentListCode = departmentCode
         }else{
             ElMessage.error('获取失败')
@@ -169,6 +189,8 @@ const getDepartmentList = async() => {
 const resetForm = () => {
     //清空查询框数据
     searchForm.userName = "";
+    searchForm.xId = "";
+    searchForm.yId = "";
     //分页器重置为第一页
     pCurrentPage.value = 1;
     pPageSize.value = 10;
@@ -199,10 +221,80 @@ const loadTeachingWokingInfoList = async () => {
       yId:searchForm.yId,
     });
     baseInfoTableData.value = res.data.data.records;
+    pTotal.value = res.data.data.total;
   } catch (error) {}
   loading.value = false;
 };
+//添加用户信息对话框开关
+const dialogDelFormVisible = ref<boolean>(false);
+const delForm = reactive({
+searForm:{
+  xId:'',
+  yId:'',
+}
+});
+const deleteXYWoking = () => {
+  dialogDelFormVisible.value = true;
+}
+const delXYConfirm = async() => {
+  try{
+    //删除的过渡效果
+    loading.value = true;
+    const res = await deleteXYWokingAPI({
+      xId:delForm.searForm.xId,
+      yId:delForm.searForm.yId,
+    })
+    if (res.data.code == "200") {
+          ElMessage({
+              message: "删除成功",
+              duration: 1500,
+              type: "success",
+          });
+          loadTeachingWokingInfoList();
+      } else {
+          ElMessage.error(res.data.msg)
+      }
+      loading.value = false;
+  } catch(e){console.log(e,'error');}
+}
+//删除用户信息
+const deleteUserWoking = async(row:any) => {
+ElMessageBox.confirm("确认删除?", {
+  confirmButtonText: "是",
+  cancelButtonText: "否",
+  type: "warning",
+})
+  .then(async () => {
+      //删除的过渡效果
+      loading.value = true;
+      const res = await deleteUserWokingAPI({id:row.id});
+      if (res.data.code == "200") {
+          ElMessage({
+              message: "删除成功",
+              duration: 1500,
+              type: "success",
+          });
+          loadTeachingWokingInfoList();
+      } else {
+          ElMessage.error(res.data.msg)
+      }
+      loading.value = false;
+  })
+  .catch(() => {console.log('error');});
+}
 
+const seeUserWoking = async (row: any) => {
+        let text = {
+          pageNum:pCurrentPage.value,
+          pageSize:pPageSize.value,
+          userName:row.userName,
+          xId:searchForm.xId,
+          yId:searchForm.yId,
+        }
+        router
+            .push({ path: "/home/seeUserwoking", query: text })
+            .catch((e) => console.error(e));
+      }
 onMounted(() => {
   // 获取教学工作量信息列表
   loadTeachingWokingInfoList();

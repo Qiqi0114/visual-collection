@@ -58,9 +58,18 @@ const routes: Array<RouteRecordRaw> = [
             name: "workloadData",
             meta: {
                 title: "教学工作量数据",
-                key:"sub2-1",
+                key:"sub2-2",
             },
             component: () => import("../views/teachingwokingload/teachingwokingload.vue"),
+          },
+          {
+            path: "/home/seeUserwoking",
+            name: "seeUserwoking",
+            meta: {
+                title: "查看教学工作量数据",
+                key:"sub2-3",
+            },
+            component: () => import("../views/teachingwokingload/seeUserwoking.vue"),
         }
         ]
     },
