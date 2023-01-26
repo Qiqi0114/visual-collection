@@ -329,8 +329,6 @@ const getDepartmentList = async() => {
             codeValue.forEach((val:{id:string,departmentName:string}) => {
                 departmentCode.push({value:val.id,label:val.departmentName})
             })
-            console.log(departmentCode);
-            
             departmentList.departmentListCode = departmentCode
         }else{
             ElMessage.error('获取失败')
@@ -395,7 +393,6 @@ const loadUserManagementById = async (id:string) => {
     updateForm.userForm.userEmail = res.data.data.userEmail;
     }catch(error){
     console.log('error');
-    
     }
 }
 
