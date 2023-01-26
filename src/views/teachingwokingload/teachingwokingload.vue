@@ -12,11 +12,28 @@
               style="width: 100%"
             >
               <el-row>
-                <el-col :span="6">
+                <el-col :span="4">
                   <el-form-item label="姓名" prop="userName">
                     <el-input
                       v-model.userName="searchForm.userName"
                       placeholder="请输入姓名"
+                    />
+                  </el-form-item>
+                </el-col>
+                <el-col :span="4">
+                  <el-form-item label="系" prop="xId">
+                    <el-select v-model="searchForm.xId"
+                                    placeholder="请选择系" style="width:90%">
+                            <el-option v-for="item in departmentList.departmentListCode" :key="item.value" :label="item.label"
+                                :value="item.value" />
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="4">
+                  <el-form-item label="年" prop="yId">
+                    <el-input
+                      v-model.yId="searchForm.yId"
+                      placeholder="请选择年"
                     />
                   </el-form-item>
                 </el-col>
@@ -45,17 +62,30 @@
           :height="500"
         >
           <el-table-column prop="id" label="用户id" min-width="130" />
-          <el-table-column prop="userName" label="用户全称" min-width="120" />
-          <el-table-column prop="passWord" label="密码" min-width="120" />
-          <el-table-column prop="userSex" label="用户性别" min-width="90" />
-          <el-table-column prop="userPhone" label="手机号" min-width="120" />
-          <el-table-column prop="userEmail" label="用户邮箱" min-width="120" />
-          <el-table-column prop="roleId" label="角色id" min-width="85">
-            <template #default="scope">
-              <span v-if="scope.row.roleId === '1'">管理员</span>
-              <span v-if="scope.row.roleId === '2'">用户</span>
-            </template>
-          </el-table-column>
+          <el-table-column prop="teachCourse" label="讲授课程" min-width="120" />
+          <el-table-column prop="openingSchool" label="开课学院" min-width="120" />
+          <el-table-column prop="schoolAccounting" label="核算学院" min-width="90" />
+          <el-table-column prop="natureCurriculum" label="课程性质" min-width="120" />
+          <el-table-column prop="teachingTerm" label="授课学期" min-width="120" />
+          <el-table-column prop="classRoom" label="班级" min-width="120" />
+          <el-table-column prop="k1" label="k1" min-width="120" />
+          <el-table-column prop="k2" label="k2" min-width="120" />
+          <el-table-column prop="k3" label="k3" min-width="120" />
+          <el-table-column prop="K4" label="K4" min-width="120" />
+          <el-table-column prop="K5" label="K5" min-width="120" />
+          <el-table-column prop="K6" label="K6" min-width="120" />
+          <el-table-column prop="J" label="J-计划学时" min-width="120" />
+          <el-table-column prop="f" label="F" min-width="120" />
+          <el-table-column prop="r" label="R-人数" min-width="120" />
+          <el-table-column prop="y1" label="Y（用于考核）" min-width="120" />
+          <el-table-column prop="y2" label="Y（计算津贴）" min-width="120" />
+          <el-table-column prop="classRoom2" label="班级" min-width="120" />
+          <el-table-column prop="teachingContent" label="教学内容" min-width="120" />
+          <el-table-column prop="jj" label="J-计划周数" min-width="120" />
+          <el-table-column prop="k7" label="k7" min-width="120" />
+          <el-table-column prop="s1" label="S1" min-width="120" />
+          <el-table-column prop="workloadCorrelationId" label="id" min-width="120" />
+          <el-table-column prop="rstudent" label="学生人数" min-width="120" />
         </el-table>
       </div>
       <!--分页器 start-->
@@ -79,10 +109,11 @@
 </template>
 
 <script lang="ts" setup>
-import { FormInstance } from "element-plus";
+import { ElMessage, FormInstance } from "element-plus";
 import { reactive } from "vue";
 import { onMounted, ref } from "vue-demi";
 import { useRouter } from "vue-router";
+import { DepartmentListAPI } from "../../api/accountManagement";
 import { getTeachingWokingInfoList } from "../../api/teachingwokingload";
 import store from "../../store";
 //加载
@@ -110,7 +141,30 @@ const searchFormRef = ref<FormInstance>()
 //查询参数
 const searchForm = reactive({
      userName:"",
+     xId:"",
+     yId:"",
 })
+let departmentList = reactive({departmentListCode:[] as any})
+//获取系列表
+const getDepartmentList = async() => {
+    try{
+        const res = await DepartmentListAPI()
+        if(res.data.code == '200'){
+            const codeValue = res.data.data;
+            let departmentCode: { value: any; label: any }[] = [];
+            codeValue.forEach((val:{id:string,departmentName:string}) => {
+                departmentCode.push({value:val.id,label:val.departmentName})
+            })
+            console.log(departmentCode);
+            
+            departmentList.departmentListCode = departmentCode
+        }else{
+            ElMessage.error('获取失败')
+        }
+    }catch(e){
+        console.log(e,'e');
+    }
+}
 // 重置查询条件
 const resetForm = () => {
     //清空查询框数据
@@ -137,8 +191,14 @@ const selectForm = (formEl: FormInstance | undefined) => {
 const loadTeachingWokingInfoList = async () => {
   loading.value = true;
   try {
-    const res = await getTeachingWokingInfoList();
-    baseInfoTableData.value = res.data.data;
+    const res = await getTeachingWokingInfoList({
+      pageNum:pCurrentPage.value,
+      pageSize:pPageSize.value,
+      userName:searchForm.userName,
+      xId:searchForm.xId,
+      yId:searchForm.yId,
+    });
+    baseInfoTableData.value = res.data.data.records;
   } catch (error) {}
   loading.value = false;
 };
@@ -146,8 +206,8 @@ const loadTeachingWokingInfoList = async () => {
 onMounted(() => {
   // 获取教学工作量信息列表
   loadTeachingWokingInfoList();
-
-  console.log(store.getters.gettoken);
+  //获取系列表
+  getDepartmentList()
 });
 </script>
 
