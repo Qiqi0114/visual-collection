@@ -49,6 +49,7 @@
 </template>
 
 <script lang="ts" setup>
+import { join } from "path/posix";
 import { onMounted, ref } from "vue-demi";
 import { getTeachingWokingInfoList } from "../../api/teachingwokingload";
 import router from "../../router";
@@ -56,7 +57,7 @@ const queryRouter = router.currentRoute.value.query;
 //加载
 const loading = ref<boolean>(false)
 //table赋值
-const baseInfoTableData = ref([]);
+const baseInfoTableData = ref<any[]>([]);
 //获取教学工作量信息表
 const loadTeachingWokingInfoList = async () => {
   loading.value = true;
@@ -69,7 +70,8 @@ const loadTeachingWokingInfoList = async () => {
       yId:queryRouter.yId,
     });
     baseInfoTableData.value = res.data.data.records[0].workloadList;
-    baseInfoTableData.value.z = res.data.data.records[0].z;
+    //合计z
+    baseInfoTableData.value[17].z = res.data.data.records[0].z;
   } catch (error) {}
   loading.value = false;
 };
