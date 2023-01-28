@@ -8,9 +8,9 @@ export function getTeachingWokingInfoList(
     //名称
     userName:string,
     //系
-    xId:string,
+    departmentId:string,
     //年
-    yId:string,
+    yearId:string,
   }
 ) {
     return request({
@@ -36,15 +36,29 @@ export function deleteUserWokingAPI(
 
 //批量删除当前所在年限下的 所在系下的所有工作量
 export function deleteXYWokingAPI(
-  param:{
-    //系
-    xId:string,
-    //年
-    yId:string,
-  }) {
+  param:any) {
   return request({
-    url: '/workloadService/workload/deleteworkloadList?xId=1&yId=1',
+    url: '/workloadService/workload/deleteworkloadList',
     method: 'delete',
     params:param
+  })
+}
+//导入excel
+export function importWorkloadAPI(
+  param:any) {
+  return request({
+    url: '/workloadService/workload/importWorkload',
+    method: 'post',
+    headers:{'Content-type': 'multipart/form-data'},
+    data:param,
+  })
+}
+
+
+//获取年限列表
+export function getYearListAPI() {
+  return request({
+    url: '/workloadService/workload/getYearList',
+    method: 'get',
   })
 }
