@@ -1,119 +1,205 @@
 <template>
     <div class="container-bg">
         <div class="container">
-                <!-- 上传文件按钮 -->
-            <div class="buttonBox">
-            <el-upload
-                action
-                accept=".xlsx,.xls"
-                :auto-upload="false"
-                :show-file-list="false"
-                :on-change="handle"
+          <div>
+            <el-row>
+          <el-col>
+            <el-form
+              ref="searchFormRef"
+              :model="searchForm"
+              :inline="true"
+              style="width: 100%"
             >
-                <el-button type="primary" slot="trigger">选取 Excel 文件</el-button>
-            </el-upload>
-            <el-button type="success" @click="submit()">采集数据提交</el-button>
-            </div>
+              <el-row>
+                <el-col :span="6">
+                  <el-form-item label="系" prop="xId">
+                  <el-select v-model="searchForm.xId" filterable placeholder="请选择">
+                    <el-option
+                      v-for="item in  departmentList.departmentListCode"
+                      :key="item.value"
+                      :label="item.label"
+                      :value="item.value"
+                    >
+                    </el-option>
+                  </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                  <el-form-item label="年限" prop="yearId">
+                    <el-select v-model="searchForm.yId" filterable placeholder="请选择">
+                      <el-option
+                        v-for="item in  YearList.YearListCode"
+                        :key="item.value"
+                        :label="item.label"
+                        :value="item.value"
+                      >
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="6">
+                  <el-form-item style="float: right">
+                    <el-upload drag
+                      :limit=limitNum
+                      :auto-upload="false"
+                      accept=".xlsx"
+                      :action="UploadUrl()"
+                      :before-upload="beforeUploadFile"
+                      :on-change="fileChange"
+                      :on-exceed="exceedFile"
+                      :on-success="handleSuccess"
+                      :on-error="handleError"
+                      :file-list="fileList">
+                      <div class="img_box" v-if="imgs">
+                        <img src="../../assets/excel.png" />
+                      </div>
+                      <span class="box_text">导入</span>
+                      </el-upload>
+                      <br/>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+            </el-form>
+          </el-col>
+        </el-row>
+            
 
-            <!-- 解析出来的数据 -->
-            <div class="tableBox" v-show="show">
-            <h3>
-                <i class="el-icon-info">
-                小主，以下是采集完成的数据，请您检查无误后，点击“采集数据提交”按钮上传至服务器</i
-                >
-            </h3>
-            <el-table     v-loading="loading"
-    element-loading-text="拼命加载中"
-    element-loading-spinner="el-icon-loading"
-    element-loading-background="rgba(0, 0, 0, 0.8)" :data="tempData" border style="width: 100%" :height="height">
-                <el-table-column
-                prop="name"
-                label="姓名"
-                min-width="50%"
-                ></el-table-column>
-                <el-table-column
-                prop="phone"
-                label="电话"
-                min-width="50%"
-                ></el-table-column>
-            </el-table>
-            </div>
-        </div>
-        </div>
+
+          </div>
+
+      </div>
+    </div>
 </template>
 
 <script lang="ts" setup>
-import xlsx from 'xlsx'
-import { readFile, character, delay } from '../../assets/js/utils'
-import { ref } from "vue-demi"
-import { ElMessage } from 'element-plus';
-//加载
-const loading = ref<boolean>(false);
-//展示出解析出来的数据
-const show = ref<boolean>(false);let tempData = ref<any>([]);
+import axios from "axios";
+import { ElMessage, ElMessageBox } from "element-plus";
+import { onMounted, reactive, ref } from "vue-demi";
+import { DepartmentListAPI } from "../../api/accountManagement";
+import { getYearListAPI, importWorkloadAPI } from "../../api/teachingwokingload";
+//条件参数
+const searchForm = reactive({
+  xId:"",
+  yId:"",
+})
+//系选择
+let departmentList = reactive({departmentListCode:[] as any})
+//系id
+const xId = ref<string>('')
 
-    // 采集 EXCEL 数据
-const handle = async(e:any) => {
-      let file = e.raw
-      if (!file) return
-
-      show.value = false
-      loading.value = true;
-
-      await delay(300)
-
-      // 读取FILE中的数据
-      let data = await readFile(file)
-      let workbook = xlsx.read(data, { type: 'binary' }),
-        worksheet = workbook.Sheets[workbook.SheetNames[0]],
-        list = xlsx.utils.sheet_to_json(worksheet)
-      // console.log(list)
-
-      // 把读取出来的数据变为可以提交为服务器的数据格式
-      let arr :any[]= []
-      let oldData = JSON.parse(window.localStorage.getItem('excel') || '[]')
-      let index = oldData.length
-      list.forEach(item => {
-        let obj = {}
-        for (let key in character) {
-          if (!character.hasOwnProperty(key)) break
-          let v = character[key],
-            text = v.text,
-            type = v.type
-          v = item[text] || ''
-          type === 'string' ? (v = String(v)) : null
-          type === 'number' ? (v = Number(v)) : null
-          obj[key] = v
+//获取系列表
+const getDepartmentList = async() => {
+    try{
+        const res = await DepartmentListAPI()
+        if(res.data.code == '200'){
+            const codeValue = res.data.data;
+            let departmentCode: { value: any; label: any }[] = [];
+            codeValue.forEach((val:{id:string,departmentName:string}) => {
+                departmentCode.push({value:val.id,label:val.departmentName})
+            }) 
+            departmentList.departmentListCode = departmentCode
+        }else{
+            ElMessage.error('获取失败')
         }
-        obj.id = ++index
-        obj.time = new Date()
-        arr.push(obj)
-      })
-
-      await delay(300)
-
-      // 展示到页面中
-      show.value = true
-      // console.log(arr)
-      tempData = arr
-      loading.value = false;
+    }catch(e){
+        console.log(e,'e');
     }
+}
+//年选择
+let YearList = reactive({YearListCode:[] as any})
 
-    // 提交数据给服务器
-    const submit =() =>{
-      if (tempData.length <= 0) {
-        return ElMessage.warning({
-          message: '小主，请您先选择 EXCEL 文件！',
-          type: 'warning',
-          showClose: true
-        })
+//获取年限列表
+const getYearList = async() => {
+    try{
+        const res = await getYearListAPI()
+        if(res.data.code == '200'){
+            const codeValue = res.data.data;
+            let YearCode: { value: any; label: any }[] = [];
+            codeValue.forEach((val:{id:string,numberYears:string}) => {
+              YearCode.push({value:val.id,label:val.numberYears})
+            }) 
+            YearList.YearListCode = YearCode
+        }else{
+            ElMessage.error('获取失败')
+        }
+    }catch(e){
+        console.log(e,'e');
+    }
+}  
+//上传excell时，同时允许上传的最大数
+const limitNum = ref<number>(1);
+// excel文件列表
+const fileList = ref<any[]>([]);
+//excel图片显示
+const imgs = ref<boolean>(false);
+// 文件超出个数限制时的钩子
+const exceedFile = (files:any, fileList:any) => {
+        ElMessage.warning(`只能选择 ${limitNum.value} 个文件，当前共选择了 ${files.length + fileList.length} 个`);
       }
-      let oldData = JSON.parse(window.localStorage.getItem('excel') || '[]'),
-        newData = [...oldData, ...tempData]
-      window.localStorage.setItem('excel', JSON.stringify(newData))
-      
-    }
-  
+      // 文件状态改变时的钩子
+      const fileChange = (files:any, fileList:any) => {
+        console.log(files.raw);
+        console.log(fileList);
+        if (fileList.length === 0){
+          ElMessage.warning('请上传文件');
+        } else {
+          ElMessageBox.confirm("确认上传?", {
+          confirmButtonText: "是",
+          cancelButtonText: "否",
+          type: "warning",
+        })
+          .then(async () => {
+            let form = new FormData();
+            form.append('file', files.raw);
+            form.append('xId', searchForm.xId);
+            form.append('yId', searchForm.yId);
+            
+            importWorkloadAPI(form).then(
+              res=>{
+
+              },err =>{
+              });
+              searchForm.xId = "";
+            searchForm.yId = "";
+            fileList.value = [];
+          })
+        }
+      }
+      // 上传文件之前的钩子, 参数为上传的文件,若返回 false 或者返回 Promise 且被 reject，则停止上传
+      const beforeUploadFile = (file:any) => {
+        console.log('before upload');
+        console.log(file);
+        let extension = file.name.substring(file.name.lastIndexOf('.')+1);
+        let size = file.size / 1024 / 1024;
+        if(extension !== 'xlsx') {
+          ElMessage.warning('只能上传后缀是.xlsx的文件');
+        }
+        if(size > 10) {
+          ElMessage.warning('文件大小不得超过10M');
+        }
+      }
+      // 文件上传成功时的钩子
+      const handleSuccess = (res:any, files:any, fileList:any) =>{
+        ElMessage.success('文件上传成功');
+        console.log(fileList);
+        imgs.value = true;
+      }
+      // 文件上传失败时的钩子
+      const handleError = (err, file, fileList) => {
+        ElMessage.error('文件上传失败');
+      }
+      const UploadUrl = () =>{
+       // 因为action参数是必填项，我们使用二次确认进行文件上传时，直接填上传文件的url会因为没有参数导致api报404，所以这里将action设置为一个返回为空的方法就行，避免抛错
+        return ""
+      }
+      const uploadFile = () =>{
+
+      }
+
+onMounted(() => {
+  getDepartmentList();
+  getYearList();
+})
 </script>
 
 <style lang="scss" scoped>
