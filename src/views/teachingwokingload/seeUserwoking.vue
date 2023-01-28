@@ -66,8 +66,8 @@ const loadTeachingWokingInfoList = async () => {
       pageNum:queryRouter.pageNum,
       pageSize:queryRouter.pageSize,
       userName:queryRouter.userName,
-      xId:queryRouter.xId,
-      yId:queryRouter.yId,
+      departmentId:queryRouter.departmentId,
+      yearId:queryRouter.yearId,
     });
     baseInfoTableData.value = res.data.data.records[0].workloadList;
     //合计z

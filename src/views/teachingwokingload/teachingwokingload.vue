@@ -22,20 +22,25 @@
                   </el-form-item>
                 </el-col>
                 <el-col :span="6">
-                  <el-form-item label="系" prop="xId">
-                    <el-select v-model="searchForm.xId"
-                                    placeholder="请选择系" style="width:90%">
+                  <el-form-item label="系" prop="departmentId">
+                    <el-select v-model="searchForm.departmentId"
+                              filterable  placeholder="请选择系" style="width:90%">
                             <el-option v-for="item in departmentList.departmentListCode" :key="item.value" :label="item.label"
                                 :value="item.value" />
                     </el-select>
                   </el-form-item>
                 </el-col>
                 <el-col :span="6">
-                  <el-form-item label="年" prop="yId">
-                    <el-input
-                      v-model.yId="searchForm.yId"
-                      placeholder="请选择年"
-                    />
+                  <el-form-item label="年限" prop="yearId">
+                    <el-select v-model="searchForm.yearId" filterable placeholder="请选择">
+                        <el-option
+                          v-for="item in  YearList.YearListCode"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value"
+                        >
+                        </el-option>
+                      </el-select>
                   </el-form-item>
                 </el-col>
                 <el-col :span="6">
@@ -111,7 +116,15 @@
                   </el-col>
                   <el-col :span="8">
                     <el-form-item label="年">
-                        <el-input v-model="delForm.searForm.yId"></el-input>
+                      <el-select v-model="delForm.searForm.yId" filterable placeholder="请选择">
+                        <el-option
+                          v-for="item in  YearList.YearListCode"
+                          :key="item.value"
+                          :label="item.label"
+                          :value="item.value"
+                        >
+                        </el-option>
+                      </el-select>
                     </el-form-item>
                   </el-col>
                 </el-row>
@@ -135,7 +148,7 @@ import { reactive } from "vue";
 import { onMounted, ref } from "vue-demi";
 import { useRouter } from "vue-router";
 import { DepartmentListAPI } from "../../api/accountManagement";
-import { deleteUserWokingAPI, deleteXYWokingAPI, getTeachingWokingInfoList } from "../../api/teachingwokingload";
+import { deleteUserWokingAPI, deleteXYWokingAPI, getTeachingWokingInfoList, getYearListAPI } from "../../api/teachingwokingload";
 import router from "../../router";
 import store from "../../store";
 //加载
@@ -163,8 +176,8 @@ const searchFormRef = ref<FormInstance>()
 //查询参数
 const searchForm = reactive({
      userName:"",
-     xId:"",
-     yId:"",
+     departmentId:"",
+     yearId:"",
 })
 let departmentList = reactive({departmentListCode:[] as any})
 //获取系列表
@@ -185,12 +198,33 @@ const getDepartmentList = async() => {
         console.log(e,'e');
     }
 }
+//年选择
+let YearList = reactive({YearListCode:[] as any})
+
+//获取年限列表
+const getYearList = async() => {
+    try{
+        const res = await getYearListAPI()
+        if(res.data.code == '200'){
+            const codeValue = res.data.data;
+            let YearCode: { value: any; label: any }[] = [];
+            codeValue.forEach((val:{id:string,numberYears:string}) => {
+              YearCode.push({value:val.id,label:val.numberYears})
+            }) 
+            YearList.YearListCode = YearCode
+        }else{
+            ElMessage.error('获取失败')
+        }
+    }catch(e){
+        console.log(e,'e');
+    }
+}  
 // 重置查询条件
 const resetForm = () => {
     //清空查询框数据
     searchForm.userName = "";
-    searchForm.xId = "";
-    searchForm.yId = "";
+    searchForm.departmentId = "";
+    searchForm.yearId = "";
     //分页器重置为第一页
     pCurrentPage.value = 1;
     pPageSize.value = 10;
@@ -217,8 +251,8 @@ const loadTeachingWokingInfoList = async () => {
       pageNum:pCurrentPage.value,
       pageSize:pPageSize.value,
       userName:searchForm.userName,
-      xId:searchForm.xId,
-      yId:searchForm.yId,
+      departmentId:searchForm.departmentId,
+      yearId:searchForm.yearId,
     });
     baseInfoTableData.value = res.data.data.records;
     pTotal.value = res.data.data.total;
@@ -256,6 +290,7 @@ const delXYConfirm = async() => {
       }
       loading.value = false;
   } catch(e){console.log(e,'error');}
+  dialogDelFormVisible.value = false;
 }
 //删除用户信息
 const deleteUserWoking = async(row:any) => {
@@ -288,8 +323,8 @@ const seeUserWoking = async (row: any) => {
           pageNum:pCurrentPage.value,
           pageSize:pPageSize.value,
           userName:row.userName,
-          xId:searchForm.xId,
-          yId:searchForm.yId,
+          departmentId:searchForm.departmentId,
+          yearId:searchForm.yearId,
         }
         router
             .push({ path: "/home/seeUserwoking", query: text })
@@ -299,7 +334,9 @@ onMounted(() => {
   // 获取教学工作量信息列表
   loadTeachingWokingInfoList();
   //获取系列表
-  getDepartmentList()
+  getDepartmentList();
+  //获取年限列表
+  getYearList();
 });
 </script>
 
