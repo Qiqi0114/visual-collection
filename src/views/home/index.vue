@@ -137,7 +137,7 @@ if (isCollapse.value===true){
 .router-container{
   overflow: hidden;
   right: 0;
-  width: 1000px;
+  width: 1050px;
   margin-bottom: 0px;
   height: 100%;
   z-index: 88;
