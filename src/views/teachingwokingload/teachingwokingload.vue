@@ -70,8 +70,8 @@
         >
           <el-table-column fixed="right" label="操作" min-width="120">
             <template #default="scope">
-              <el-button type="text" @click="deleteUserWoking(scope.row)">删除</el-button>
-              <el-button type="text" @click="seeUserWoking(scope.row)">查看</el-button>
+              <el-button type="primary" link @click="seeUserWoking(scope.row)">查看</el-button>
+              <el-button type="danger" link @click="deleteUserWoking(scope.row)">删除</el-button>
             </template>
           </el-table-column>
           <el-table-column prop="id" label="用户id" min-width="130" />
@@ -84,23 +84,24 @@
           <el-table-column prop="s1" label="s1合计" min-width="120" />
           <el-table-column prop="z" label="未乘就业率系数的总工作量Z" min-width="120" />
         </el-table>
+        <!--分页器 start-->
+        <div class="flex pagination-bg">
+          <el-pagination
+            v-model:currentPage="pCurrentPage"
+            v-model:page-size="pPageSize"
+            :page-sizes="[10, 20]"
+            :small="pSmall"
+            :disabled="pDisabled"
+            :background="pBackground"
+            layout="total, sizes, prev, pager, next, jumper"
+            :total="pTotal"
+            @size-change="handleSizeChange"
+            @current-change="handleCurrentChange"
+          />
+        </div>
+        <!--分页器 end-->
       </div>
-      <!--分页器 start-->
-      <div class="flex pagination-bg">
-        <el-pagination
-          v-model:currentPage="pCurrentPage"
-          v-model:page-size="pPageSize"
-          :page-sizes="[10, 20]"
-          :small="pSmall"
-          :disabled="pDisabled"
-          :background="pBackground"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="pTotal"
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-        />
-      </div>
-      <!--分页器 end-->
+
       <!--删除对话框-->
       <el-dialog title="添加用户" v-model="dialogDelFormVisible">
               <el-form :model="delForm">
