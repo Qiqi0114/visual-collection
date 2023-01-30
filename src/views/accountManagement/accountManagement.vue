@@ -10,13 +10,14 @@
                               <el-col :span="6">
                                   <el-form-item label="姓名" prop="userName">
                                       <el-input v-model.userName="searchForm.userName"
-                                          placeholder="请输入姓名" />
+                                      @input = "loadUserManagementInfoList()"  
+                                      clearable  placeholder="请输入姓名" />
                                   </el-form-item>
                               </el-col>
                               <el-col :span="12">
                                   <el-form-item style="float: right;">
-                                      <el-button type="success" @click="selectForm(searchFormRef)">查询</el-button>
-                                      <el-button @click="resetForm()" type="info">重置</el-button>
+                                      <!-- <el-button type="success" @click="selectForm(searchFormRef)">查询</el-button>
+                                      <el-button @click="resetForm()" type="info">重置</el-button> -->
                                       <el-button type="primary" @click="addUserManagement()">添加</el-button>
                                   </el-form-item>
                               </el-col>
@@ -43,13 +44,19 @@
                           <el-button type="text" @click="deleteUserManagement(scope.row)">删除</el-button>
                       </template>
                   </el-table-column>
-                  <el-table-column prop="id" label="用户id" min-width="200" />
+                  <el-table-column prop="id" v-if="false" label="用户id" min-width="200" />
                   <el-table-column prop="userName" label="用户全称" min-width="120" />
-                  <el-table-column prop="user_account" label="用户账号" min-width="120" />
+                  <el-table-column prop="userAccount" label="用户账号" min-width="120" />
                   <el-table-column prop="passWord" label="密码" min-width="120" :show-overflow-tooltip="true"/>
+                  <el-table-column prop="departmentName" label="系" min-width="140" />
                   <el-table-column prop="userPhone" label="手机号" min-width="130" />
                   <el-table-column prop="userEmail" label="用户邮箱" min-width="180" />
-                  <el-table-column prop="departmentName" label="系" min-width="140" />
+                  <el-table-column prop="userSex" label="性别" min-width="130">
+                    <template #default="scope">
+                        <span v-if="scope.row.userSex === 1">女</span>
+                        <span v-if="scope.row.userSex === 0">男</span>
+                    </template>
+                  </el-table-column>
                   <el-table-column prop="roleName" label="角色" min-width="100"/>
               </el-table>
           </div>
@@ -178,7 +185,7 @@ const searchFormRef = ref<FormInstance>()
 const searchForm = reactive({
 userName:"",
 })
-// 重置查询条件
+/* // 重置查询条件
 const resetForm = () => {
 //清空查询框数据
 searchForm.userName = "";
@@ -199,7 +206,7 @@ formEl.validate((valid) => {
          return false;
     }
 })
-}
+} */
 //添加用户信息对话框开关
 const dialogAddFormVisible = ref<boolean>(false);
 const addForm = reactive({
