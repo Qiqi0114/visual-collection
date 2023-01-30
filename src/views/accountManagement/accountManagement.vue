@@ -33,20 +33,20 @@
               <el-table :data="baseInfoTableData" :border="true" 
                   ref="baseInfoTableDataRef" v-loading="loading" :header-cell-style="{ background: '#F5F6FA' }"
                   :height="500">
-                  <el-table-column label="操作" min-width="170">
+                  <el-table-column fixed="left" label="操作" min-width="180">
                       <template #default="scope">
-                          <el-button type="text"
+                          <el-button type="primary" link
                               @click="updateUserManagement(scope.row)">编辑
                           </el-button>
-                          <el-button type="text"
+                          <el-button type="info" link
                               @click="updateUserPassWd(scope.row)">重置密码
                           </el-button>
-                          <el-button type="text" @click="deleteUserManagement(scope.row)">删除</el-button>
+                          <el-button type="danger" link @click="deleteUserManagement(scope.row)">删除</el-button>
                       </template>
                   </el-table-column>
                   <el-table-column prop="id" v-if="false" label="用户id" min-width="200" />
                   <el-table-column prop="userName" label="用户全称" min-width="120" />
-                  <el-table-column prop="userAccount" label="用户账号" min-width="120" />
+                  <el-table-column prop="userAccount" label="用户账号" min-width="120" :show-overflow-tooltip="true" />
                   <el-table-column prop="passWord" label="密码" min-width="120" :show-overflow-tooltip="true"/>
                   <el-table-column prop="departmentName" label="系" min-width="140" />
                   <el-table-column prop="userPhone" label="手机号" min-width="130" />
@@ -439,5 +439,5 @@ loadUserManagementInfoList();
 </script>
 
 <style lang="scss" scoped>
-
+@import "../../style/public.scss";
 </style>
