@@ -58,9 +58,22 @@
       </el-scrollbar>
    </div>
     <div class="router-container" id="router-container">
+          <!-- 头部 -->
+    <el-menu
+    :default-active="activeIndex"
+    class="el-menu-demo"
+    mode="horizontal"
+  >
+    <el-menu-item index="1">处理中心</el-menu-item>
+    <el-sub-menu index="2">
+      <template #title>账号</template>
+      <el-menu-item index="2-1" @click="goOut()">退出</el-menu-item>
+    </el-sub-menu>
+  </el-menu>
         <router-view></router-view>
     </div>
   </div>
+  
 </template>
 
 <script lang="ts" setup>
@@ -72,6 +85,7 @@ import {
   ArrowRightBold,
 } from '@element-plus/icons-vue';
 import store from "../../store";
+import router from "../../router";
 const route = useRoute();
 
 //是否水平折叠收起菜单
@@ -84,13 +98,19 @@ const handleOpen = (key: string, keyPath: string[]) => {
 const handleClose = (key: string, keyPath: string[]) => {
   // console.log(key, keyPath)
 }
-
+//头部默认选中
+const activeIndex = ref<string>('1');
+//退出
+const goOut = async() => {
+  router.push({ path: "/login", query: {} })
+  await store.dispatch("clearLoginInfo");
+}
 const test =()=>{
   isCollapse.value = !isCollapse.value;
 if (isCollapse.value===true){
-  document.getElementById("router-container")!.style.width="calc(100% - 63px)" ;
+  document.getElementById("router-container")!.style.width="calc(1050px + 250px)" ;
 }else{
-  document.getElementById("router-container")!.style.width="calc(100% - 200px)" ;
+  document.getElementById("router-container")!.style.width="calc(1050px)" ;
 }
 }
 </script>
@@ -117,7 +137,7 @@ if (isCollapse.value===true){
 .router-container{
   overflow: hidden;
   right: 0;
-  width: 1000px;
+  width: 1050px;
   margin-bottom: 0px;
   height: 100%;
   z-index: 88;

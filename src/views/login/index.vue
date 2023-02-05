@@ -47,26 +47,6 @@ const { setCancelToken } = useCancelToken();
                     ...loginForm,
                     cancelToken: setCancelToken(),
                 });
-/*         try {
-        const res = await loginApi({
-        //账号
-        userAccount: loginForm.userAccount,
-        //密码
-        passWord:loginForm.passWord,
-        })
-        if(res.data.code == '200'){
-          router.push({ path: "/home", query: {} })
-          ElMessage.success({
-            message: '登陆成功',
-            type: 'success',
-          })
-        }else{
-          ElMessage.error('账号或密码错误')
-        }
-
-    } catch (error) {
-
-    } */
 }
 
 </script>

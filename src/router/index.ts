@@ -22,16 +22,16 @@ const routes: Array<RouteRecordRaw> = [
               title: "账号管理",
               key:"sub1",
           },
-          component: () => import("../views/accountManagement/accountManagement.vue"),
+        
           children: [
             {
                 path: "/home/administrator",
                 name: "administrator",
                 meta: {
-                    title: "管理员管理",
+                    title: "账号管理",
                     key:"sub1-1",
                 },
-                component: () => import("../views/accountManagement/administrator.vue"),
+                component: () => import("../views/accountManagement/accountManagement.vue"),
             },
           ]
       },
@@ -42,7 +42,7 @@ const routes: Array<RouteRecordRaw> = [
             title: "教学工作量",
             key:"sub3",
         },
-        component: () => import("../views/teachingwokingload/teachingwokingload.vue"),
+        
         children: [
           {
               path: "/home/ImportWorkload",
@@ -58,9 +58,18 @@ const routes: Array<RouteRecordRaw> = [
             name: "workloadData",
             meta: {
                 title: "教学工作量数据",
-                key:"sub2-1",
+                key:"sub2-2",
             },
             component: () => import("../views/teachingwokingload/teachingwokingload.vue"),
+          },
+          {
+            path: "/home/seeUserwoking",
+            name: "seeUserwoking",
+            meta: {
+                title: "查看教学工作量数据",
+                key:"sub2-3",
+            },
+            component: () => import("../views/teachingwokingload/seeUserwoking.vue"),
         }
         ]
     },
@@ -71,25 +80,33 @@ const routes: Array<RouteRecordRaw> = [
               title: "收集表管理",
               key:"sub2",
           },
-          component: () => import("../views/collectionTableManagement/collectionTableManagement.vue"),
           children: [
             {
-                path: "/home/publishCollectionTable",
-                name: "publishCollectionTable",
+                path: "/home/scientificResearch",
+                name: "scientificResearch",
                 meta: {
-                    title: "发布收集表",
+                    title: "科研工作量",
                     key:"sub2-1",
                 },
-                component: () => import("../views/collectionTableManagement/publishCollectionTable.vue"),
+                component: () => import("../views/collectionTableManagement/scientificResearch.vue"),
             },
             {
-              path: "/home/CollectionTable",
-              name: "CollectionTable",
+              path: "/home/other",
+              name: "other",
               meta: {
-                  title: "收集表列表",
+                  title: "其他工作量",
                   key:"sub2-2",
               },
-              component: () => import("../views/collectionTableManagement/CollectionTable.vue"),
+              component: () => import("../views/collectionTableManagement/other.vue"),
+            },
+            {
+              path: "/home/collectionTable",
+              name: "collectionTable",
+              meta: {
+                  title: "收集表",
+                  key:"sub2-3",
+              },
+              component: () => import("../views/collectionTableManagement/collectionTable.vue"),
           },
           ]
       },
