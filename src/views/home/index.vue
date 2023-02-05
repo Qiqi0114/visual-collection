@@ -108,9 +108,9 @@ const goOut = async() => {
 const test =()=>{
   isCollapse.value = !isCollapse.value;
 if (isCollapse.value===true){
-  document.getElementById("router-container")!.style.width="calc(100% - 63px)" ;
+  document.getElementById("router-container")!.style.width="calc(1050px + 250px)" ;
 }else{
-  document.getElementById("router-container")!.style.width="calc(100% - 200px)" ;
+  document.getElementById("router-container")!.style.width="calc(1050px)" ;
 }
 }
 </script>
