@@ -98,6 +98,15 @@ const routes: Array<RouteRecordRaw> = [
                   key:"sub2-2",
               },
               component: () => import("../views/collectionTableManagement/other.vue"),
+            },
+            {
+              path: "/home/collectionTable",
+              name: "collectionTable",
+              meta: {
+                  title: "收集表",
+                  key:"sub2-3",
+              },
+              component: () => import("../views/collectionTableManagement/collectionTable.vue"),
           },
           ]
       },

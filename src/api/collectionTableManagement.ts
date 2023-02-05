@@ -5,10 +5,17 @@ export function getCollectionTableListList(
   param:{
     //id  1 科研  8 其他
     id:string,
+    //收集表类别id
+    collectionTableId:string,
     //系
     departmentId:string,
     //年限
     yearId:string,
+    //状态
+    staticZ:string,
+    //分页参数
+    pageNum:number,
+    pageSize:number,
   }
 ) {
     return request({
@@ -42,7 +49,7 @@ export function changedCollectionTableAPI(
     }
     ) {
     return request({
-      url: '127.0.0.1:8001/collectionTableService/collectionTable',
+      url: '/collectionTableService/collectionTable',
       method: 'put',
       params:param
     })
@@ -65,5 +72,13 @@ export function saveCollectionTableAPI(
       url: '/collectionTableService/collectionTable/saveCollectionTable',
       method: 'post',
       data:param
+    })
+  }
+  
+// 获取工作量列表接口
+export function getTreeListCollection() {
+    return request({
+      url: '/collectionTableService/collectionTable/treeListCollection',
+      method: 'get',
     })
   }
