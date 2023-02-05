@@ -80,25 +80,24 @@ const routes: Array<RouteRecordRaw> = [
               title: "收集表管理",
               key:"sub2",
           },
-          component: () => import("../views/collectionTableManagement/collectionTableManagement.vue"),
           children: [
             {
-                path: "/home/publishCollectionTable",
-                name: "publishCollectionTable",
+                path: "/home/scientificResearch",
+                name: "scientificResearch",
                 meta: {
-                    title: "发布收集表",
+                    title: "科研工作量",
                     key:"sub2-1",
                 },
-                component: () => import("../views/collectionTableManagement/publishCollectionTable.vue"),
+                component: () => import("../views/collectionTableManagement/scientificResearch.vue"),
             },
             {
-              path: "/home/CollectionTable",
-              name: "CollectionTable",
+              path: "/home/other",
+              name: "other",
               meta: {
-                  title: "收集表列表",
+                  title: "其他工作量",
                   key:"sub2-2",
               },
-              component: () => import("../views/collectionTableManagement/CollectionTable.vue"),
+              component: () => import("../views/collectionTableManagement/other.vue"),
           },
           ]
       },
