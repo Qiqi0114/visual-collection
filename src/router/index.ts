@@ -33,6 +33,15 @@ const routes: Array<RouteRecordRaw> = [
                 },
                 component: () => import("../views/accountManagement/accountManagement.vue"),
             },
+            {
+              path: "/home/groupManagement",
+              name: "groupManagement",
+              meta: {
+                  title: "用户组管理",
+                  key:"sub1-2",
+              },
+              component: () => import("../views/accountManagement/groupManagement.vue"),
+          },
           ]
       },
       {
