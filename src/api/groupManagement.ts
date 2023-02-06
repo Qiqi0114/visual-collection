@@ -1,18 +1,18 @@
 import request from "../utils/request"
 
-//获取账号管理信息列表
-export function AccountManagementAPI(
+//用户分页查询
+export function getGroupListPageAPI(
   param: {
     //分页参数
     pageNum:number,
     pageSize:number,
-    //用户名称
-    userName:string,
+    //用户组名称
+    groupName:string,
   }) {
   return request({
-    url: '/userService/user/getUserPageList',
-    method: 'post',
-    data:param
+    url: '/UserGroupService/UserGroup/getGroupListPage',
+    method: 'get',
+    params:param
   })
 }
 
@@ -30,6 +30,18 @@ export function addGroupAPI(
   })
 }
 
+//用户组下用户列表
+export function getGroupByListAPI(
+  param: {
+    //用户组id
+    id:string,
+  }) {
+  return request({
+    url: '/UserGroupService/UserGroup/getGroupByList',
+    method: 'get',
+    params:param
+  })
+}
 
 //用户组添加用户
 export function addUserGroupAPI(
@@ -46,6 +58,18 @@ export function addUserGroupAPI(
     })
   }
 
+//删除用户组
+export function deleteGroupAPI(
+  param: {
+      id:string,
+  }) {
+  return request({
+    url: '',
+    method: 'delete',
+    data:param
+  })
+}
+
 //用户组删除用户
 export function deleteUserGroupAPI(
     param: {
@@ -53,7 +77,7 @@ export function deleteUserGroupAPI(
         userId:string[],
     }) {
     return request({
-      url: '/UserGroupService/UserGroup/saveUserGroup',
+      url: '/UserGroupService/UserGroup/deleteUserGroup',
       method: 'delete',
       data:param
     })
