@@ -86,12 +86,12 @@ export function getTreeListCollection() {
 // 用户获取收集表列表接口
 export function getUserCollectionTable(
   param:{
-/*     //收集表类别id
-    collectionTableId:string,
+    //收集表类别id
+    collectionTableParentId:string,
     //年限
-    yearId:string,
+    numberYearId:string,
     //状态
-    staticZ:string, */
+    staticZ:string,
     //分页参数
     pageNum:number,
     pageSize:number,
@@ -102,3 +102,49 @@ export function getUserCollectionTable(
       params:param,
     })
   }
+
+
+// 登录用户获取提交过的收集表
+export function getUserByCollectionTableDetailedTextListAPI(
+  param:{
+    //收集表id
+    collectionTableDetailedId:string,
+  }) {
+    return request({
+      url: '/collectionTableService/collectionTable/getUserByCollectionTableDetailedTextList',
+      method: 'get',
+      params:param,
+    })
+  }
+
+//表单
+export interface formModal {
+  excelB:string,
+  excelC:string,
+  excelD:string,
+  excelE:string,
+  excelF:string,
+  excelG:string,
+  excelH:string,
+  excelI:string,
+  excelJ:string,
+  excelK:string,
+  excelL:string,
+  excelM:string,
+  excelN:string,
+}
+//用户提交收集表接口
+export function saveUserCollectionTableAPI(
+  param:{
+    //收集表id
+    collectionTableDetailedId:string,
+    //收集表表单参数
+    collectionTableDetailedExcel:formModal,
+  }
+  ) {
+  return request({
+    url: '/collectionTableService/collectionTable/saveUserCollectionTable',
+    method: 'post',
+    data:param
+  })
+}

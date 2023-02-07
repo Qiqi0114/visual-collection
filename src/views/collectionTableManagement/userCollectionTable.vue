@@ -71,8 +71,8 @@
           >
             <el-table-column fixed="left" label="操作" min-width="120">
               <template #default="scope">
-                <el-button type="success" link :disabled="scope.row.staticZ === '0' || scope.row.staticZ ==='2'" @click="seeUserWoking(scope.row)">提交</el-button>
-                <el-button type="primary" link :disabled="scope.row.staticZ === '1' || scope.row.staticZ ==='0'" @click="seeUserWoking(scope.row)">查看</el-button>
+                <el-button type="success" link :disabled="scope.row.staticZ === '0' || scope.row.staticZ ==='2'" @click="submitUserWoking(scope.row)">提交</el-button>
+                <el-button type="primary" link :disabled="scope.row.staticZ ==='0'" @click="seeUserWoking(scope.row)">查看</el-button>
               </template>
             </el-table-column>
             <el-table-column prop="id" label="收集表id" min-width="130" />
@@ -106,6 +106,24 @@
             </div>
             <!--分页器 end-->
         </div>
+                  <!-- 查看已提交收集表列表 -->
+            <el-dialog title="已提交收集表列表" v-model="dialogSubmitVisible">
+              <el-table :data="userSubmitTableData" :border="true" 
+                  ref="userTableDataRef" v-loading="loadingUserGroup" :header-cell-style="{ background: '#F5F6FA' }"
+                  :height="500">
+                  <el-table-column fixed="left" label="操作" min-width="120">
+                    <template #default="scope">
+                      <el-button type="primary" link  @click="seeSubmitUserWoking(scope.row)">查看</el-button>
+                    </template>
+                  </el-table-column>
+                  <el-table-column prop="id" label="收集表id" min-width="200" />
+                  <el-table-column prop="collectionTableId" label="类别id" min-width="120" />
+                  <el-table-column prop="collectionTableName" label="类别名称" min-width="120" :show-overflow-tooltip="true" />
+                  <el-table-column prop="collectionTableParentId" label="父类别id" min-width="120" :show-overflow-tooltip="true"/>
+                  <el-table-column prop="collectionTableParentName" label="父类别名称" min-width="140" />
+                  <el-table-column prop="collectionTableDetailedExcel" label="数据" min-width="130" />
+              </el-table>
+          </el-dialog> 
       </div>
     </div>
   </template>
@@ -116,14 +134,18 @@
   import { onMounted, ref } from "vue-demi";
   import { useRouter } from "vue-router";
   import { DepartmentListAPI } from "../../api/accountManagement";
-  import { changedCollectionTableAPI, deleteCollectionTableAPI, getCollectionTableListList, getTreeListCollection, getUserCollectionTable, saveCollectionTableAPI } from "../../api/collectionTableManagement";
+  import { changedCollectionTableAPI, deleteCollectionTableAPI, getCollectionTableListList, getTreeListCollection, getUserByCollectionTableDetailedTextListAPI, getUserCollectionTable, saveCollectionTableAPI } from "../../api/collectionTableManagement";
   import { addCollectionAPI, getYearListAPI } from "../../api/teachingwokingload";
   import router from "../../router";
   import store from "../../store";
   //加载
   const loading = ref<boolean>(false)
+  //加载
+  const loadingUserGroup = ref<boolean>(false)
   //table赋值
   const baseInfoTableData = ref([]);
+  //用户已提交收集表table赋值
+  const userSubmitTableData = ref([]);
   // 总数
   const pTotal = ref(0);
   // 第几页
@@ -181,9 +203,7 @@
               const codeValue = res.data.data;
               let departmentCode: { value: any; label: any }[] = [];
               codeValue.forEach((val:{id:string,collectionTableName:string,parentId:string}) => {
-                if(val.parentId === '1'){
                   departmentCode.push({value:val.id,label:val.collectionTableName})
-                }
               }) 
               collectionTable.collectionTableCode = departmentCode
           }else{
@@ -239,9 +259,9 @@
     loading.value = true;
     try {
       const res = await getUserCollectionTable({
-/*         collectionTableId:searchForm.collectionTableId,
+        collectionTableId:searchForm.collectionTableId,
         yearId:searchForm.yearId,
-        staticZ:searchForm.staticZ, */
+        staticZ:searchForm.staticZ,
         pageNum:pCurrentPage.value,
         pageSize:pPageSize.value,
       });
@@ -258,13 +278,59 @@
       pPageSize.value = 10;
   };
   
-  
+  //查看用户已提交收集表列表对话框开关
+const dialogSubmitVisible = ref<boolean>(false);
+
   const seeUserWoking = async (row: any) => {
+    if(row.staticZ !== '0'){
+      dialogSubmitVisible.value = true;
+      loadingUserGroup.value = true;
+      try {
+      const res = await getUserByCollectionTableDetailedTextListAPI({
+        collectionTableDetailedId:row.id,
+      });
+      userSubmitTableData.value = res.data.data;
+      pTotal.value = res.data.data.total;
+    } catch (error) {}
+    loadingUserGroup.value = false;  
+  }
+}     
+//跳转提交表单
+const submitUserWoking = async (row: any) => {
+          let text = {
+            id:row.id,
+            collectionTableParentId:row.collectionTableParentId,  
+            collectionTableId:row.collectionTableId,
+            collectionTableName:row.collectionTableName,
+            disabled:'1',
+          }
+          router
+              .push({ path: "/home/collectionTable", query: text })
+              .catch((e) => console.error(e));
+        }
+//跳转查看提交表单
+const seeSubmitUserWoking = async (row: any) => {
+  console.log(row);
+  
           let text = {
             collectionTableParentId:row.collectionTableParentId,  
             collectionTableId:row.collectionTableId,
             collectionTableName:row.collectionTableName,
-            staticZ:row.staticZ,
+            collectionTableDetailedExcel:row.collectionTableDetailedExcel,
+            excelB:row.collectionTableDetailedExcel.excelB,
+            excelC:row.collectionTableDetailedExcel.excelC,
+            excelD:row.collectionTableDetailedExcel.excelD,
+            excelE:row.collectionTableDetailedExcel.excelE,
+            excelF:row.collectionTableDetailedExcel.excelF,
+            excelG:row.collectionTableDetailedExcel.excelG,
+            excelH:row.collectionTableDetailedExcel.excelH,
+            excelI:row.collectionTableDetailedExcel.excelI,
+            excelJ:row.collectionTableDetailedExcel.excelJ,
+            excelK:row.collectionTableDetailedExcel.excelK,
+            excelL:row.collectionTableDetailedExcel.excelL,
+            excelM:row.collectionTableDetailedExcel.excelM,
+            excelN:row.collectionTableDetailedExcel.excelN,
+            disabled:'0',
           }
           router
               .push({ path: "/home/collectionTable", query: text })
