@@ -1,6 +1,6 @@
 import request from "../utils/request";
 
-// 获取工作量列表接口
+// 获取收集表列表接口
 export function getCollectionTableListList(
   param:{
     //id  1 科研  8 其他
@@ -75,10 +75,30 @@ export function saveCollectionTableAPI(
     })
   }
   
-// 获取工作量列表接口
+// 获取收集表类别接口
 export function getTreeListCollection() {
     return request({
       url: '/collectionTableService/collectionTable/treeListCollection',
       method: 'get',
+    })
+  }
+
+// 用户获取收集表列表接口
+export function getUserCollectionTable(
+  param:{
+/*     //收集表类别id
+    collectionTableId:string,
+    //年限
+    yearId:string,
+    //状态
+    staticZ:string, */
+    //分页参数
+    pageNum:number,
+    pageSize:number,
+  }) {
+    return request({
+      url: '/collectionTableService/collectionTable/userCollectionTable',
+      method: 'get',
+      params:param,
     })
   }
