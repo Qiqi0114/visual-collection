@@ -408,7 +408,7 @@ const saveCollectionTable = async() => {
     })
     if (res.data.code == "200") {
           ElMessage({
-              message: "删除成功",
+              message: "添加成功",
               duration: 1500,
               type: "success",
           });

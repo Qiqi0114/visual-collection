@@ -220,6 +220,8 @@
        yearId:"",
        staticZ:"",
   })
+  
+  //系选项
   let departmentList = reactive({departmentListCode:[] as any})
   
   //获取系列表
@@ -240,7 +242,7 @@
           console.log(e,'e');
       }
   }
-  //年选择
+  //年选项
   let YearList = reactive({YearListCode:[] as any})
   
   //获取年限列表
@@ -263,7 +265,7 @@
   } 
   //收集表类别选项
   let collectionTable = reactive({collectionTableCode:[] as any})
-  //获取系列表
+  //获取收集表列表
   const getTreeList = async() => {
       try{
           const res = await getTreeListCollection()
@@ -410,7 +412,7 @@
       })
       if (res.data.code == "200") {
             ElMessage({
-                message: "删除成功",
+                message: "添加成功",
                 duration: 1500,
                 type: "success",
             });
