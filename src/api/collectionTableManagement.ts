@@ -193,3 +193,27 @@ export function userApplyForDeleteCollectionTableAPI(
     params:param
   })
 }
+
+// 管理员获取收集表接口
+export function getApplyForUpdateCollectionTableAPI(
+  param:{
+    //收集表大类别id //科研 其他工作量
+    collectionTableParentId:string,
+    //收集表类别id
+    collectionTableId:string,
+    //系id
+    departmentId:string,
+    //年限id
+    numberYearId:string,
+    //用户
+    userId:string,
+    //分页参数
+    pageNum:number,
+    pageSize:number,
+  }) {
+    return request({
+      url: '/collectionTableService/collectionTable/applyForUpdateCollectionTable',
+      method: 'get',
+      params:param,
+    })
+  }
