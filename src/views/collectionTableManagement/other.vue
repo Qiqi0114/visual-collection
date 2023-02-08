@@ -184,12 +184,10 @@
   import { ElMessage, ElMessageBox, FormInstance } from "element-plus";
   import { reactive } from "vue";
   import { onMounted, ref } from "vue-demi";
-  import { useRouter } from "vue-router";
   import { DepartmentListAPI } from "../../api/accountManagement";
   import { changedCollectionTableAPI, deleteCollectionTableAPI, getCollectionTableListList, getTreeListCollection, saveCollectionTableAPI } from "../../api/collectionTableManagement";
-  import { addCollectionAPI, getYearListAPI } from "../../api/teachingwokingload";
+  import { getYearListAPI } from "../../api/teachingwokingload";
   import router from "../../router";
-  import store from "../../store";
   //加载
   const loading = ref<boolean>(false)
   //table赋值
