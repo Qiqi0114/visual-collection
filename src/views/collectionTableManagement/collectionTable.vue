@@ -89,7 +89,38 @@
                             </el-form-item>
                         </el-col>
                     </el-row>
-
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="折算值" prop="excelK">
+                                <el-select v-model="CollectionTableForm.excelK" @change="excelLChange()"
+                                            filterable  placeholder="请选择" style="width:90%" clearable>
+                                        <el-option v-for="item in excelK2" :key="item.value" :label="item.label"
+                                            :value="item.value" />
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="积分" prop="excelL">
+                                <el-input v-model="CollectionTableForm.excelL" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="积分总计" prop="excelM">
+                                <el-input v-model="CollectionTableForm.excelM" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="学院额外奖励分值" prop="excelN">
+                                <el-input v-model="CollectionTableForm.excelN" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
                     
 <!--                     <el-row v-if="RESROUTER.disabled">
                         <el-col :span="24">
@@ -204,6 +235,38 @@
                         <el-col :span="24">
                             <el-form-item label="专利号（或书号、著作权登记号、发明专利号）" prop="excelJ">
                                 <el-input v-model="CollectionTableForm.excelJ" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="折算值" prop="excelK">
+                                <el-select v-model="CollectionTableForm.excelK" @change="excelLChange()"
+                                            filterable  placeholder="请选择" style="width:90%" clearable>
+                                        <el-option v-for="item in excelK3" :key="item.value" :label="item.label"
+                                            :value="item.value" />
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="积分" prop="excelL">
+                                <el-input v-model="CollectionTableForm.excelL" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="积分总计" prop="excelM">
+                                <el-input v-model="CollectionTableForm.excelM" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="学院额外奖励分值" prop="excelN">
+                                <el-input v-model="CollectionTableForm.excelN" />
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -326,7 +389,38 @@
                             </el-form-item>
                         </el-col>
                     </el-row>
-
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="折算值" prop="excelK">
+                                <el-select v-model="CollectionTableForm.excelK" @change="excelLChange()"
+                                            filterable  placeholder="请选择" style="width:90%" clearable>
+                                        <el-option v-for="item in excelK4" :key="item.value" :label="item.label"
+                                            :value="item.value" />
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="积分" prop="excelL">
+                                <el-input v-model="CollectionTableForm.excelL" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="积分总计" prop="excelM">
+                                <el-input v-model="CollectionTableForm.excelM" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="学院额外奖励分值" prop="excelN">
+                                <el-input v-model="CollectionTableForm.excelN" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
                     
 <!--                     <el-row v-if="RESROUTER.disabled">
                         <el-col :span="24">
@@ -438,11 +532,38 @@
                     <el-row>
                         <el-col :span="24">
                             <el-form-item label="到账经费" prop="excelJ">
-                                <el-input v-model="CollectionTableForm.excelJ" />
+                                <el-input v-model="CollectionTableForm.excelJ"/>
                             </el-form-item>
                         </el-col>
                     </el-row>
-
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="折算值" prop="excelK">
+                                <el-input v-model="CollectionTableForm.excelK" @focus="excelJChange()"/>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="积分" prop="excelL">
+                                <el-input v-model="CollectionTableForm.excelL" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="积分总计" prop="excelM">
+                                <el-input v-model="CollectionTableForm.excelM" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="学院额外奖励分值" prop="excelN">
+                                <el-input v-model="CollectionTableForm.excelN" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
                     
 <!--                     <el-row v-if="RESROUTER.disabled">
                         <el-col :span="24">
@@ -551,7 +672,34 @@
                             </el-form-item>
                         </el-col>
                     </el-row>
-
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="折算值" prop="excelK">
+                                <el-input v-model="CollectionTableForm.excelK"  @focus="excelJChange()"/>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="积分" prop="excelL">
+                                <el-input v-model="CollectionTableForm.excelL" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="积分总计" prop="excelM">
+                                <el-input v-model="CollectionTableForm.excelM" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="学院额外奖励分值" prop="excelN">
+                                <el-input v-model="CollectionTableForm.excelN" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
                     
 <!--                     <el-row v-if="RESROUTER.disabled">
                         <el-col :span="24">
@@ -667,7 +815,34 @@
                             </el-form-item>
                         </el-col>
                     </el-row>
-
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="折算值" prop="excelK">
+                                <el-input v-model="CollectionTableForm.excelK"  @focus="excelJChange()"/>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="积分" prop="excelL">
+                                <el-input v-model="CollectionTableForm.excelL"/>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="积分总计" prop="excelM">
+                                <el-input v-model="CollectionTableForm.excelM" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="学院额外奖励分值" prop="excelN">
+                                <el-input v-model="CollectionTableForm.excelN" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
                     
 <!--                     <el-row v-if="RESROUTER.disabled">
                         <el-col :span="24">
@@ -749,6 +924,38 @@
                                 <el-date-picker v-model="CollectionTableForm.excelE"
                                     type="date" style="width:90%;" placeholder="选择日期" value-format="YYYY-MM-DD">
                                 </el-date-picker>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="折算值" prop="excelK">
+                                <el-input v-model="CollectionTableForm.excelK"/>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="积分" prop="excelL">
+                                <el-select v-model="CollectionTableForm.excelL"
+                                            filterable  placeholder="请选择" style="width:90%" clearable>
+                                        <el-option v-for="item in excelL9" :key="item.value" :label="item.label"
+                                            :value="item.value" />
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="积分总计" prop="excelM">
+                                <el-input v-model="CollectionTableForm.excelM" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="学院额外奖励分值" prop="excelN">
+                                <el-input v-model="CollectionTableForm.excelN" />
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -836,6 +1043,38 @@
                             </el-form-item>
                         </el-col>
                     </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="折算值" prop="excelK">
+                                <el-input v-model="CollectionTableForm.excelK"/>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="积分" prop="excelL">
+                                <el-select v-model="CollectionTableForm.excelL"
+                                            filterable  placeholder="请选择" style="width:90%" clearable>
+                                        <el-option v-for="item in excelL9" :key="item.value" :label="item.label"
+                                            :value="item.value" />
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="积分总计" prop="excelM">
+                                <el-input v-model="CollectionTableForm.excelM" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="学院额外奖励分值" prop="excelN">
+                                <el-input v-model="CollectionTableForm.excelN" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
 
 <!--                     <el-row v-if="RESROUTER.disabled">
                         <el-col :span="24">
@@ -920,6 +1159,38 @@
                             </el-form-item>
                         </el-col>
                     </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="折算值" prop="excelK">
+                                <el-input v-model="CollectionTableForm.excelK"/>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="积分" prop="excelL">
+                                <el-select v-model="CollectionTableForm.excelL"
+                                            filterable  placeholder="请选择" style="width:90%" clearable>
+                                        <el-option v-for="item in excelL9" :key="item.value" :label="item.label"
+                                            :value="item.value" />
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="积分总计" prop="excelM">
+                                <el-input v-model="CollectionTableForm.excelM" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="学院额外奖励分值" prop="excelN">
+                                <el-input v-model="CollectionTableForm.excelN" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
 
 <!--                     <el-row v-if="RESROUTER.disabled">
                         <el-col :span="24">
@@ -1001,6 +1272,38 @@
                                 <el-date-picker v-model="CollectionTableForm.excelE"
                                     type="date" style="width:90%;" placeholder="选择日期" value-format="YYYY-MM-DD">
                                 </el-date-picker>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="折算值" prop="excelK">
+                                <el-input v-model="CollectionTableForm.excelK"/>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="积分" prop="excelL">
+                                <el-select v-model="CollectionTableForm.excelL"
+                                            filterable  placeholder="请选择" style="width:90%" clearable>
+                                        <el-option v-for="item in excelL9" :key="item.value" :label="item.label"
+                                            :value="item.value" />
+                                </el-select>
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="积分总计" prop="excelM">
+                                <el-input v-model="CollectionTableForm.excelM" />
+                            </el-form-item>
+                        </el-col>
+                    </el-row>
+                    <el-row v-if="RESROUTER.integralDisplay === 'true'">
+                        <el-col :span="24">
+                            <el-form-item label="学院额外奖励分值" prop="excelN">
+                                <el-input v-model="CollectionTableForm.excelN" />
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -1515,6 +1818,163 @@ let excelC12 = [
     },
 ]
 
+let excelK2 = [
+    {
+        value:'0.2',
+        label:'0.2',
+    },
+    {
+        value:'0.5',
+        label:'0.5',
+    },
+    {
+        value:'1',
+        label:'1',
+    },
+    {
+        value:'2',
+        label:'2',
+    },
+    {
+        value:'8',
+        label:'8',
+    },
+    {
+        value:'10',
+        label:'10',
+    },
+    {
+        value:'15',
+        label:'15',
+    },
+    {
+        value:'22',
+        label:'22',
+    },
+]
+let excelK3 = [
+    {
+        value:'0.5',
+        label:'0.5',
+    },
+    {
+        value:'1',
+        label:'1',
+    },
+    {
+        value:'6',
+        label:'6',
+    },
+    {
+        value:'8',
+        label:'8',
+    },
+    {
+        value:'10',
+        label:'10',
+    },
+    {
+        value:'25',
+        label:'25',
+    },
+]
+let excelK4 = [
+    {
+        value:'3',
+        label:'3',
+    },
+    {
+        value:'10',
+        label:'10',
+    },
+    {
+        value:'15',
+        label:'15',
+    },
+    {
+        value:'20',
+        label:'20',
+    },
+    {
+        value:'25',
+        label:'25',
+    },
+    {
+        value:'30',
+        label:'30',
+    },
+]
+let excelL9 = [
+    {
+        value:'4',
+        label:'4',
+    },
+    {
+        value:'6',
+        label:'6',
+    },
+    {
+        value:'8',
+        label:'8',
+    },
+    {
+        value:'10',
+        label:'10',
+    },
+    {
+        value:'12',
+        label:'12',
+    },
+    {
+        value:'15',
+        label:'15',
+    },
+    {
+        value:'18',
+        label:'18',
+    },
+    {
+        value:'20',
+        label:'20',
+    },
+    {
+        value:'24',
+        label:'24',
+    },
+    {
+        value:'25',
+        label:'25',
+    },
+    {
+        value:'30',
+        label:'30',
+    },
+    {
+        value:'40',
+        label:'40',
+    },
+]
+const excelLChange = () => {
+    //字符转 转浮点数字计算 再转字符串
+    CollectionTableForm.excelL = (parseFloat(CollectionTableForm.excelK)*16).toString();
+};
+
+const excelJChange = () => {
+    if(RESROUTER.collectionTableId === '5'){
+        CollectionTableForm.excelK = (parseFloat(CollectionTableForm.excelJ)/400000).toString();
+        CollectionTableForm.excelL = (parseFloat(CollectionTableForm.excelK)*16).toString();
+    }
+    if(RESROUTER.collectionTableId === '6'){
+        CollectionTableForm.excelK = (parseFloat(CollectionTableForm.excelJ)/1000).toString();
+        CollectionTableForm.excelL = (parseFloat(CollectionTableForm.excelK)*16).toString();
+    }
+    if(RESROUTER.collectionTableId === '7'){
+        CollectionTableForm.excelK = (parseFloat(CollectionTableForm.excelJ)/1000).toString();
+        CollectionTableForm.excelL = (parseFloat(CollectionTableForm.excelK)*16).toString();
+    }
+};
+
+
 //校验
 const rules = reactive({
     excelB: [{ required: true, message: "科研成果类别必填", trigger: "blur" }],
@@ -1551,14 +2011,8 @@ const submitForm = async () => {
                         duration: 1500,
                         type: "success",
                     });
-                    //判断是科研、其他工作量收集表
-                    if(RESROUTER.collectionTableParentId === '1'){
-                        //提交成功后返回科研工作量页面
-                        router.push({ path: "/home/userCollectionTable" })
-                    }else if(RESROUTER.collectionTableParentId === '8'){
-                        //提交成功后返回其他工作量页面
-                        router.push({ path: "/home/userOtherCollectionTable" })
-                    }  
+                    //提交成功返回收集列表
+                    await seeUserCollectionTable()
                 } else {
                     ElMessage.error(res.data.msg)
                 }
@@ -1574,14 +2028,8 @@ const submitForm = async () => {
                         duration: 1500,
                         type: "success",
                     });
-                    //判断是科研、其他工作量收集表
-                    if(RESROUTER.collectionTableParentId === '1'){
-                        //提交成功后返回科研工作量页面
-                        router.push({ path: "/home/userCollectionTable" })
-                    }else if(RESROUTER.collectionTableParentId === '8'){
-                        //提交成功后返回其他工作量页面
-                        router.push({ path: "/home/userOtherCollectionTable" })
-                    }  
+                    //提交成功返回收集列表
+                    await seeUserCollectionTable() 
                 } else {
                     ElMessage.error(res.data.msg)
                 }
@@ -1634,14 +2082,8 @@ ElMessageBox.confirm("确认删除?", {
               duration: 1500,
               type: "success",
           });
-                //判断是科研、其他工作量收集表
-                if(RESROUTER.collectionTableParentId === '1'){
-                    //确认删除后返回科研工作量页面
-                    router.push({ path: "/home/userCollectionTable" })
-                }else if(RESROUTER.collectionTableParentId === '8'){
-                    //确认删除后返回其他工作量页面
-                    router.push({ path: "/home/userOtherCollectionTable" })
-                }  
+          //删除成功返回收集列表
+          await seeUserCollectionTable()
       } else {ElMessage.error(res.data.msg)}
   })
   .catch(() => {console.log('error');});
@@ -1652,15 +2094,30 @@ ElMessageBox.confirm("确认删除?", {
 const seeUserCollectionTable = async () => {
         //判断是科研、其他工作量收集表
                 if(RESROUTER.collectionTableParentId === '1'){
-                    router
-                    .push({ path: "/home/userCollectionTable" })
-                    .catch((e) => console.error(e));
+                    //判断管理平台还是用户平台
+                    if(RESROUTER.integralDisplay === 'true'){
+                        router
+                            .push({ path: "/home/scientificResearchCollection" })
+                            .catch((e) => console.error(e));
+                    }else{
+                        router
+                            .push({ path: "/home/userCollectionTable" })
+                            .catch((e) => console.error(e));
+                    }
                 }else if(RESROUTER.collectionTableParentId === '8'){
-                    router
-                    .push({ path: "/home/userOtherCollectionTable" })
-                    .catch((e) => console.error(e));
+                    //判断管理平台还是用户平台
+                    if(RESROUTER.integralDisplay === 'true'){
+                        router
+                            .push({ path: "/home/otherCollection" })
+                            .catch((e) => console.error(e));
+                    }else{
+                        router
+                            .push({ path: "/home/userOtherCollectionTable" })
+                            .catch((e) => console.error(e));
+                    }
                 }  
   }
+
 //路由参数
 const RESROUTER = router.currentRoute.value.query as any;
 //查看已提交页面是否有权限修改禁用开关
