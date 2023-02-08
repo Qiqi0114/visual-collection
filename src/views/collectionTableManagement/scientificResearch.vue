@@ -184,12 +184,10 @@
 import { ElMessage, ElMessageBox, FormInstance } from "element-plus";
 import { reactive } from "vue";
 import { onMounted, ref } from "vue-demi";
-import { useRouter } from "vue-router";
 import { DepartmentListAPI } from "../../api/accountManagement";
 import { changedCollectionTableAPI, deleteCollectionTableAPI, getCollectionTableListList, getTreeListCollection, saveCollectionTableAPI } from "../../api/collectionTableManagement";
-import { addCollectionAPI, getYearListAPI } from "../../api/teachingwokingload";
+import { getYearListAPI } from "../../api/teachingwokingload";
 import router from "../../router";
-import store from "../../store";
 //加载
 const loading = ref<boolean>(false)
 //table赋值
@@ -263,7 +261,7 @@ const getYearList = async() => {
 } 
 //收集表类别选项
 let collectionTable = reactive({collectionTableCode:[] as any})
-//获取系列表
+//获取收集表类别列表
 const getTreeList = async() => {
     try{
         const res = await getTreeListCollection()
@@ -351,7 +349,7 @@ const loadCollectionTableList = async () => {
     pCurrentPage.value = 1;
     pPageSize.value = 10;
 };
-
+//改变收集表状态
 const changedCollection = async(row:any,type:string) => {
   try{
     //过渡效果
@@ -424,6 +422,7 @@ const saveCollectionTable = async() => {
   addForm.collectionTableId = "";
   value1.value = ""
 }
+
 //删除收集表信息
 const deleteCollectionTable = async(row:any) => {
 ElMessageBox.confirm("确认删除?", {
