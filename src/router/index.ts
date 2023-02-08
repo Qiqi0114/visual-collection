@@ -131,20 +131,31 @@ const routes: Array<RouteRecordRaw> = [
               path: "/home/userCollectionTable",
               name: "userCollectionTable",
               meta: {
-                  title: "收集表列表",
+                  title: "科研工作量",
                   key:"sub5-1",
+                  collectionTableParentId:'1',
               },
               component: () => import("../views/collectionTableManagement/userCollectionTable.vue"),
           },
           {
+            path: "/home/userOtherCollectionTable",
+            name: "userOtherCollectionTable",
+            meta: {
+                title: "其他工作量",
+                key:"sub5-2",
+                collectionTableParentId:'8',
+            },
+            component: () => import("../views/collectionTableManagement/userCollectionTable.vue"),
+        },
+          {
             path: "/home/CollectionTable",
             name: "CollectionTable",
             meta: {
-                title: "收集表",
+                title: "科研工作量收集表",
                 key:"sub5-3",
             },
             component: () => import("../views/collectionTableManagement/CollectionTable.vue"),
-        },
+          },
         ]
     },
       {
