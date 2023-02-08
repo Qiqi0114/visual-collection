@@ -127,15 +127,12 @@
   </template>
   
   <script lang="ts" setup>
-  import { ElMessage, ElMessageBox, FormInstance } from "element-plus";
+  import { ElMessage, FormInstance } from "element-plus";
   import { reactive } from "vue";
   import { onMounted, ref } from "vue-demi";
-  import { useRouter } from "vue-router";
-  import { DepartmentListAPI } from "../../api/accountManagement";
-  import { changedCollectionTableAPI, deleteCollectionTableAPI, getCollectionTableListList, getTreeListCollection, getUserByCollectionTableDetailedTextListAPI, getUserCollectionTable, saveCollectionTableAPI } from "../../api/collectionTableManagement";
-  import { addCollectionAPI, getYearListAPI } from "../../api/teachingwokingload";
+  import {  getUserByCollectionTableDetailedTextListAPI, getUserCollectionTable } from "../../api/collectionTableManagement";
+  import { getYearListAPI } from "../../api/teachingwokingload";
   import router from "../../router";
-  import store from "../../store";
   //加载
   const loading = ref<boolean>(false)
   //加载
