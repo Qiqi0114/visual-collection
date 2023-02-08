@@ -2,7 +2,8 @@
 </script>
 
 <template>
-  <router-view/>
+  <!-- 路由不同路径组件复用不刷新解决  :key="$route.href" -->
+  <router-view :key="$route.href"/>
 </template>
 
 <style lang="scss" scoped>
