@@ -184,12 +184,10 @@
   import { ElMessage, ElMessageBox, FormInstance } from "element-plus";
   import { reactive } from "vue";
   import { onMounted, ref } from "vue-demi";
-  import { useRouter } from "vue-router";
   import { DepartmentListAPI } from "../../api/accountManagement";
   import { changedCollectionTableAPI, deleteCollectionTableAPI, getCollectionTableListList, getTreeListCollection, saveCollectionTableAPI } from "../../api/collectionTableManagement";
-  import { addCollectionAPI, getYearListAPI } from "../../api/teachingwokingload";
+  import { getYearListAPI } from "../../api/teachingwokingload";
   import router from "../../router";
-  import store from "../../store";
   //加载
   const loading = ref<boolean>(false)
   //table赋值
@@ -220,6 +218,8 @@
        yearId:"",
        staticZ:"",
   })
+  
+  //系选项
   let departmentList = reactive({departmentListCode:[] as any})
   
   //获取系列表
@@ -240,7 +240,7 @@
           console.log(e,'e');
       }
   }
-  //年选择
+  //年选项
   let YearList = reactive({YearListCode:[] as any})
   
   //获取年限列表
@@ -263,7 +263,7 @@
   } 
   //收集表类别选项
   let collectionTable = reactive({collectionTableCode:[] as any})
-  //获取系列表
+  //获取收集表列表
   const getTreeList = async() => {
       try{
           const res = await getTreeListCollection()
@@ -410,7 +410,7 @@
       })
       if (res.data.code == "200") {
             ElMessage({
-                message: "删除成功",
+                message: "添加成功",
                 duration: 1500,
                 type: "success",
             });
@@ -424,6 +424,7 @@
     addForm.numberYearId = "";
     addForm.expirationTime = "";
     addForm.collectionTableId = "";
+    value1.value = "";
   }
   //删除收集表信息
   const deleteCollectionTable = async(row:any) => {

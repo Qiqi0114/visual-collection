@@ -1,6 +1,6 @@
 import request from "../utils/request";
 
-// 获取工作量列表接口
+// 获取收集表列表接口
 export function getCollectionTableListList(
   param:{
     //id  1 科研  8 其他
@@ -75,10 +75,145 @@ export function saveCollectionTableAPI(
     })
   }
   
-// 获取工作量列表接口
+// 获取收集表类别接口
 export function getTreeListCollection() {
     return request({
       url: '/collectionTableService/collectionTable/treeListCollection',
       method: 'get',
+    })
+  }
+
+// 用户获取收集表列表接口
+export function getUserCollectionTable(
+  param:{
+    //收集表类别id
+    collectionTableParentId:string,
+    //年限
+    numberYearId:string,
+    //状态
+    staticZ:string,
+    //分页参数
+    pageNum:number,
+    pageSize:number,
+  }) {
+    return request({
+      url: '/collectionTableService/collectionTable/userCollectionTable',
+      method: 'get',
+      params:param,
+    })
+  }
+
+
+// 登录用户获取提交过的收集表
+export function getUserByCollectionTableDetailedTextListAPI(
+  param:{
+    //收集表id
+    collectionTableDetailedId:string,
+  }) {
+    return request({
+      url: '/collectionTableService/collectionTable/getUserByCollectionTableDetailedTextList',
+      method: 'get',
+      params:param,
+    })
+  }
+
+//收集表表单
+export interface formModal {
+  excelB:string,
+  excelC:string,
+  excelD:string,
+  excelE:string,
+  excelF:string,
+  excelG:string,
+  excelH:string,
+  excelI:string,
+  excelJ:string,
+  excelK:string,
+  excelL:string,
+  excelM:string,
+  excelN:string,
+}
+
+//用户提交收集表接口
+export function saveUserCollectionTableAPI(
+  param:{
+    //收集表id
+    collectionTableDetailedId:string,
+    //收集表表单参数
+    collectionTableDetailedExcel:formModal,
+  }
+  ) {
+  return request({
+    url: '/collectionTableService/collectionTable/saveUserCollectionTable',
+    method: 'post',
+    data:param
+  })
+}
+
+
+//用户申请收集表修改
+export function userApplyForUpdateCollectionTableAPI(
+  param:{
+    //已提交收集表id
+    id:string,
+  }) {
+    return request({
+      url: '/collectionTableService/collectionTable/userApplyForUpdateCollectionTable',
+      method: 'get',
+      params:param,
+    })
+  }
+
+//用户修改已提交的收集表
+export function updateCollectionTableDetailedTextListAPI(
+  param:{
+    //申请同意的收集表id
+    id:string,
+    //收集表表单参数
+    collectionTableDetailedExcel:formModal,
+  }
+  ) {
+  return request({
+    url: '/collectionTableService/collectionTable/updateCollectionTableDetailedTextList',
+    method: 'post',
+    data:param
+  })
+}
+
+//删除提交的收集表接口
+export function userApplyForDeleteCollectionTableAPI(
+  param:{
+    //已提交收集表id
+    id:string,
+  }
+  ) {
+  return request({
+    url: '/collectionTableService/collectionTable/deleteCollectionTableDetailedText',
+    method: 'delete',
+    params:param
+  })
+}
+
+// 管理员获取收集表接口
+export function getApplyForUpdateCollectionTableAPI(
+  param:{
+    //收集表大类别id //科研 其他工作量
+    collectionTableParentId:string,
+    //收集表类别id
+    collectionTableId:string,
+    //系id
+    departmentId:string,
+    //年限id
+    numberYearId:string,
+    //用户
+    userId:string,
+    //分页参数
+    pageNum:number,
+    pageSize:number,
+  }) {
+    return request({
+      url: '/collectionTableService/collectionTable/applyForUpdateCollectionTable',
+      method: 'get',
+      params:param,
     })
   }
