@@ -426,6 +426,7 @@
     addForm.numberYearId = "";
     addForm.expirationTime = "";
     addForm.collectionTableId = "";
+    value1.value = "";
   }
   //删除收集表信息
   const deleteCollectionTable = async(row:any) => {
