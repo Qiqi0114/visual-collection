@@ -117,7 +117,7 @@ export function getUserByCollectionTableDetailedTextListAPI(
     })
   }
 
-//表单
+//收集表表单
 export interface formModal {
   excelB:string,
   excelC:string,
@@ -133,6 +133,7 @@ export interface formModal {
   excelM:string,
   excelN:string,
 }
+
 //用户提交收集表接口
 export function saveUserCollectionTableAPI(
   param:{
@@ -146,5 +147,49 @@ export function saveUserCollectionTableAPI(
     url: '/collectionTableService/collectionTable/saveUserCollectionTable',
     method: 'post',
     data:param
+  })
+}
+
+
+//用户申请收集表修改
+export function userApplyForUpdateCollectionTableAPI(
+  param:{
+    //已提交收集表id
+    id:string,
+  }) {
+    return request({
+      url: '/collectionTableService/collectionTable/userApplyForUpdateCollectionTable',
+      method: 'get',
+      params:param,
+    })
+  }
+
+//用户修改已提交的收集表
+export function updateCollectionTableDetailedTextListAPI(
+  param:{
+    //申请同意的收集表id
+    id:string,
+    //收集表表单参数
+    collectionTableDetailedExcel:formModal,
+  }
+  ) {
+  return request({
+    url: '/collectionTableService/collectionTable/updateCollectionTableDetailedTextList',
+    method: 'post',
+    data:param
+  })
+}
+
+//删除提交的收集表接口
+export function userApplyForDeleteCollectionTableAPI(
+  param:{
+    //已提交收集表id
+    id:string,
+  }
+  ) {
+  return request({
+    url: '/collectionTableService/collectionTable/deleteCollectionTableDetailedText',
+    method: 'delete',
+    params:param
   })
 }
