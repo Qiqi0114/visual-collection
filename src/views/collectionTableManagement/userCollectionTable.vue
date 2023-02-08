@@ -13,8 +13,8 @@
               >
                 <el-row>
                   <el-col :span="4">
-                    <el-form-item label="年限" prop="yearId">
-                      <el-select v-model="searchForm.yearId" filterable placeholder="请选择"  clearable>
+                    <el-form-item label="年限" prop="numberYearId">
+                      <el-select v-model="searchForm.numberYearId" filterable placeholder="请选择"  clearable>
                           <el-option
                             v-for="item in  YearList.YearListCode"
                             :key="item.value"
@@ -23,15 +23,6 @@
                           >
                           </el-option>
                         </el-select>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="8">
-                    <el-form-item label="收集表类别" prop="collectionTableId">
-                      <el-select v-model="searchForm.collectionTableId"
-                                filterable  placeholder="请选择类别" style="width:90%" clearable>
-                              <el-option v-for="item in collectionTable.collectionTableCode" :key="item.value" :label="item.label"
-                                  :value="item.value" />
-                      </el-select>
                     </el-form-item>
                   </el-col>
                   <el-col :span="6">
@@ -75,9 +66,9 @@
                 <el-button type="primary" link :disabled="scope.row.staticZ ==='0'" @click="seeUserWoking(scope.row)">查看</el-button>
               </template>
             </el-table-column>
-            <el-table-column prop="id" label="收集表id" min-width="130" />
+            <el-table-column prop="id" label="收集表id" min-width="130" :show-overflow-tooltip="true"/>
             <el-table-column prop="collectionTableId" label="收集表类型id" min-width="120" />
-            <el-table-column prop="collectionTableName" label="收集表类型名称" min-width="120" />
+            <el-table-column prop="collectionTableName" label="收集表类型名称" min-width="280" />
             <el-table-column prop="collectionTableParentId" label="工作量" min-width="120">
               <template #default="scope">
                 <span v-if="scope.row.collectionTableParentId === '1'">科研工作量</span>
@@ -85,8 +76,8 @@
               </template>
             </el-table-column>
             <el-table-column prop="departmentId" label="系id" min-width="120" />
-            <el-table-column prop="departmentName" label="系" min-width="90" />
-            <el-table-column prop="expirationTime" label="截至时间" min-width="120" />
+            <el-table-column prop="departmentName" label="系" min-width="200" />
+            <el-table-column prop="expirationTime" label="截至时间" min-width="200" />
             <el-table-column prop="numberYearId" label="年id" min-width="120" />
             <el-table-column prop="numberYearName" label="年限" min-width="120" />
             <el-table-column prop="staticZ" fixed="right" label="状态" min-width="120">
@@ -111,17 +102,24 @@
               <el-table :data="userSubmitTableData" :border="true" 
                   ref="userTableDataRef" v-loading="loadingUserGroup" :header-cell-style="{ background: '#F5F6FA' }"
                   :height="500">
-                  <el-table-column fixed="left" label="操作" min-width="120">
+                  <el-table-column fixed="left" label="操作" min-width="80">
                     <template #default="scope">
-                      <el-button type="primary" link  @click="seeSubmitUserWoking(scope.row)">查看</el-button>
+                      <el-button v-if="!scope.row.applyFor" type="primary" link  @click="seeSubmitUserWoking(scope.row)">查看</el-button>
+                      <el-button v-if="scope.row.applyFor" type="success" link  @click="seeSubmitUserWoking(scope.row)">修改</el-button>
                     </template>
                   </el-table-column>
                   <el-table-column prop="id" label="收集表id" min-width="200" />
                   <el-table-column prop="collectionTableId" label="类别id" min-width="120" />
-                  <el-table-column prop="collectionTableName" label="类别名称" min-width="120" :show-overflow-tooltip="true" />
+                  <el-table-column prop="collectionTableName" label="类别名称" min-width="280" :show-overflow-tooltip="true" />
                   <el-table-column prop="collectionTableParentId" label="父类别id" min-width="120" :show-overflow-tooltip="true"/>
                   <el-table-column prop="collectionTableParentName" label="父类别名称" min-width="140" />
                   <el-table-column prop="collectionTableDetailedExcel" label="数据" min-width="130" />
+                  <el-table-column prop="applyFor" fixed="right" label="提交状态" min-width="130">
+                    <template #default="scope">
+                      <span v-if="scope.row.applyFor" style="color: red;">申请成功未提交</span>
+                      <span v-if="!scope.row.applyFor" style="color: green;">申请成功已提交</span>
+                    </template>
+                  </el-table-column>
               </el-table>
           </el-dialog> 
       </div>
@@ -166,9 +164,7 @@
   const searchFormRef = ref<FormInstance>()
   //查询参数
   const searchForm = reactive({
-       id:"1",
-       collectionTableId:"",
-       yearId:"",
+       numberYearId:"",
        staticZ:"",
   })
 
@@ -193,27 +189,6 @@
           console.log(e,'e');
       }
   } 
-  //收集表类别选项
-  let collectionTable = reactive({collectionTableCode:[] as any})
-  //获取系列表
-  const getTreeList = async() => {
-      try{
-          const res = await getTreeListCollection()
-          if(res.data.code == '200'){
-              const codeValue = res.data.data;
-              let departmentCode: { value: any; label: any }[] = [];
-              codeValue.forEach((val:{id:string,collectionTableName:string,parentId:string}) => {
-                  departmentCode.push({value:val.id,label:val.collectionTableName})
-              }) 
-              collectionTable.collectionTableCode = departmentCode
-          }else{
-              ElMessage.error('获取失败')
-          }
-      }catch(e){
-          console.log(e,'e');
-      }
-  }
-  
   
   //收集表状态选项
   let staticZCode = [
@@ -233,9 +208,8 @@
   // 重置查询条件
   const resetForm = () => {
       //清空查询框数据
-      searchForm.yearId = "";
+      searchForm.numberYearId = "";
       searchForm.staticZ = "";
-      searchForm.collectionTableId = "";
       //分页器重置为第一页
       pCurrentPage.value = 1;
       pPageSize.value = 10;
@@ -259,8 +233,8 @@
     loading.value = true;
     try {
       const res = await getUserCollectionTable({
-        collectionTableId:searchForm.collectionTableId,
-        yearId:searchForm.yearId,
+        collectionTableParentId:router.currentRoute.value.meta.collectionTableParentId,
+        numberYearId:searchForm.numberYearId,
         staticZ:searchForm.staticZ,
         pageNum:pCurrentPage.value,
         pageSize:pPageSize.value,
@@ -270,9 +244,8 @@
     } catch (error) {}
     loading.value = false;
         //清空查询框数据
-      searchForm.yearId = "";
+      searchForm.numberYearId = "";
       searchForm.staticZ = "";
-      searchForm.collectionTableId = "";
       //分页器重置为第一页
       pCurrentPage.value = 1;
       pPageSize.value = 10;
@@ -310,9 +283,8 @@ const submitUserWoking = async (row: any) => {
         }
 //跳转查看提交表单
 const seeSubmitUserWoking = async (row: any) => {
-  console.log(row);
-  
           let text = {
+            id:row.id,
             collectionTableParentId:row.collectionTableParentId,  
             collectionTableId:row.collectionTableId,
             collectionTableName:row.collectionTableName,
@@ -331,6 +303,7 @@ const seeSubmitUserWoking = async (row: any) => {
             excelM:row.collectionTableDetailedExcel.excelM,
             excelN:row.collectionTableDetailedExcel.excelN,
             disabled:'0',
+            applyFor:row.applyFor,
           }
           router
               .push({ path: "/home/collectionTable", query: text })
@@ -341,8 +314,6 @@ const seeSubmitUserWoking = async (row: any) => {
     loadUserCollectionTableList();
     //获取年限列表
     getYearList();
-    //获取收集表类别
-    getTreeList();
   });
   </script>
   
