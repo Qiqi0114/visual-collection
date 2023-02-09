@@ -85,18 +85,18 @@
                 <el-button type="danger" link @click="deleteCollectionTable(scope.row)">删除</el-button>
               </template>
             </el-table-column>
-            <el-table-column prop="id" label="收集表id" min-width="130" />
-            <el-table-column prop="collectionTableId" label="收集表类型id" min-width="120" />
-            <el-table-column prop="collectionTableName" label="收集表类型名称" min-width="120" />
-            <el-table-column prop="collectionTableParentId" label="工作量" min-width="120">
-                <template #default="scope">
-                <span v-if="scope.row.collectionTableParentId === '1'">科研工作量</span>
-                <span v-if="scope.row.collectionTableParentId === '8'">其他工作量</span>
-                </template>
-            </el-table-column>
-            <el-table-column prop="departmentId" label="系id" min-width="120" />
-            <el-table-column prop="departmentName" label="系" min-width="90" />
-            <el-table-column prop="expirationTime" label="截至时间" min-width="120" />
+            <el-table-column prop="id" label="收集表id" min-width="180" show-overflow-tooltip="true"/>
+          <el-table-column prop="collectionTableId" label="收集表类型id" min-width="120" />
+          <el-table-column prop="collectionTableName" label="收集表类型名称" min-width="300" />
+          <el-table-column prop="collectionTableParentId" label="工作量" min-width="120">
+            <template #default="scope">
+              <span v-if="scope.row.collectionTableParentId === '1'">科研工作量</span>
+              <span v-if="scope.row.collectionTableParentId === '8'">其他工作量</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="departmentId" label="系id" min-width="120" />
+          <el-table-column prop="departmentName" label="系" min-width="180" />
+          <el-table-column prop="expirationTime" label="截至时间" min-width="180" />
             <el-table-column prop="numberYearId" label="年id" min-width="120" />
             <el-table-column prop="numberYearName" label="年限" min-width="120" />
             <el-table-column prop="staticZ" fixed="right" label="状态" min-width="120">
