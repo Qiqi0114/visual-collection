@@ -451,14 +451,13 @@ ElMessageBox.confirm("确认删除?", {
 
 const seeUserWoking = async (row: any) => {
         let text = {
-          pageNum:pCurrentPage.value,
-          pageSize:pPageSize.value,
-          userName:row.userName,
-          departmentId:searchForm.departmentId,
-          yearId:searchForm.yearId,
+          departmentId:row.departmentId,
+          numberYearId:row.numberYearId,
+          collectionTableParentId:row.collectionTableParentId,
+          collectionTableId:row.collectionTableId,
         }
         router
-            .push({ path: "/home/collectionTable", query: text })
+            .push({ path: "/home/scientificResearchCollection", query: text })
             .catch((e) => console.error(e));
       }
 onMounted(() => {

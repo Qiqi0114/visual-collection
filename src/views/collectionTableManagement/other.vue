@@ -453,17 +453,16 @@
   }
   
   const seeUserWoking = async (row: any) => {
-          let text = {
-            pageNum:pCurrentPage.value,
-            pageSize:pPageSize.value,
-            userName:row.userName,
-            departmentId:searchForm.departmentId,
-            yearId:searchForm.yearId,
-          }
-          router
-              .push({ path: "/home/collectionTable", query: text })
-              .catch((e) => console.error(e));
+        let text = {
+          departmentId:row.departmentId,
+          numberYearId:row.numberYearId,
+          collectionTableParentId:'row.collectionTableParentId',
+          collectionTableId:row.collectionTableId,
         }
+        router
+            .push({ path: "/home/otherCollection", query: text })
+            .catch((e) => console.error(e));
+      }
   onMounted(() => {
     // 获取教学工作量信息列表
     loadCollectionTableList();

@@ -367,6 +367,26 @@ try{
 }
 loadingAdCollection.value = false;
 }
+//管理员获取收集表用户提交列表
+const loadRESROUTERApplyForUpdateCollectionInfoList = async () => {
+loadingAdCollection.value = true;
+try{
+  const res = await getApplyForUpdateCollectionTableAPI({
+            pageNum:pCurrentPage.value,
+            pageSize:pPageSize.value,
+            userId:'',
+            departmentId:RESROUTER.departmentId,
+            numberYearId:RESROUTER.numberYearId,
+            collectionTableParentId:RESROUTER.collectionTableParentId,
+            collectionTableId:RESROUTER.collectionTableId,
+        })
+        adCollectionTableData.value = res.data.data.records;
+        pTotal.value = res.data.data.total;
+}catch(error){
+    console.log('error');
+}
+loadingAdCollection.value = false;
+}
 //跳转查看提交表单
 const seeSubmitUserWoking = async (row: any) => {
           let text = {
@@ -396,17 +416,34 @@ const seeSubmitUserWoking = async (row: any) => {
               .push({ path: "/home/CollectionTable", query: text })
               .catch((e) => console.error(e));
         }
+//路由参数
+const RESROUTER = router.currentRoute.value.query as any;
+
 onMounted(() => {
-  // 获取教学工作量信息列表
-  loadApplyForUpdateCollectionInfoList();
-  //获取年限列表
-  getYearList();
-  //获取系列表
-  getDepartmentList();
-  //获取收集表类别
-  getTreeList();
-  //获取用户列表
-  loadUserManagementInfoList();
+  //判断是否是工作量跳转收集表列表页面
+  if(RESROUTER.collectionTableId !== undefined){
+        // 获取工作量查看条件参数跳转调用教学工作量信息列表
+        loadRESROUTERApplyForUpdateCollectionInfoList()
+        //获取年限列表
+        getYearList();
+        //获取系列表
+        getDepartmentList();
+        //获取收集表类别
+        getTreeList();
+        //获取用户列表
+        loadUserManagementInfoList();
+    }else{
+        // 获取教学工作量信息列表
+        loadApplyForUpdateCollectionInfoList();
+        //获取年限列表
+        getYearList();
+        //获取系列表
+        getDepartmentList();
+        //获取收集表类别
+        getTreeList();
+        //获取用户列表
+        loadUserManagementInfoList();
+    }
 });
 </script>
 
