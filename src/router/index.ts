@@ -21,6 +21,7 @@ const routes: Array<RouteRecordRaw> = [
           meta: {
               title: "账号管理",
               key:"sub1",
+              icon:"Avatar"
           },
         
           children: [
@@ -50,6 +51,7 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
             title: "教学工作量",
             key:"sub2",
+            icon:"DataLine"
         },
         
         children: [
@@ -87,7 +89,8 @@ const routes: Array<RouteRecordRaw> = [
           name: "collectionTableManagement",
           meta: {
               title: "收集表管理",
-              key:"sub3",
+              key:"sub3", 
+              icon:"List"
           },
           children: [
             {
@@ -134,6 +137,7 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
             title: "提交收集表",
             key:"sub4",
+            icon:"List"
         },
         children: [
           {

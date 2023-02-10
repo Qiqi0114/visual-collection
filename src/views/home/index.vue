@@ -18,7 +18,9 @@
           <el-sub-menu :index="item.meta.key">
               <!-- 一级导航 -->
               <template #title>
-                <el-icon><location /></el-icon>
+                <el-icon v-if="item.meta.icon === 'Avatar'"><Avatar /></el-icon>
+                <el-icon v-if="item.meta.icon === 'DataLine'"><DataLine /></el-icon>
+                <el-icon v-if="item.meta.icon === 'List'"><List /></el-icon>
                 <span>{{ item.meta.title }}</span>
               </template>
               <!-- 二级导航 -->
@@ -84,6 +86,7 @@ import {
   ArrowLeftBold,
   ArrowRightBold,
 } from '@element-plus/icons-vue';
+import { Avatar, DataLine, List } from '@element-plus/icons-vue'
 import store from "../../store";
 import router from "../../router";
 const route = useRoute();
