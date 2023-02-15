@@ -61,7 +61,7 @@
                     >
                     <el-button @click="resetForm()" type="info">重置</el-button>
                     <el-button @click="addCollection()" type="success">发布收集表</el-button>
-                    <el-button @click="exportCollection()" type="success">导出收集表</el-button>
+
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -178,54 +178,6 @@
               </template>
           </el-dialog>
 
-                <!--导出收集表对话框-->
-      <el-dialog title="导出收集表" v-model="dialogexportFormVisible">
-              <el-form :model="addForm">
-                <el-row>
-                  <el-col :span="12">
-                    <el-form-item label="系">
-                        <el-select v-model="exportForm.departmentId"
-                                      placeholder="请选择系">
-                              <el-option v-for="item in departmentList.departmentListCode" :key="item.value" :label="item.label"
-                                  :value="item.value" />
-                        </el-select>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="12">
-                    <el-form-item label="年">
-                      <el-select v-model="exportForm.numberYearId" filterable placeholder="请选择">
-                        <el-option
-                          v-for="item in  YearList.YearListCode"
-                          :key="item.value"
-                          :label="item.label"
-                          :value="item.value"
-                        >
-                        </el-option>
-                      </el-select>
-                    </el-form-item>
-                  </el-col>
-                </el-row>
-                <el-row>
-                  <el-col :span="12">
-                  <el-form-item label="收集表类别" prop="collectionTableId">
-                    <el-select v-model="exportForm.collectionTableId"
-                              filterable  placeholder="请选择类别" style="width:90%" clearable>
-                            <el-option v-for="item in collectionTable.collectionTableCode" :key="item.value" :label="item.label"
-                                :value="item.value" />
-                    </el-select>
-                  </el-form-item>
-                </el-col>
-                </el-row>
-              </el-form>
-              <template #footer>
-                  <span class="dialog-footer">
-                  <el-button @click="dialogexportFormVisible = false">取 消</el-button>
-                  <el-button type="primary" @click="exportCollectionConfirm()"
-                      >确 定</el-button
-                  >
-                  </span>
-              </template>
-          </el-dialog>
     </div>
   </div>
 </template>
@@ -473,48 +425,6 @@ const saveCollectionTable = async() => {
   value1.value = ""
 }
 
-//导出收集表信息对话框开关
-const dialogexportFormVisible = ref<boolean>(false);
-const exportForm = reactive({
-  departmentId:'',
-  numberYearId:'',
-  collectionTableId:'',
-});
-//导出收集表
-const exportCollection = () => {
-  dialogexportFormVisible.value = true;
-}
-//确认导出收集表
-const exportCollectionConfirm = async() => {
-  await exportCollectionTable();
-  dialogexportFormVisible.value = false;
-  await loadCollectionTableList();
-}
-const exportCollectionTable = async() => {
-  try{
-    //过渡效果
-    loading.value = true;
-    const res = await exportCollectionTableAPI({
-      departmentId:exportForm.departmentId,
-      numberYearId:exportForm.numberYearId,
-      collectionTableId:exportForm.collectionTableId,
-    })
-    if (res.data.code == "200") {
-          ElMessage({
-              message: "导出成功",
-              duration: 1500,
-              type: "success",
-          });
-          loadCollectionTableList();
-      } else {
-          ElMessage.error(res.data.msg)
-      }
-      loading.value = false;
-  } catch(e){console.log(e,'error');}
-  exportForm.departmentId = "";
-  exportForm.numberYearId = "";
-  exportForm.collectionTableId = "";
-}
 
 //删除收集表信息
 const deleteCollectionTable = async(row:any) => {
