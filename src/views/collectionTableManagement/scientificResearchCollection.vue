@@ -146,11 +146,11 @@
           </el-dialog> 
       <!--导出收集表对话框-->
       <el-dialog title="导出收集表" v-model="dialogexportFormVisible">
-              <el-form :model="addForm">
+              <el-form :model="exportForm">
                 <el-row>
                   <el-col :span="12">
                     <el-form-item label="系">
-                        <el-select v-model="exportForm.departmentId"
+                        <el-select v-model="exportForm.metId"
                                       placeholder="请选择系">
                               <el-option v-for="item in departmentList.departmentListCode" :key="item.value" :label="item.label"
                                   :value="item.value" />
@@ -159,7 +159,7 @@
                   </el-col>
                   <el-col :span="12">
                     <el-form-item label="年">
-                      <el-select v-model="exportForm.numberYearId" filterable placeholder="请选择">
+                      <el-select v-model="exportForm.yearId" filterable placeholder="请选择">
                         <el-option
                           v-for="item in  YearList.YearListCode"
                           :key="item.value"
@@ -170,17 +170,6 @@
                       </el-select>
                     </el-form-item>
                   </el-col>
-                </el-row>
-                <el-row>
-                  <el-col :span="12">
-                  <el-form-item label="收集表类别" prop="collectionTableId">
-                    <el-select v-model="exportForm.collectionTableId"
-                              filterable  placeholder="请选择类别" style="width:90%" clearable>
-                            <el-option v-for="item in collectionTable.collectionTableCode" :key="item.value" :label="item.label"
-                                :value="item.value" />
-                    </el-select>
-                  </el-form-item>
-                </el-col>
                 </el-row>
               </el-form>
               <template #footer>
@@ -203,7 +192,7 @@
 import { ElMessage, ElTable, FormInstance } from "element-plus";
 import { onMounted, reactive, ref } from "vue-demi";
 import { AccountManagementAPI, DepartmentListAPI } from "../../api/accountManagement";
-import { getApplyForUpdateCollectionTableAPI, getTreeListCollection } from "../../api/collectionTableManagement";
+import { getApplyForUpdateCollectionTableAPI, getExportExcelCollectionAPI, getTreeListCollection } from "../../api/collectionTableManagement";
 import { getYearListAPI } from "../../api/teachingwokingload";
 import router from "../../router";
 //加载
@@ -400,9 +389,8 @@ const selectForm = (formEl: FormInstance | undefined) => {
 //导出收集表信息对话框开关
 const dialogexportFormVisible = ref<boolean>(false);
 const exportForm = reactive({
-  departmentId:'',
-  numberYearId:'',
-  collectionTableId:'',
+  yearId:'',
+  metId:'',
 });
 //导出收集表
 const exportCollection = () => {
@@ -414,30 +402,19 @@ const exportCollectionConfirm = async() => {
   dialogexportFormVisible.value = false;
   await loadApplyForUpdateCollectionInfoList();
 }
+
+
+
+
+let url: any = import.meta.env // 配置不同环境的域名信息等
 const exportCollectionTable = async() => {
-  try{
-    //过渡效果
-    loading.value = true;
-    const res = await exportCollectionTableAPI({
-      departmentId:exportForm.departmentId,
-      numberYearId:exportForm.numberYearId,
-      collectionTableId:exportForm.collectionTableId,
-    })
-    if (res.data.code == "200") {
-          ElMessage({
-              message: "导出成功",
-              duration: 1500,
-              type: "success",
-          });
-          loadApplyForUpdateCollectionInfoList();
-      } else {
-          ElMessage.error(res.data.msg)
-      }
-      loading.value = false;
-  } catch(e){console.log(e,'error');}
-  exportForm.departmentId = "";
-  exportForm.numberYearId = "";
-  exportForm.collectionTableId = "";
+  //过渡效果
+  loadingAdCollection.value = true;
+  location.href = url.VITE_APP_BASE_API+'/collectionTableService/collectionTable/export_excel_collection?'+'tableId=1&yearId='+exportForm.yearId+'&metId='+exportForm.metId
+  loadApplyForUpdateCollectionInfoList();
+  loadingAdCollection.value = false;
+  exportForm.yearId = "";
+  exportForm.metId = "";
 }
 
 

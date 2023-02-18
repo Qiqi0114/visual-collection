@@ -217,3 +217,21 @@ export function getApplyForUpdateCollectionTableAPI(
       params:param,
     })
   }
+
+//导出收集表 其他 或者科研 这个接口未用 由location.href = url.VITE_APP_BASE_API+'/collectionTableService/collectionTable/export_excel_collection?'+'tableId=1&yearId='+exportForm.yearId+'&metId='+exportForm.metId完成
+export function getExportExcelCollectionAPI(
+  param:{
+    //收集表大类别id //科研 其他工作量
+    tableId:string,
+    //系id
+    metId:string,
+    //年限id
+    yearId:string,
+  }) {
+    return request({
+      url: '/collectionTableService/collectionTable/export_excel_collection',
+      method: 'get',
+      params:param,
+    })
+  }
+  
