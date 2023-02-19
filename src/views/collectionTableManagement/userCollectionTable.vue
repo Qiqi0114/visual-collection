@@ -34,9 +34,7 @@
                       </el-select>
                     </el-form-item>
                   </el-col>
-                </el-row>
-                <el-row>
-                  <el-col :span="24">
+                  <el-col :span="6">
                     <el-form-item style="float: right">
                       <el-button type="primary" @click="selectForm(searchFormRef)"
                         >查询</el-button
@@ -58,7 +56,7 @@
             ref="baseInfoTableDataRef"
             v-loading="loading"
             :header-cell-style="{ background: '#F5F6FA' }"
-            :height="400"
+            :height="450"
           >
             <el-table-column fixed="left" label="操作" min-width="120">
               <template #default="scope">
