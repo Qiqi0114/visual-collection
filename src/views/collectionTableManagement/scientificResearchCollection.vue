@@ -65,7 +65,7 @@
           <div class="table-bg" ref="tableContainer" style="width: 99%;">
             <el-table :data="adCollectionTableData" :border="true" 
                   ref="userTableDataRef" v-loading="loadingAdCollection" :header-cell-style="{ background: '#F5F6FA' }"
-                  :height="500" >
+                  :height="450" >
                   <el-table-column fixed="left" label="操作" min-width="80">
                     <template #default="scope">
                       <el-button  type="success" link  @click="seeSubmitUserWoking(scope.row)">修改</el-button>
@@ -112,7 +112,7 @@
               </el-row>
               <el-table :data="userTableData" :border="true" 
                   ref="userTableDataRef" v-loading="loadingUser" :header-cell-style="{ background: '#F5F6FA' }"
-                  :height="500" @select="handleSelectionChange1" >
+                  :height="400" @select="handleSelectionChange1" >
                   <el-table-column type="selection" width="55" />
                   <el-table-column prop="id" v-if="false" label="用户id" min-width="200" />
                   <el-table-column prop="userName" label="用户全称" min-width="120" />

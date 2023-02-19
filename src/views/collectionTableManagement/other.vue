@@ -77,7 +77,7 @@
             ref="baseInfoTableDataRef"
             v-loading="loading"
             :header-cell-style="{ background: '#F5F6FA' }"
-            :height="450"
+            :height="400"
           >
             <el-table-column fixed="left" label="操作" min-width="120">
               <template #default="scope">

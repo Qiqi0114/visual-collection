@@ -69,7 +69,7 @@
       <template #title>账号</template>
       <el-menu-item index="2-1" @click="goOut()">退出</el-menu-item>
     </el-sub-menu>
-  </el-menu>
+    </el-menu>
         <router-view></router-view>
     </div>
   </div>

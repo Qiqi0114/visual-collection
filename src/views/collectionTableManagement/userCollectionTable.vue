@@ -58,7 +58,7 @@
             ref="baseInfoTableDataRef"
             v-loading="loading"
             :header-cell-style="{ background: '#F5F6FA' }"
-            :height="450"
+            :height="400"
           >
             <el-table-column fixed="left" label="操作" min-width="120">
               <template #default="scope">
@@ -101,7 +101,7 @@
             <el-dialog title="已提交收集表列表" v-model="dialogSubmitVisible">
               <el-table :data="userSubmitTableData" :border="true" 
                   ref="userTableDataRef" v-loading="loadingUserGroup" :header-cell-style="{ background: '#F5F6FA' }"
-                  :height="500">
+                  :height="400">
                   <el-table-column fixed="left" label="操作" min-width="80">
                     <template #default="scope">
                       <el-button v-if="!scope.row.applyFor" type="primary" link  @click="seeSubmitUserWoking(scope.row)">查看</el-button>
