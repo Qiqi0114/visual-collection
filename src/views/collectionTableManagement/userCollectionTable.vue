@@ -241,9 +241,6 @@
         //清空查询框数据
       searchForm.numberYearId = "";
       searchForm.staticZ = "";
-      //分页器重置为第一页
-      pCurrentPage.value = 1;
-      pPageSize.value = 10;
   };
   
   //查看用户已提交收集表列表对话框开关
