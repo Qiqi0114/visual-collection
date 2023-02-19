@@ -18,30 +18,28 @@
           <el-sub-menu :index="item.meta.key">
               <!-- 一级导航 -->
               <template #title>
+                <el-icon v-if="item.meta.icon === 'Checked'"><Checked /></el-icon>
                 <el-icon v-if="item.meta.icon === 'Avatar'"><Avatar /></el-icon>
-                <el-icon v-if="item.meta.icon === 'DataLine'"><DataLine /></el-icon>
+                <el-icon v-if="item.meta.icon === 'TrendCharts'"><TrendCharts /></el-icon>
                 <el-icon v-if="item.meta.icon === 'List'"><List /></el-icon>
+                <el-icon v-if="item.meta.icon === 'Histogram'"><Histogram /></el-icon>
                 <span>{{ item.meta.title }}</span>
               </template>
               <!-- 二级导航 -->
-              <template v-if="item.children">
+              <template v-if="item.children.length > 0">
                 <el-menu-item-group v-for="val in item.children"  :key="val.meta.key">
-                  <template v-if="val.children">
-                    <el-sub-menu v-for="ele in item.children" :key="ele.meta.key" :index="ele.path">
-                      <template #title>
-                        <el-icon><location /></el-icon>
-                        <span>{{ item.meta.title }}</span>
-                      </template>
-                      <el-menu-item  :index="ele.path">{{ ele.meta.title }}</el-menu-item>
-                    </el-sub-menu>
-                  </template>
-                  <template v-else>
                   <el-menu-item
                     :index="val.path">
+                    <el-icon v-if="val.meta.icon === 'Edit'"><Edit /></el-icon>
+                    <el-icon v-if="val.meta.icon === 'Tickets'"><Tickets /></el-icon>
+                    <el-icon v-if="val.meta.icon === 'DataLine'"><DataLine /></el-icon>
+                    <el-icon v-if="val.meta.icon === 'Setting'"><Setting /></el-icon>
+                    <el-icon v-if="val.meta.icon === 'DataAnalysis'"><DataAnalysis /></el-icon>
                     {{ val.meta.title }}
                   </el-menu-item>
-                </template>
                 </el-menu-item-group>
+              </template>
+              <template v-else>
 
               </template>
           </el-sub-menu>
@@ -82,11 +80,10 @@
 import { ref } from "vue-demi";
 import { useRoute } from "vue-router";
 import {
-  Setting,
   ArrowLeftBold,
   ArrowRightBold,
 } from '@element-plus/icons-vue';
-import { Avatar, DataLine, List } from '@element-plus/icons-vue'
+import { Avatar, DataLine, TrendCharts, List, Setting, Tickets, Checked, Edit, Histogram, DataAnalysis} from '@element-plus/icons-vue'
 import store from "../../store";
 import router from "../../router";
 const route = useRoute();

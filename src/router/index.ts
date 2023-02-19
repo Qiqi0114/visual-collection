@@ -31,6 +31,7 @@ const routes: Array<RouteRecordRaw> = [
                 meta: {
                     title: "账号管理",
                     key:"sub1-1",
+                    icon:"Setting"
                 },
                 component: () => import("../views/accountManagement/accountManagement.vue"),
             },
@@ -40,9 +41,20 @@ const routes: Array<RouteRecordRaw> = [
               meta: {
                   title: "用户组管理",
                   key:"sub1-2",
+                  icon:"Setting"
               },
               component: () => import("../views/accountManagement/groupManagement.vue"),
-          },
+            },
+            {
+              path: "/home/departManagement",
+              name: "departManagement",
+              meta: {
+                  title: "系管理",
+                  key:"sub1-3",
+                  icon:"Setting"
+              },
+              component: () => import("../views/accountManagement/departManagement.vue"),
+           },
           ]
       },
       {
@@ -51,9 +63,8 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
             title: "教学工作量",
             key:"sub2",
-            icon:"DataLine"
+            icon:"TrendCharts"
         },
-        
         children: [
           {
               path: "/home/ImportWorkload",
@@ -61,6 +72,7 @@ const routes: Array<RouteRecordRaw> = [
               meta: {
                   title: "导入教学工作量",
                   key:"sub2-1",
+                  icon:"DataLine"
               },
               component: () => import("../views/teachingwokingload/ImportWorkload.vue"),
           },
@@ -70,6 +82,7 @@ const routes: Array<RouteRecordRaw> = [
             meta: {
                 title: "教学工作量数据",
                 key:"sub2-2",
+                icon:"DataLine"
             },
             component: () => import("../views/teachingwokingload/teachingwokingload.vue"),
           },
@@ -79,6 +92,7 @@ const routes: Array<RouteRecordRaw> = [
             meta: {
                 title: "查看教学工作量数据",
                 key:"sub2-3",
+                icon:"DataLine"
             },
             component: () => import("../views/teachingwokingload/seeUserwoking.vue"),
         }
@@ -99,6 +113,7 @@ const routes: Array<RouteRecordRaw> = [
                 meta: {
                     title: "科研工作量",
                     key:"sub3-1",
+                    icon:"Tickets"
                 },
                 component: () => import("../views/collectionTableManagement/scientificResearch.vue"),
             },
@@ -108,6 +123,7 @@ const routes: Array<RouteRecordRaw> = [
               meta: {
                   title: "其他工作量",
                   key:"sub3-2",
+                  icon:"Tickets"
               },
               component: () => import("../views/collectionTableManagement/other.vue"),
             },
@@ -117,6 +133,7 @@ const routes: Array<RouteRecordRaw> = [
               meta: {
                   title: "收集科研工作量",
                   key:"sub3-3",
+                  icon:"Tickets"
               },
               component: () => import("../views/collectionTableManagement/scientificResearchCollection.vue"),
             },
@@ -126,6 +143,7 @@ const routes: Array<RouteRecordRaw> = [
               meta: {
                   title: "收集其他工作量",
                   key:"sub3-4",
+                  icon:"Tickets"
               },
               component: () => import("../views/collectionTableManagement/otherCollection.vue"),
             },
@@ -137,7 +155,7 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
             title: "提交收集表",
             key:"sub4",
-            icon:"List"
+            icon:"Checked"
         },
         children: [
           {
@@ -147,6 +165,7 @@ const routes: Array<RouteRecordRaw> = [
                   title: "科研工作量",
                   key:"sub5-1",
                   collectionTableParentId:'1',
+                  icon:"Edit"
               },
               component: () => import("../views/collectionTableManagement/userCollectionTable.vue"),
           },
@@ -157,6 +176,7 @@ const routes: Array<RouteRecordRaw> = [
                 title: "其他工作量",
                 key:"sub5-2",
                 collectionTableParentId:'8',
+                icon:"Edit"
             },
             component: () => import("../views/collectionTableManagement/userCollectionTable.vue"),
         },
@@ -166,6 +186,7 @@ const routes: Array<RouteRecordRaw> = [
             meta: {
                 title: "科研工作量收集表",
                 key:"sub5-3",
+                icon:"Edit"
             },
             component: () => import("../views/collectionTableManagement/CollectionTable.vue"),
           },
@@ -176,7 +197,7 @@ const routes: Array<RouteRecordRaw> = [
           name: "integratedManagement",
           meta: {
               title: "综合管理",
-              key:"sub6",
+              key:"sub7",
           },
           component: () => import("../views/integratedManagement/integratedManagement.vue"),
       },
@@ -185,9 +206,21 @@ const routes: Array<RouteRecordRaw> = [
         name: "visualizationAttempts",
         meta: {
             title: "可视化视图",
-            key:"sub7",
+            key:"sub6",
+            icon:"Histogram"
         },
-        component: () => import("../views/visualizationAttempts/visualizationAttempts.vue"),
+        children: [
+          {
+              path: "/home/visualizationAttempts",
+              name: "visualizationAttempts",
+              meta: {
+                  title: "工作量可视化视图",
+                  key:"sub6-1",
+                  icon:"DataAnalysis"
+              },
+              component: () => import("../views/visualizationAttempts/visualizationAttempts.vue"),
+          },
+        ]
     }
   ]
   },
