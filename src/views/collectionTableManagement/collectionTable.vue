@@ -1,7 +1,7 @@
 <template>
     <div class="container-bg">
       <div class="container">
-        <el-scrollbar height="650px">
+        <el-scrollbar height="550px">
             <!--表单 start-->
             <el-form ref="ruleFormRef" :model="CollectionTableForm" :rules="rules"
                     label-width="420px" class="demo-CollectionTableForm" :size="formSize" v-loading="loading"
