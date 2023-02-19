@@ -1,7 +1,8 @@
 <template>
     <div class="container-bg">
       <div class="container">
- <!--表单 start-->
+        <el-scrollbar height="650px">
+            <!--表单 start-->
             <el-form ref="ruleFormRef" :model="CollectionTableForm" :rules="rules"
                     label-width="420px" class="demo-CollectionTableForm" :size="formSize" v-loading="loading"
                     v-if="(RESROUTER.collectionTableId === '2' ? true : false)" :disabled="!editFlag">
@@ -1341,6 +1342,8 @@
                   <el-button type="danger" @click="deleteCollectionTable()">删除提交表</el-button>
                   <el-button @click="seeUserCollectionTable()">返回</el-button>
                 </el-row>
+        </el-scrollbar>
+ 
       </div>
     </div>
   </template>
