@@ -77,7 +77,7 @@
             ref="baseInfoTableDataRef"
             v-loading="loading"
             :header-cell-style="{ background: '#F5F6FA' }"
-            :height="450"
+            :height="400"
           >
             <el-table-column fixed="left" label="操作" min-width="120">
               <template #default="scope">
@@ -85,18 +85,18 @@
                 <el-button type="danger" link @click="deleteCollectionTable(scope.row)">删除</el-button>
               </template>
             </el-table-column>
-            <el-table-column prop="id" label="收集表id" min-width="130" />
-            <el-table-column prop="collectionTableId" label="收集表类型id" min-width="120" />
-            <el-table-column prop="collectionTableName" label="收集表类型名称" min-width="120" />
-            <el-table-column prop="collectionTableParentId" label="工作量" min-width="120">
-                <template #default="scope">
-                <span v-if="scope.row.collectionTableParentId === '1'">科研工作量</span>
-                <span v-if="scope.row.collectionTableParentId === '8'">其他工作量</span>
-                </template>
-            </el-table-column>
-            <el-table-column prop="departmentId" label="系id" min-width="120" />
-            <el-table-column prop="departmentName" label="系" min-width="90" />
-            <el-table-column prop="expirationTime" label="截至时间" min-width="120" />
+            <el-table-column prop="id" label="收集表id" min-width="180" show-overflow-tooltip="true"/>
+          <el-table-column prop="collectionTableId" label="收集表类型id" min-width="120" />
+          <el-table-column prop="collectionTableName" label="收集表类型名称" min-width="300" />
+          <el-table-column prop="collectionTableParentId" label="工作量" min-width="120">
+            <template #default="scope">
+              <span v-if="scope.row.collectionTableParentId === '1'">科研工作量</span>
+              <span v-if="scope.row.collectionTableParentId === '8'">其他工作量</span>
+            </template>
+          </el-table-column>
+          <el-table-column prop="departmentId" label="系id" min-width="120" />
+          <el-table-column prop="departmentName" label="系" min-width="180" />
+          <el-table-column prop="expirationTime" label="截至时间" min-width="180" />
             <el-table-column prop="numberYearId" label="年id" min-width="120" />
             <el-table-column prop="numberYearName" label="年限" min-width="120" />
             <el-table-column prop="staticZ" fixed="right" label="状态" min-width="120">
@@ -176,6 +176,7 @@
                     </span>
                 </template>
             </el-dialog>
+
       </div>
     </div>
   </template>
@@ -349,9 +350,6 @@
       searchForm.yearId = "";
       searchForm.staticZ = "";
       searchForm.collectionTableId = "";
-      //分页器重置为第一页
-      pCurrentPage.value = 1;
-      pPageSize.value = 10;
   };
   
   const changedCollection = async(row:any,type:string) => {
@@ -426,6 +424,9 @@
     addForm.collectionTableId = "";
     value1.value = "";
   }
+
+
+
   //删除收集表信息
   const deleteCollectionTable = async(row:any) => {
   ElMessageBox.confirm("确认删除?", {
@@ -453,17 +454,16 @@
   }
   
   const seeUserWoking = async (row: any) => {
-          let text = {
-            pageNum:pCurrentPage.value,
-            pageSize:pPageSize.value,
-            userName:row.userName,
-            departmentId:searchForm.departmentId,
-            yearId:searchForm.yearId,
-          }
-          router
-              .push({ path: "/home/collectionTable", query: text })
-              .catch((e) => console.error(e));
+        let text = {
+          departmentId:row.departmentId,
+          numberYearId:row.numberYearId,
+          collectionTableParentId:'row.collectionTableParentId',
+          collectionTableId:row.collectionTableId,
         }
+        router
+            .push({ path: "/home/otherCollection", query: text })
+            .catch((e) => console.error(e));
+      }
   onMounted(() => {
     // 获取教学工作量信息列表
     loadCollectionTableList();

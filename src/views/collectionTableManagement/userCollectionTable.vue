@@ -34,9 +34,7 @@
                       </el-select>
                     </el-form-item>
                   </el-col>
-                </el-row>
-                <el-row>
-                  <el-col :span="24">
+                  <el-col :span="6">
                     <el-form-item style="float: right">
                       <el-button type="primary" @click="selectForm(searchFormRef)"
                         >查询</el-button
@@ -101,7 +99,7 @@
             <el-dialog title="已提交收集表列表" v-model="dialogSubmitVisible">
               <el-table :data="userSubmitTableData" :border="true" 
                   ref="userTableDataRef" v-loading="loadingUserGroup" :header-cell-style="{ background: '#F5F6FA' }"
-                  :height="500">
+                  :height="400">
                   <el-table-column fixed="left" label="操作" min-width="80">
                     <template #default="scope">
                       <el-button v-if="!scope.row.applyFor" type="primary" link  @click="seeSubmitUserWoking(scope.row)">查看</el-button>
@@ -243,9 +241,6 @@
         //清空查询框数据
       searchForm.numberYearId = "";
       searchForm.staticZ = "";
-      //分页器重置为第一页
-      pCurrentPage.value = 1;
-      pPageSize.value = 10;
   };
   
   //查看用户已提交收集表列表对话框开关

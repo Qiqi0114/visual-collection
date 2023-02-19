@@ -61,6 +61,7 @@
                     >
                     <el-button @click="resetForm()" type="info">重置</el-button>
                     <el-button @click="addCollection()" type="success">发布收集表</el-button>
+
                   </el-form-item>
                 </el-col>
               </el-row>
@@ -77,7 +78,7 @@
           ref="baseInfoTableDataRef"
           v-loading="loading"
           :header-cell-style="{ background: '#F5F6FA' }"
-          :height="450"
+          :height="400"
         >
           <el-table-column fixed="left" label="操作" min-width="120">
             <template #default="scope">
@@ -85,9 +86,9 @@
               <el-button type="danger" link @click="deleteCollectionTable(scope.row)">删除</el-button>
             </template>
           </el-table-column>
-          <el-table-column prop="id" label="收集表id" min-width="130" />
+          <el-table-column prop="id" label="收集表id" min-width="180" show-overflow-tooltip="true"/>
           <el-table-column prop="collectionTableId" label="收集表类型id" min-width="120" />
-          <el-table-column prop="collectionTableName" label="收集表类型名称" min-width="120" />
+          <el-table-column prop="collectionTableName" label="收集表类型名称" min-width="150" />
           <el-table-column prop="collectionTableParentId" label="工作量" min-width="120">
             <template #default="scope">
               <span v-if="scope.row.collectionTableParentId === '1'">科研工作量</span>
@@ -95,8 +96,8 @@
             </template>
           </el-table-column>
           <el-table-column prop="departmentId" label="系id" min-width="120" />
-          <el-table-column prop="departmentName" label="系" min-width="90" />
-          <el-table-column prop="expirationTime" label="截至时间" min-width="120" />
+          <el-table-column prop="departmentName" label="系" min-width="180" />
+          <el-table-column prop="expirationTime" label="截至时间" min-width="180" />
           <el-table-column prop="numberYearId" label="年id" min-width="120" />
           <el-table-column prop="numberYearName" label="年限" min-width="120" />
           <el-table-column prop="staticZ" fixed="right" label="状态" min-width="120">
@@ -109,7 +110,7 @@
         </el-table>
           <!--分页器 start-->
           <div class="flex pagination-bg">
-              <el-pagination v-model:currentPage="pCurrentPage" v-model:page-size="pPageSize"
+            <el-pagination v-model:currentPage="pCurrentPage" v-model:page-size="pPageSize"
                   :page-sizes="[10, 20]" :small="pSmall" :disabled="pDisabled" :background="pBackground"
                   layout="total, sizes, prev, pager, next, jumper" :total="pTotal" @size-change="handleSizeChange"
                   @current-change="handleCurrentChange" />
@@ -176,6 +177,7 @@
                   </span>
               </template>
           </el-dialog>
+
     </div>
   </div>
 </template>
@@ -345,9 +347,6 @@ const loadCollectionTableList = async () => {
     searchForm.yearId = "";
     searchForm.staticZ = "";
     searchForm.collectionTableId = "";
-    //分页器重置为第一页
-    pCurrentPage.value = 1;
-    pPageSize.value = 10;
 };
 //改变收集表状态
 const changedCollection = async(row:any,type:string) => {
@@ -423,6 +422,7 @@ const saveCollectionTable = async() => {
   value1.value = ""
 }
 
+
 //删除收集表信息
 const deleteCollectionTable = async(row:any) => {
 ElMessageBox.confirm("确认删除?", {
@@ -451,14 +451,13 @@ ElMessageBox.confirm("确认删除?", {
 
 const seeUserWoking = async (row: any) => {
         let text = {
-          pageNum:pCurrentPage.value,
-          pageSize:pPageSize.value,
-          userName:row.userName,
-          departmentId:searchForm.departmentId,
-          yearId:searchForm.yearId,
+          departmentId:row.departmentId,
+          numberYearId:row.numberYearId,
+          collectionTableParentId:row.collectionTableParentId,
+          collectionTableId:row.collectionTableId,
         }
         router
-            .push({ path: "/home/collectionTable", query: text })
+            .push({ path: "/home/scientificResearchCollection", query: text })
             .catch((e) => console.error(e));
       }
 onMounted(() => {

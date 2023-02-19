@@ -32,7 +32,7 @@
           <div class="table-bg" ref="tableContainer" style="width: 99%;">
               <el-table :data="baseInfoTableData" :border="true" 
                   ref="baseInfoTableDataRef" v-loading="loading" :header-cell-style="{ background: '#F5F6FA' }"
-                  :height="500">
+                  :height="450">
                   <el-table-column fixed="left" label="操作" min-width="180">
                       <template #default="scope">
                           <el-button type="primary" link

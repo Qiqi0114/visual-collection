@@ -40,7 +40,7 @@
             <el-table-column prop="s1" label="S1" min-width="120" />
           </el-table-column>
           <el-table-column label="Z=F+Y+S">
-            <el-table-column prop="z" fixed="right" label="未乘就业率系数的总工作量" min-width="120" />
+            <el-table-column prop="z" fixed="right" label="未乘就业率系数的总工作量" min-width="220" />
           </el-table-column>
           </el-table-column>
 

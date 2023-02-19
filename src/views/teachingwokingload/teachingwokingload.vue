@@ -74,15 +74,15 @@
               <el-button type="danger" link @click="deleteUserWoking(scope.row)">删除</el-button>
             </template>
           </el-table-column>
-          <el-table-column prop="id" label="用户id" min-width="130" />
-          <el-table-column prop="numberYears" label="年限" min-width="120" />
+          <el-table-column prop="id" label="用户id" min-width="180" :show-overflow-tooltip="true"/>
+          <el-table-column prop="numberYears" label="年限" min-width="80" />
           <el-table-column prop="userName" fixed="left" label="人员名称" min-width="120" />
-          <el-table-column prop="departmentName" label="系" min-width="90" />
+          <el-table-column prop="departmentName" label="系" min-width="200" />
           <el-table-column prop="f" label="教学业绩分值F" min-width="120" />
           <el-table-column prop="y1" label="Y（用于考核）" min-width="120" />
           <el-table-column prop="y2" label="Y（计算津贴）" min-width="120" />
           <el-table-column prop="s1" label="s1合计" min-width="120" />
-          <el-table-column prop="z" label="未乘就业率系数的总工作量Z" min-width="120" />
+          <el-table-column prop="z" label="未乘就业率系数的总工作量Z" min-width="220" />
         </el-table>
         <!--分页器 start-->
         <div class="flex pagination-bg">
