@@ -65,7 +65,7 @@
           <div class="table-bg" ref="tableContainer" style="width: 99%;">
             <el-table :data="adCollectionTableData" :border="true" 
                   ref="userTableDataRef" v-loading="loadingAdCollection" :header-cell-style="{ background: '#F5F6FA' }"
-                  :height="450" >
+                  :height="400" >
                   <el-table-column fixed="left" label="操作" min-width="80">
                     <template #default="scope">
                       <el-button  type="success" link  @click="seeSubmitUserWoking(scope.row)">修改</el-button>
@@ -84,15 +84,16 @@
                     </template>
                   </el-table-column>
               </el-table>
+            <!--分页器 start-->
+            <div class="flex pagination-bg">
+                <el-pagination v-model:pCurrentPage="pCurrentPage" v-model:page-size="pPageSize"
+                    :page-sizes="[10, 20]" :small="Small" :disabled="Disabled" :background="Background"
+                    layout="total, sizes, prev, pager, next, jumper" :total="pTotal" @size-change="handleSize"
+                    @current-change="handleCurrent" />
+            </div>
+            <!--分页器 end-->
           </div>
-          <!--分页器 start-->
-          <div class="flex pagination-bg">
-              <el-pagination v-model:pCurrentPage="pCurrentPage" v-model:page-size="pPageSize"
-                  :page-sizes="[10, 20]" :small="Small" :disabled="Disabled" :background="Background"
-                  layout="total, sizes, prev, pager, next, jumper" :total="pTotal" @size-change="handleSize"
-                  @current-change="handleCurrent" />
-          </div>
-          <!--分页器 end-->
+
         <!-- 添加用户对话框 -->
         <el-dialog title="添加用户" v-model="dialoguserVisible">
             <el-row>
@@ -130,9 +131,9 @@
                   <el-table-column prop="roleName" label="角色" min-width="100"/>
               </el-table>
           <!--分页器 start-->
-              <el-pagination v-model:currentPage="pCurrentPage" v-model:page-size="pPageSize"
+              <el-pagination v-model:currentPage="CurrentPage" v-model:page-size="PageSize"
                   :page-sizes="[10, 20]" :small="Small" :disabled="Disabled" :background="Background"
-                  layout="total, sizes, prev, pager, next, jumper" :total="pTotal" @size-change="handleSizeChange1"
+                  layout="total, sizes, prev, pager, next, jumper" :total="Total" @size-change="handleSizeChange1"
                   @current-change="handleCurrentChange1" />
           <!--分页器 end-->
               <template #footer>
