@@ -110,7 +110,7 @@
         </el-table>
           <!--分页器 start-->
           <div class="flex pagination-bg">
-              <el-pagination v-model:currentPage="pCurrentPage" v-model:page-size="pPageSize"
+            <el-pagination v-model:currentPage="pCurrentPage" v-model:page-size="pPageSize"
                   :page-sizes="[10, 20]" :small="pSmall" :disabled="pDisabled" :background="pBackground"
                   layout="total, sizes, prev, pager, next, jumper" :total="pTotal" @size-change="handleSizeChange"
                   @current-change="handleCurrentChange" />
@@ -347,9 +347,6 @@ const loadCollectionTableList = async () => {
     searchForm.yearId = "";
     searchForm.staticZ = "";
     searchForm.collectionTableId = "";
-    //分页器重置为第一页
-    pCurrentPage.value = 1;
-    pPageSize.value = 10;
 };
 //改变收集表状态
 const changedCollection = async(row:any,type:string) => {

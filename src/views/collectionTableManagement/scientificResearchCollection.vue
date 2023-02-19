@@ -289,7 +289,7 @@ try{
          userName:searchUserForm.userName,
     })
     userTableData.value = res.data.data.records;
-    pTotal.value = res.data.data.total;
+    Total.value = res.data.data.total;
 }catch(error){
     console.log('error');
 }

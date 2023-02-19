@@ -350,9 +350,6 @@
       searchForm.yearId = "";
       searchForm.staticZ = "";
       searchForm.collectionTableId = "";
-      //分页器重置为第一页
-      pCurrentPage.value = 1;
-      pPageSize.value = 10;
   };
   
   const changedCollection = async(row:any,type:string) => {
