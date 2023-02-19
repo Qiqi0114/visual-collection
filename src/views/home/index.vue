@@ -58,7 +58,7 @@
       </el-scrollbar>
    </div>
     <div class="router-container" id="router-container">
-          <!-- 头部 -->
+    <!-- 头部 -->
     <el-menu
     :default-active="activeIndex"
     class="el-menu-demo"
@@ -108,14 +108,17 @@ const goOut = async() => {
 const test =()=>{
   isCollapse.value = !isCollapse.value;
 if (isCollapse.value===true){
-  document.getElementById("router-container")!.style.width="calc(1050px + 250px)" ;
+  document.getElementById("router-container")!.style.width="calc(1150px + 120px)" ;
+  document.getElementById("router-container")!.style.left="80px" ;
 }else{
-  document.getElementById("router-container")!.style.width="calc(1050px)" ;
+  document.getElementById("router-container")!.style.width="calc(1150px)" ;
+  document.getElementById("router-container")!.style.left="200px" ;
 }
 }
 </script>
 
 <style lang="scss" scoped>
+@import "../../style/public.scss";
 .menu{
   width: 200px;
   top: 0;
@@ -135,9 +138,12 @@ if (isCollapse.value===true){
 }
 
 .router-container{
+  position: absolute;
+  top: 0;
+  left: 200px;
   overflow: hidden;
   right: 0;
-  width: 1050px;
+  width: 1150px;
   margin-bottom: 0px;
   height: 100%;
   z-index: 88;
