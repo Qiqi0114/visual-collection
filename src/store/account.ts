@@ -1,7 +1,7 @@
 import { CancelToken } from 'axios';
 import {AccountState, RootState} from "./types";
 import {Module} from "vueX";
-import { loginApi } from '../api/login';
+import { getLonginMenuApi, loginApi } from '../api/login';
 import { getToken, setToken } from '../lib/util';
 import { ElMessage } from 'element-plus';
 import router from '../router';
@@ -40,7 +40,6 @@ const menu: Module<AccountState, RootState> = {
                 {userAccount, passWord},
                 payload.cancelToken
             );
-            console.log(data.data);
             
             if(data.code == '200'){
                 router.push({ path: "/home", query: {} })
@@ -56,7 +55,8 @@ const menu: Module<AccountState, RootState> = {
                 token: data.data ? data.data : 'test_token',
                 remember: true,
             });
-            
+            //登录成功后获取菜单
+            const res = await getLonginMenuApi();
             //添加动态菜单
 /*             commit("SET_ROUTES",data.data.orgBusionessListDTOS) */
             return data;

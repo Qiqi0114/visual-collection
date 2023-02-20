@@ -16,3 +16,10 @@ export function loginApi(
       data:param,
     })
   }
+  // 登录后获取菜单列表
+export function getLonginMenuApi() {
+  return request({
+    url: '/menuServer/menu/getLonginMenu',
+    method: 'get',
+  })
+}
