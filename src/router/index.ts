@@ -184,7 +184,7 @@ const routes: Array<RouteRecordRaw> = [
             path: "/home/CollectionTable",
             name: "CollectionTable",
             meta: {
-                title: "科研工作量收集表",
+                title: "收集表",
                 key:"sub5-3",
                 icon:"Edit"
             },
@@ -214,12 +214,32 @@ const routes: Array<RouteRecordRaw> = [
               path: "/home/visualizationAttempts",
               name: "visualizationAttempts",
               meta: {
-                  title: "工作量可视化视图",
+                  title: "教学工作量可视化",
                   key:"sub6-1",
                   icon:"DataAnalysis"
               },
               component: () => import("../views/visualizationAttempts/visualizationAttempts.vue"),
           },
+          {
+            path: "/home/visualizationAttempts_2",
+            name: "visualizationAttempts",
+            meta: {
+                title: "科研工作量可视化",
+                key:"sub6-2",
+                icon:"DataAnalysis"
+            },
+            component: () => import("../views/visualizationAttempts/visualizationAttempts_2.vue"),
+        },
+        {
+          path: "/home/visualizationAttempts_3",
+          name: "visualizationAttempts",
+          meta: {
+              title: "其他工作量可视化",
+              key:"sub6-3",
+              icon:"DataAnalysis"
+          },
+          component: () => import("../views/visualizationAttempts/visualizationAttempts_3.vue"),
+      },
         ]
     }
   ]
