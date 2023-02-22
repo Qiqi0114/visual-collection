@@ -1,6 +1,6 @@
 <template>
     <div id="main">
-      <el-form :model="infoForm" disabled>
+      <el-form title="个人信息" :model="infoForm" disabled>
                 <el-form-item label="id">
                     <el-input v-model="infoForm.userForm.id"></el-input>
                 </el-form-item>
@@ -89,17 +89,16 @@ const getDepartmentList = async() => {
 }
 onMounted(()=>{
 getDepartmentList();
-console.log(store.getters.id);
 })
 </script>
 
 <style lang="scss" scoped>
 
 #main{
-position: fixed;
-height: 40%; //高
-width: 50%; //宽
-/* top: 0px; //缩短白边距离
-left: 0px; //缩短白边距离 */
+    position: absolute;
+    margin-left: 200px;
+    top: 20%;
+    height: 60%;
+    width: 50%; //宽
 }
 </style>
