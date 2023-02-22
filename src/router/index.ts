@@ -216,18 +216,18 @@ const routes: Array<RouteRecordRaw> = [
         },
         children: [
           {
-              path: "/home/visualizationAttempts",
-              name: "visualizationAttempts",
+              path: "/home/visualizationAttempts_1",
+              name: "visualizationAttempts_1",
               meta: {
                   title: "教学工作量可视化",
                   key:"sub6-1",
                   icon:"DataAnalysis"
               },
-              component: () => import("../views/visualizationAttempts/visualizationAttempts.vue"),
+              component: () => import("../views/visualizationAttempts/visualizationAttempts_1.vue"),
           },
           {
             path: "/home/visualizationAttempts_2",
-            name: "visualizationAttempts",
+            name: "visualizationAttempts_2",
             meta: {
                 title: "科研工作量可视化",
                 key:"sub6-2",
@@ -237,7 +237,7 @@ const routes: Array<RouteRecordRaw> = [
         },
         {
           path: "/home/visualizationAttempts_3",
-          name: "visualizationAttempts",
+          name: "visualizationAttempts_3",
           meta: {
               title: "其他工作量可视化",
               key:"sub6-3",
