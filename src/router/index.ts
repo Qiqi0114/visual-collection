@@ -16,6 +16,11 @@ const routes: Array<RouteRecordRaw> = [
     component: () => import("../views/home/index.vue"),
     children: [
       {
+        path: "/userInfo",
+        name: "userInfo",
+        component: () => import("../views/login/userInfo.vue"),
+      },
+      {
           path: "/home/accountManagement",
           name: "accountManagement",
           meta: {
@@ -250,4 +255,7 @@ const router = createRouter({
       history,
       routes
 })
+export function resetRouter(): void {
+
+}
 export default router
