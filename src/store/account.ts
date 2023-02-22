@@ -1,16 +1,36 @@
 import { CancelToken } from 'axios';
 import {AccountState, RootState} from "./types";
 import {Module} from "vueX";
-import { getLonginMenuApi, loginApi } from '../api/login';
+import { getLonginMenuApi, getTokenInfoApi, loginApi, UserInfoRes } from '../api/login';
 import { getToken, setToken } from '../lib/util';
 import { ElMessage } from 'element-plus';
-import router from '../router';
+import router, { resetRouter } from '../router';
 const menu: Module<AccountState, RootState> = {
     state: {
         token: getToken(),
+        asyncRoutes:JSON.parse(sessionStorage.getItem("SESSION_ROUTES")),
+        id:undefined,
+        userAccount:undefined,
+        userName:undefined,
+        passWord:undefined,
+        userSex:undefined,
+        userEmail:undefined,
+        userPhone:undefined,
+        departmentId:undefined,
+        roleId:undefined,
     },
     getters: {
         gettoken: (state) => state.token,
+        asyncRoutes: (state) => state.asyncRoutes,
+        id: (state) => state.id,
+        userAccount: (state) => state.userAccount,
+        userName: (state) => state.userName,
+        passWord: (state) => state.passWord,
+        userSex: (state) => state.userSex,
+        userEmail: (state) => state.userEmail,
+        userPhone: (state) => state.userPhone,
+        departmentId: (state) => state.departmentId,
+        roleId: (state) => state.roleId,
     },
     mutations: {
         SET_TOKEN(state, {token}) {
@@ -20,6 +40,23 @@ const menu: Module<AccountState, RootState> = {
         CLEAR_LOGIN_INFO(state) {
             state.token = undefined;
             setToken();
+        },
+        SET_ROUTES(state, data){
+            state.asyncRoutes = data;
+            //刷新数据会丢失，需要sessionStorage会话存储，关闭会话数据清空
+            sessionStorage.setItem("SESSION_ROUTES",JSON.stringify(data))
+        },
+        SAVE_USER_INFO(state, data: UserInfoRes) {
+            const {id, userAccount, userName, passWord, userSex, userEmail,userPhone,departmentId,roleId} = data || {};
+            state.id = id;
+            state.userAccount = userAccount;
+            state.userName = userName;
+            state.passWord = passWord;
+            state.userSex= userSex;
+            state.userEmail = userEmail;
+            state.userPhone = userPhone;
+            state.departmentId = departmentId;
+            state.roleId = roleId;
         },
     },
     actions: {
@@ -33,6 +70,7 @@ const menu: Module<AccountState, RootState> = {
                 cancelToken?: CancelToken;
             }
         ) {
+            //登录获取token
             const userAccount = payload.userAccount.trim();
             const passWord = payload.passWord;
             const type = payload.type;
@@ -40,7 +78,6 @@ const menu: Module<AccountState, RootState> = {
                 {userAccount, passWord},
                 payload.cancelToken
             );
-            
             if(data.code == '200'){
                 router.push({ path: "/home", query: {} })
                 ElMessage.success({
@@ -58,7 +95,19 @@ const menu: Module<AccountState, RootState> = {
             //登录成功后获取菜单
             const res = await getLonginMenuApi();
             //添加动态菜单
-/*             commit("SET_ROUTES",data.data.orgBusionessListDTOS) */
+            commit("SET_ROUTES",res.data.data)
+            await dispatch("getUserInfo");
+            return res;
+        },
+        //token获取个人信息
+        async getUserInfo({commit}) {
+            const token = getToken();
+            const {data} = await getTokenInfoApi();
+            if (data === null) {
+                await router.push({name: 'Login'});
+            }
+            commit("SAVE_USER_INFO", data.data);
+            resetRouter();
             return data;
         },
         //退出清空

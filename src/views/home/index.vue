@@ -13,29 +13,28 @@
         @open="handleOpen"
         @close="handleClose"
       >
-      <template v-for="item in $router.options.routes[2].children" :key="item.meta.key">
-        <template v-if="item.children">
-          <el-sub-menu :index="item.meta.key">
+      <template v-for="item in store.getters.asyncRoutes" :index="item.key" :key="item.key">
+          <el-sub-menu :index="item.key">
               <!-- 一级导航 -->
               <template #title>
-                <el-icon v-if="item.meta.icon === 'Checked'"><Checked /></el-icon>
-                <el-icon v-if="item.meta.icon === 'Avatar'"><Avatar /></el-icon>
-                <el-icon v-if="item.meta.icon === 'TrendCharts'"><TrendCharts /></el-icon>
-                <el-icon v-if="item.meta.icon === 'List'"><List /></el-icon>
-                <el-icon v-if="item.meta.icon === 'Histogram'"><Histogram /></el-icon>
-                <span>{{ item.meta.title }}</span>
+                <el-icon v-if="item.icon === 'Checked'"><Checked /></el-icon>
+                <el-icon v-if="item.icon === 'Avatar'"><Avatar /></el-icon>
+                <el-icon v-if="item.icon === 'TrendCharts'"><TrendCharts /></el-icon>
+                <el-icon v-if="item.icon === 'List'"><List /></el-icon>
+                <el-icon v-if="item.icon === 'Histogram'"><Histogram /></el-icon>
+                <span>{{ item.title }}</span>
               </template>
               <!-- 二级导航 -->
               <template v-if="item.children.length > 0">
-                <el-menu-item-group v-for="val in item.children"  :key="val.meta.key">
+                <el-menu-item-group v-for="val in item.children"  :key="val.key">
                   <el-menu-item
                     :index="val.path">
-                    <el-icon v-if="val.meta.icon === 'Edit'"><Edit /></el-icon>
-                    <el-icon v-if="val.meta.icon === 'Tickets'"><Tickets /></el-icon>
-                    <el-icon v-if="val.meta.icon === 'DataLine'"><DataLine /></el-icon>
-                    <el-icon v-if="val.meta.icon === 'Setting'"><Setting /></el-icon>
-                    <el-icon v-if="val.meta.icon === 'DataAnalysis'"><DataAnalysis /></el-icon>
-                    {{ val.meta.title }}
+                    <el-icon v-if="val.icon === 'Edit'"><Edit /></el-icon>
+                    <el-icon v-if="val.icon === 'Tickets'"><Tickets /></el-icon>
+                    <el-icon v-if="val.icon === 'DataLine'"><DataLine /></el-icon>
+                    <el-icon v-if="val.icon === 'Setting'"><Setting /></el-icon>
+                    <el-icon v-if="val.icon === 'DataAnalysis'"><DataAnalysis /></el-icon>
+                    {{ val.title }}
                   </el-menu-item>
                 </el-menu-item-group>
               </template>
@@ -43,7 +42,7 @@
 
               </template>
           </el-sub-menu>
-        </template>
+
         
       </template>
           <div class="collapse-bg">
@@ -67,7 +66,8 @@
     <el-menu-item index="1">处理中心</el-menu-item>
     <el-sub-menu index="2">
       <template #title>账号</template>
-      <el-menu-item index="2-1" @click="goOut()">退出</el-menu-item>
+      <el-menu-item index="2-1" @click="goUserInfo()">个人信息</el-menu-item>
+      <el-menu-item index="2-2" @click="goOut()">退出</el-menu-item>
     </el-sub-menu>
     </el-menu>
         <router-view></router-view>
@@ -100,6 +100,11 @@ const handleClose = (key: string, keyPath: string[]) => {
 }
 //头部默认选中
 const activeIndex = ref<string>('1');
+//个人信息
+const goUserInfo = async() => {
+  router.push({ path: "/userInfo", query: {} })
+/*   await store.dispatch("getUserInfo"); */
+}
 //退出
 const goOut = async() => {
   router.push({ path: "/login", query: {} })
