@@ -9,15 +9,15 @@ const menu: Module<AccountState, RootState> = {
     state: {
         token: getToken(),
         asyncRoutes:JSON.parse(sessionStorage.getItem("SESSION_ROUTES")),
-        id:undefined,
-        userAccount:undefined,
-        userName:undefined,
-        passWord:undefined,
-        userSex:undefined,
-        userEmail:undefined,
-        userPhone:undefined,
-        departmentId:undefined,
-        roleId:undefined,
+        id:JSON.parse(sessionStorage.getItem("id")),
+        userAccount:JSON.parse(sessionStorage.getItem("userAccount")),
+        userName:JSON.parse(sessionStorage.getItem("userName")),
+        passWord:JSON.parse(sessionStorage.getItem("passWord")),
+        userSex:JSON.parse(sessionStorage.getItem("userSex")),
+        userEmail:JSON.parse(sessionStorage.getItem("userEmail")),
+        userPhone:JSON.parse(sessionStorage.getItem("userPhone")),
+        departmentId:JSON.parse(sessionStorage.getItem("departmentId")),
+        roleId:JSON.parse(sessionStorage.getItem("roleId")),
     },
     getters: {
         gettoken: (state) => state.token,
@@ -57,6 +57,15 @@ const menu: Module<AccountState, RootState> = {
             state.userPhone = userPhone;
             state.departmentId = departmentId;
             state.roleId = roleId;
+            sessionStorage.setItem("id",JSON.stringify(id));
+            sessionStorage.setItem("userAccount",JSON.stringify(userAccount));
+            sessionStorage.setItem("userName",JSON.stringify(userName));
+            sessionStorage.setItem("passWord",JSON.stringify(passWord));
+            sessionStorage.setItem("userSex",JSON.stringify(userSex));
+            sessionStorage.setItem("userEmail",JSON.stringify(userEmail));
+            sessionStorage.setItem("userPhone",JSON.stringify(userPhone));
+            sessionStorage.setItem("departmentId",JSON.stringify(departmentId));
+            sessionStorage.setItem("roleId",JSON.stringify(roleId));
         },
     },
     actions: {
@@ -101,7 +110,6 @@ const menu: Module<AccountState, RootState> = {
         },
         //token获取个人信息
         async getUserInfo({commit}) {
-            const token = getToken();
             const {data} = await getTokenInfoApi();
             if (data === null) {
                 await router.push({name: 'Login'});
