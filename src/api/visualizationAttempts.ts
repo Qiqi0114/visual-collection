@@ -23,7 +23,7 @@ export function getYearByZAPI(
     }
 ) {
   return request({
-    url: '127.0.0.1:8001/totalService/total/getYearByZ',
+    url: '/totalService/total/getYearByZ',
     method: 'get',
     params:param
   })
