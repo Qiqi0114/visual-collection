@@ -16,3 +16,33 @@ export function loginApi(
       data:param,
     })
   }
+  // 登录后获取菜单列表
+export function getLonginMenuApi() {
+  return request({
+    url: '/menuServer/menu/getLonginMenu',
+    method: 'get',
+  })
+}
+export interface ApiRes {
+  msg: string;
+  code: string;
+}
+
+export interface UserInfoRes extends ApiRes {
+  id: string;
+  userName: string;
+  userAccount: string;
+  passWord: string;
+  userSex: string;
+  userEmail:string;
+  userPhone:string;
+  departmentId:string;
+  roleId:string;
+}
+  // token获取个人信息
+  export function getTokenInfoApi() {
+    return request({
+      url: '/menuServer/menu/getToken',
+      method: 'get',
+    })
+  }

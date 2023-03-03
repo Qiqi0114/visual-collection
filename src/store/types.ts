@@ -3,6 +3,15 @@ export interface RootState {
   }
   // 登录信息
 export interface AccountState {
-    token: any;
-
+    token?: string;
+    asyncRoutes?:string[];
+    id?:string,
+    userAccount?:string,
+    userName?:string,
+    passWord?:string,
+    userSex?:string,
+    userEmail?:string,
+    userPhone?:string,
+    departmentId?:string,
+    roleId?:string,
   }

@@ -120,7 +120,7 @@
                       <el-input v-model="updateForm.userForm.userAccount"></el-input>
                   </el-form-item>
                   <el-form-item label="性别">
-                        <el-select v-model="addForm.userForm.userSex"
+                        <el-select v-model="updateForm.userForm.userSex"
                                     placeholder="请选择" style="width:90%">
                             <el-option v-for="item in userSexList" :key="item.value" :label="item.label"
                                 :value="item.value" />
