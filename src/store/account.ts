@@ -88,7 +88,7 @@ const menu: Module<AccountState, RootState> = {
                 payload.cancelToken
             );
             if(data.code == '200'){
-                router.push({ path: "/home", query: {} })
+                router.push({ path: "/home/visualizationAttempts_1", query: {} })
                 ElMessage.success({
                   message: '登陆成功',
                   type: 'success',

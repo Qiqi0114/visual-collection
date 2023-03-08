@@ -8,6 +8,9 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/login",
     name: "login",
+    meta: {
+      title: "计算机学院教师业绩收集可视化系统",
+    },
     component: () => import("../views/login/index.vue"),
   },
   {
@@ -254,6 +257,10 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
       history,
       routes
+})
+router.beforeEach((to, from, next) => {
+  window.document.title = to.meta.title
+  next()
 })
 export function resetRouter(): void {
 
