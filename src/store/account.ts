@@ -39,6 +39,26 @@ const menu: Module<AccountState, RootState> = {
         },
         CLEAR_LOGIN_INFO(state) {
             state.token = undefined;
+            state.asyncRoutes = undefined;
+            state.id = undefined;
+            state.userAccount = undefined;
+            state.userName = undefined;
+            state.passWord = undefined;
+            state.userSex = undefined;
+            state.userEmail = undefined;
+            state.userPhone = undefined;
+            state.departmentId = undefined;
+            state.roleId = undefined;
+            sessionStorage.removeItem("id");
+            sessionStorage.removeItem("asyncRoutes");
+            sessionStorage.removeItem("userAccount");
+            sessionStorage.removeItem("userName");
+            sessionStorage.removeItem("passWord");
+            sessionStorage.removeItem("userSex");
+            sessionStorage.removeItem("userEmail");
+            sessionStorage.removeItem("userPhone");
+            sessionStorage.removeItem("departmentId");
+            sessionStorage.removeItem("roleId");
             setToken();
         },
         SET_ROUTES(state, data){
