@@ -93,11 +93,12 @@ import { DepartmentListAPI } from '../../api/accountManagement';
 import { getYearListAPI } from '../../api/teachingwokingload';
 import { getYearByZAPI, workLoadListAPI } from "../../api/visualizationAttempts";
 import store from '../../store';
+
 const departmentId = computed(() => store.getters.departmentId);
 const searchFormRef = ref<FormInstance>()
 //查询系z参数
 const searchForm = reactive({
-     departmentId:"1",
+     departmentId:"",
      yearId:"1",
 })
 const searchZFormRef = ref<FormInstance>()
@@ -306,12 +307,14 @@ const getYearByZ = async() =>{
     }
 }
 onMounted(()=>{
-    //获取系列表
-    getDepartmentList();
+  
     //判断是用户系默认
     if(departmentId.value!== undefined && departmentId.value!== '9'){
-      searchForm.departmentId = departmentId.value
+    searchForm.departmentId = departmentId.value
     }
+    //获取系列表
+    getDepartmentList();
+
     //获取年限列表
     getYearList();
     workLoadList();
