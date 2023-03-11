@@ -19,6 +19,21 @@
                                       <!-- <el-button type="success" @click="selectForm(searchFormRef)">查询</el-button>
                                       <el-button @click="resetForm()" type="info">重置</el-button> -->
                                       <el-button type="primary" @click="addUserManagement()">添加</el-button>
+                                      <el-button @click="exportUserExcel()" type="primary">导入模板</el-button>
+                                      <el-upload 
+                                        style="margin-left:50px"
+                                        :limit=limitNum
+                                        :auto-upload="false"
+                                        accept=".xlsx"
+                                        :action="UploadUrl()"
+                                        :before-upload="beforeUploadFile"
+                                        :on-change="fileChange"
+                                        :on-exceed="exceedFile"
+                                        :on-success="handleSuccess"
+                                        :on-error="handleError"
+                                        :file-list="fileList">
+                                        <el-button type="success">导入</el-button>
+                                        </el-upload>
                                   </el-form-item>
                               </el-col>
                           </el-row>
@@ -230,7 +245,74 @@ const userSexList = [
             label: "女",
         },
 ]
+let url: any = import.meta.env // 配置不同环境的域名信息等
+const exportUserExcel = async() => {
+  location.href = url.VITE_APP_BASE_API+'/userService/user/downloadUserExcel'
+}
+//上传excell时，同时允许上传的最大数
+const limitNum = ref<number>(1);
+// excel文件列表
+const fileList = ref<any[]>([]);
+//excel图片显示
+const imgs = ref<boolean>(false);
+// 文件超出个数限制时的钩子
+const exceedFile = (files:any, fileList:any) => {
+        ElMessage.warning(`只能选择 ${limitNum.value} 个文件，当前共选择了 ${files.length + fileList.length} 个`);
+      }
+      // 文件状态改变时的钩子
+      const fileChange = (files:any, fileList:any) => {
+        console.log(files.raw);
+        console.log(fileList);
+        if (fileList.length === 0){
+          ElMessage.warning('请上传文件');
+        } else {
+          ElMessageBox.confirm("确认上传?", {
+          confirmButtonText: "是",
+          cancelButtonText: "否",
+          type: "warning",
+        })
+          .then(async () => {
+            let form = new FormData();
+            form.append('file', files.raw);
+            importWorkloadAPI(form).then(
+              res=>{
 
+              },err =>{
+              });
+            fileList.value = [];
+          })
+        }
+      }
+      // 上传文件之前的钩子, 参数为上传的文件,若返回 false 或者返回 Promise 且被 reject，则停止上传
+      const beforeUploadFile = (file:any) => {
+        console.log('before upload');
+        console.log(file);
+        let extension = file.name.substring(file.name.lastIndexOf('.')+1);
+        let size = file.size / 1024 / 1024;
+        if(extension !== 'xlsx') {
+          ElMessage.warning('只能上传后缀是.xlsx的文件');
+        }
+        if(size > 10) {
+          ElMessage.warning('文件大小不得超过10M');
+        }
+      }
+      // 文件上传成功时的钩子
+      const handleSuccess = (res:any, files:any, fileList:any) =>{
+        ElMessage.success('文件上传成功');
+        console.log(fileList);
+        imgs.value = true;
+      }
+      // 文件上传失败时的钩子
+      const handleError = (err, file, fileList) => {
+        ElMessage.error('文件上传失败');
+      }
+      const UploadUrl = () =>{
+       // 因为action参数是必填项，我们使用二次确认进行文件上传时，直接填上传文件的url会因为没有参数导致api报404，所以这里将action设置为一个返回为空的方法就行，避免抛错
+        return ""
+      }
+      const uploadFile = () =>{
+
+      }
 //添加用户信息
 const addUserManagement = async() =>{
     dialogAddFormVisible.value = true;
