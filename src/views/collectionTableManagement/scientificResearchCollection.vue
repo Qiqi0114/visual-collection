@@ -193,7 +193,7 @@
 import { ElMessage, ElTable, FormInstance } from "element-plus";
 import { onMounted, reactive, ref } from "vue-demi";
 import { AccountManagementAPI, DepartmentListAPI } from "../../api/accountManagement";
-import { getApplyForUpdateCollectionTableAPI, getExportExcelCollectionAPI, getTreeListCollection } from "../../api/collectionTableManagement";
+import { getApplyForUpdateCollectionTableAPI, getTreeListCollection } from "../../api/collectionTableManagement";
 import { getYearListAPI } from "../../api/teachingwokingload";
 import router from "../../router";
 //加载
