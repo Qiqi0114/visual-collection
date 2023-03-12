@@ -1,8 +1,8 @@
 <template>
     <div id="main">
-      <el-form title="个人信息" :model="infoForm" disabled>
+      <el-form title="个人信息" :model="infoForm">
                 <el-form-item label="id">
-                    <el-input v-model="infoForm.userForm.id"></el-input>
+                    <el-input v-model="infoForm.userForm.id" disabled></el-input>
                 </el-form-item>
                 <el-form-item label="用户名称">
                     <el-input v-model="infoForm.userForm.userName"></el-input>
@@ -31,13 +31,16 @@
                     </el-select>
                 </el-form-item>
             </el-form>
+            <el-row>
+                <el-button type="primary" @click="saveUserInfo()">保存</el-button>
+              </el-row>
     </div>      
 </template>
 
 <script lang="ts" setup>
 import { ElMessage } from "element-plus";
 import { computed, onMounted, reactive } from "vue";
-import { DepartmentListAPI } from "../../api/accountManagement";
+import { DepartmentListAPI, updateUserManagementAPI } from "../../api/accountManagement";
 import store from "../../store";
 const id = computed(() => store.getters.id);
 const userName = computed(() => store.getters.userName);
@@ -86,6 +89,37 @@ const getDepartmentList = async() => {
   }catch(e){
       console.log(e,'e');
   }
+}
+
+//保存个人信息
+const saveUserInfo = async () => {
+try{
+  const res = await updateUserManagementAPI({
+      id:infoForm.userForm.id,//用户id
+      userName:infoForm.userForm.userName,//用户名称
+      user_account:infoForm.userForm.userAccount,//用户账号
+      userSex:infoForm.userForm.userSex,//性别
+      userPhone:infoForm.userForm.userPhone,//电话
+      userEmail:infoForm.userForm.userEmail,//邮箱
+      departmentId:infoForm.userForm.departmentId,//用户系
+  })
+  if (res.data.code == "200") {
+      ElMessage({
+          message: res.data.msg,
+          duration: 5000,
+          type: "success",
+      });
+  } else {
+      //失败
+      ElMessage({
+          message: res.data.msg,
+          duration: 5000,
+          type: "error",
+      });
+  }
+}catch(error){
+  console.log('error');
+}
 }
 onMounted(()=>{
 getDepartmentList();
