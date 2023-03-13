@@ -112,10 +112,10 @@
                   <el-table-column prop="collectionTableParentId" label="父类别id" min-width="120" :show-overflow-tooltip="true"/>
                   <el-table-column prop="collectionTableParentName" label="父类别名称" min-width="140" />
                   <el-table-column prop="collectionTableDetailedExcel" label="数据" min-width="130" />
-                  <el-table-column prop="applyFor" fixed="right" label="提交状态" min-width="130">
+                  <el-table-column prop="applyFor" fixed="right" label="申请状态" min-width="130">
                     <template #default="scope">
-                      <span v-if="scope.row.applyFor" style="color: red;">申请成功未提交</span>
-                      <span v-if="!scope.row.applyFor" style="color: green;">申请成功已提交</span>
+                      <span v-if="!scope.row.applyFor" style="color: red;">审批不可以修改</span>
+                      <span v-if="scope.row.applyFor" style="color: green;">审批可以修改</span>
                     </template>
                   </el-table-column>
               </el-table>

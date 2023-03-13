@@ -1,4 +1,22 @@
 import request from "../utils/request"
+//导出用户导入模板
+export function downloadUserExcelAPI() {
+  return request({
+    url: '/userService/user/downloadUserExcel',
+    method: 'get',
+  })
+}
+
+//导入excel
+export function importUserExcelAPI(
+  param:any) {
+  return request({
+    url: '/userService/user/importUserExcel',
+    method: 'post',
+    headers:{'Content-type': 'multipart/form-data'},
+    data:param,
+  })
+}
 
 //获取账号管理信息列表
 export function AccountManagementAPI(
