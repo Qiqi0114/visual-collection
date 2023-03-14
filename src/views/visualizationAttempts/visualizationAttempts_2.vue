@@ -252,6 +252,7 @@ const workLoadList = async() =>{
         const res = await getScientificResearchOtherUserAPI({
             yearId:searchForm.yearId,
             demtId:searchForm.departmentId,
+            cParentId:'1'
         })
         if(res.data.code === 200){
           let temp :string[] = [];

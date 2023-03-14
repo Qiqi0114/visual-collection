@@ -36,6 +36,8 @@ export function getScientificResearchOtherUserAPI(
       yearId:string;
       //系id
       demtId:string;
+      //收集表大类别id
+      cParentId:string;
   }
 ) {
 return request({
