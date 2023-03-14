@@ -91,7 +91,7 @@ import { ElMessage, FormInstance } from 'element-plus';
 import { onMounted, inject, reactive, ref, computed } from 'vue'; 
 import { DepartmentListAPI } from '../../api/accountManagement';
 import { getYearListAPI } from '../../api/teachingwokingload';
-import { getScientificResearchOtherIntegralAPI, getYearByZAPI, workLoadListAPI } from "../../api/visualizationAttempts";
+import { getScientificResearchOtherIntegralAPI, getScientificResearchOtherUserAPI, getYearByZAPI, workLoadListAPI } from "../../api/visualizationAttempts";
 import store from '../../store';
 
 const departmentId = computed(() => store.getters.departmentId);
@@ -249,22 +249,23 @@ let sourceData :Array<Array<string>> = new Array<Array<string>>();
 const workLoadList = async() =>{
     try{
         sourceData = [];
-        const res = await workLoadListAPI({
+        const res = await getScientificResearchOtherUserAPI({
             yearId:searchForm.yearId,
-            mentId:searchForm.departmentId,
+            demtId:searchForm.departmentId,
         })
         if(res.data.code === 200){
           let temp :string[] = [];
-          temp.push('product', 's1合计', '教学业绩分值F', '未乘就业率系数的总工作量Z')
+          temp.push('product', '积分总计', '学院额外奖励分值总计', '总计')
           sourceData.push(temp);
-            res.data.data.forEach((item: { userName: string; z: string; s1: string; f: string; }) => {
-                let temp :string[] = [];
-                temp.push(item.userName)
-                temp.push(item.s1)
-                temp.push(item.f)
-                temp.push(item.z)
-                sourceData.push(temp);
-            });
+          for(let key in res.data.data){
+            let temp :string[] = [];
+            temp.push(key)
+            temp.push(res.data.data[key].积分合计)
+            temp.push(res.data.data[key].奖励分值)
+            temp.push(res.data.data[key].总计)
+            sourceData.push(temp);
+          }
+            console.log(sourceData);
             change();
         }else{
             

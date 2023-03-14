@@ -30,22 +30,20 @@ export function getYearByZAPI(
 }
 
 //获取科研其他工作量
-/* export function workLoadListAPI(
+export function getScientificResearchOtherUserAPI(
   param:{
       //年限id
       yearId:string;
       //系id
-      mentId:string;
-      //类别id
-      cParentId:string;
+      demtId:string;
   }
 ) {
 return request({
-  url: '/totalService/total/workLoadList',
+  url: '/totalService/total/getScientificResearchOtherUser',
   method: 'get',
   params:param
 })
-} */
+}
 //获取科研其他工作量合计
 export function getScientificResearchOtherIntegralAPI(
   param:{
