@@ -65,7 +65,7 @@
   >
     <el-menu-item index="1">处理中心</el-menu-item>
     <el-sub-menu style="margin-left: auto;"  index="2">
-      <template #title>账号</template>
+      <template #title><el-icon><User /></el-icon>{{userName}}</template>
       <el-menu-item index="2-1" @click="goUserInfo()">个人信息</el-menu-item>
       <el-menu-item index="2-2" @click="goOut()">退出</el-menu-item>
     </el-sub-menu>
@@ -83,11 +83,12 @@ import {
   ArrowLeftBold,
   ArrowRightBold,
 } from '@element-plus/icons-vue';
-import { Avatar, DataLine, TrendCharts, List, Setting, Tickets, Checked, Edit, Histogram, DataAnalysis} from '@element-plus/icons-vue'
+import {User, Avatar, DataLine, TrendCharts, List, Setting, Tickets, Checked, Edit, Histogram, DataAnalysis} from '@element-plus/icons-vue'
 import store from "../../store";
 import router from "../../router";
+import { computed } from "vue";
 const route = useRoute();
-
+const userName = computed(() => store.getters.userName);
 //是否水平折叠收起菜单
 const isCollapse = ref(false)
 
