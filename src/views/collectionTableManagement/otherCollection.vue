@@ -249,7 +249,7 @@ const searchCollectionForm = reactive({
 const loadingUser = ref<boolean>(false)
 //用户table赋值
 const userTableData = ref([]);
-const userTableDataRef = ref<FormInstance>()
+const userTableDataRef = ref<InstanceType<typeof ElTable>>()
 //添加用户对话框开关
 const dialoguserVisible = ref<boolean>(false);
 //查看用户
@@ -263,8 +263,12 @@ const searchUserFormRef = ref<InstanceType<typeof ElTable>>()
 const searchUserForm = reactive({
     userName:"",
 })
+interface User {
+  id: string
+  userName: string
+}
 //表格添加用户勾选
-const multipleSelection1 = ref<any>([]);
+const multipleSelection1 = ref<User[]>([])
 //表格单选
 const handleSelectionChange1 = (selection: any,row: any) => {
     multipleSelection1.value = row;
@@ -369,7 +373,8 @@ const resetForm = () => {
     searchCollectionForm.userName = "";
     searchCollectionForm.collectionTableId = "";
     searchCollectionForm.numberYearId = "";
-    multipleSelection1.value = "";
+    multipleSelection1.value.id = "";
+    multipleSelection1.value.userName = "";
     //分页器重置为第一页
     pCurrentPage.value = 1;
     pPageSize.value = 10;

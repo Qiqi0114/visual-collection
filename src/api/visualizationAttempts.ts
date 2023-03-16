@@ -28,3 +28,36 @@ export function getYearByZAPI(
     params:param
   })
 }
+
+//获取科研其他工作量
+export function getScientificResearchOtherUserAPI(
+  param:{
+      //年限id
+      yearId:string;
+      //系id
+      demtId:string;
+      //收集表大类别id
+      cParentId:string;
+  }
+) {
+return request({
+  url: '/totalService/total/getScientificResearchOtherUser',
+  method: 'get',
+  params:param
+})
+}
+//获取科研其他工作量合计
+export function getScientificResearchOtherIntegralAPI(
+  param:{
+      //年限id
+      yearId:string;
+      //类别id
+      cParentId:string;
+  }
+) {
+return request({
+  url: '/totalService/total/getScientificResearchOtherIntegral',
+  method: 'get',
+  params:param
+})
+}

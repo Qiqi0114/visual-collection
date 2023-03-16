@@ -103,7 +103,7 @@
       </div>
 
       <!--删除对话框-->
-      <el-dialog title="添加用户" v-model="dialogDelFormVisible">
+      <el-dialog title="删除教学工作量" v-model="dialogDelFormVisible">
               <el-form :model="delForm">
                 <el-row>
                   <el-col :span="10">

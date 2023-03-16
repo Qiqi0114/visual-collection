@@ -8,10 +8,10 @@
                       <el-form ref="searchFormRef" :model="searchForm" :inline="true" style="width:100%">
                           <el-row>
                               <el-col :span="6">
-                                  <el-form-item label="姓名" prop="userName">
+                                  <el-form-item label="用户组名称" prop="userName">
                                       <el-input v-model.userName="searchForm.groupName"
                                       @input = "loadGroupListPage()"  
-                                      clearable  placeholder="请输入姓名" />
+                                      clearable  placeholder="请输入用户组名称" />
                                   </el-form-item>
                               </el-col>
                               <el-col :span="12">
@@ -166,12 +166,15 @@ const userGroupTableData = ref([]);
 //用户table赋值
 const userTableData = ref([]);
 //表格删除勾选
-const multipleSelection = ref([]);
+const multipleSelection = ref<User[]>([]);
 const handleSelectionChange = (val: any) => {
     multipleSelection.value = val;
 };
+interface User {
+  id: string
+}
 //表格添加用户勾选
-const multipleSelection1 = ref([]);
+const multipleSelection1 = ref<User[]>([]);
 const handleSelectionChange1 = (val: any) => {
     multipleSelection1.value = val;
     console.log(multipleSelection1.value);

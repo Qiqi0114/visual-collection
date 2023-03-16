@@ -87,7 +87,7 @@ export function getTreeListCollection() {
 export function getUserCollectionTable(
   param:{
     //收集表类别id
-    collectionTableParentId:string,
+    collectionTableParentId:any,
     //年限
     numberYearId:string,
     //状态
