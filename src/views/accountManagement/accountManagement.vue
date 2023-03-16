@@ -173,7 +173,7 @@
 import { reactive } from "@vue/reactivity";
 import { ElMessage, ElMessageBox, FormInstance } from "element-plus";
 import { onMounted, ref } from "vue";
-import { AccountManagementAPI, addUserManagementAPI, deleteUserManagementAPI, DepartmentListAPI, getUserManagementByIdAPI, PasswordResetAPI, updateUserManagementAPI } from "../../api/accountManagement";
+import { AccountManagementAPI, addUserManagementAPI, deleteUserManagementAPI, DepartmentListAPI, getUserManagementByIdAPI, importUserExcelAPI, PasswordResetAPI, updateUserManagementAPI } from "../../api/accountManagement";
 //加载
 const loading = ref<boolean>(false)
 //table赋值
@@ -274,7 +274,7 @@ const exceedFile = (files:any, fileList:any) => {
           .then(async () => {
             let form = new FormData();
             form.append('file', files.raw);
-            importWorkloadAPI(form).then(
+            importUserExcelAPI(form).then(
               res=>{
 
               },err =>{
@@ -303,7 +303,7 @@ const exceedFile = (files:any, fileList:any) => {
         imgs.value = true;
       }
       // 文件上传失败时的钩子
-      const handleError = (err, file, fileList) => {
+      const handleError = (err: any, file: any, fileList: any) => {
         ElMessage.error('文件上传失败');
       }
       const UploadUrl = () =>{

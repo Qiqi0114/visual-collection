@@ -3,14 +3,14 @@ import request from "../utils/request";
 // 获取教学工作量
 export function getTeachingWokingInfoList(
   param:{
-    pageNum:number,
-    pageSize:number,
+    pageNum:any,
+    pageSize:any,
     //名称
-    userName:string,
+    userName:any,
     //系
-    departmentId:string,
+    departmentId:any,
     //年
-    yearId:string,
+    yearId:any,
   }
 ) {
     return request({

@@ -185,7 +185,7 @@ const exceedFile = (files:any, fileList:any) => {
         imgs.value = true;
       }
       // 文件上传失败时的钩子
-      const handleError = (err, file, fileList) => {
+      const handleError = (err: any, file: any, fileList: any) => {
         ElMessage.error('文件上传失败');
       }
       const UploadUrl = () =>{

@@ -49,7 +49,6 @@
 </template>
 
 <script lang="ts" setup>
-import { join } from "path/posix";
 import { onMounted, ref } from "vue-demi";
 import { getTeachingWokingInfoList } from "../../api/teachingwokingload";
 import router from "../../router";

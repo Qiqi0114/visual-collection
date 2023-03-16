@@ -166,12 +166,15 @@ const userGroupTableData = ref([]);
 //用户table赋值
 const userTableData = ref([]);
 //表格删除勾选
-const multipleSelection = ref([]);
+const multipleSelection = ref<User[]>([]);
 const handleSelectionChange = (val: any) => {
     multipleSelection.value = val;
 };
+interface User {
+  id: string
+}
 //表格添加用户勾选
-const multipleSelection1 = ref([]);
+const multipleSelection1 = ref<User[]>([]);
 const handleSelectionChange1 = (val: any) => {
     multipleSelection1.value = val;
     console.log(multipleSelection1.value);

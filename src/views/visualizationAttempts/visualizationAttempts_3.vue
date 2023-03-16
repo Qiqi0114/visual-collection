@@ -292,7 +292,7 @@ const getYearByZ = async() =>{
         let name :string[] = []
         for(let key in res.data.data){
           let temp :string[] = [];
-          let nam :string[] = '';
+          let nam :string[] = [];
           nam = Object.keys(res.data.data[key])
           name.push(nam[0])
           temp.push(res.data.data[key][nam[0]].积分合计)

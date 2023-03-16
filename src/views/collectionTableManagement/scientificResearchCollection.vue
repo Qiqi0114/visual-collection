@@ -248,7 +248,7 @@ const searchCollectionForm = reactive({
 const loadingUser = ref<boolean>(false)
 //用户table赋值
 const userTableData = ref([]);
-const userTableDataRef = ref<FormInstance>()
+const userTableDataRef = ref<InstanceType<typeof ElTable>>()
 //添加用户对话框开关
 const dialoguserVisible = ref<boolean>(false);
 //查看用户
@@ -267,6 +267,7 @@ const multipleSelection1 = ref<any>([]);
 //表格单选
 const handleSelectionChange1 = (selection: any,row: any) => {
     multipleSelection1.value = row;
+    
     userTableDataRef.value!.clearSelection(); //先清空选中状态，selection值还在
     if(selection.length == 0){
         return
