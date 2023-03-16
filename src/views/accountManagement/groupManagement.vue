@@ -8,10 +8,10 @@
                       <el-form ref="searchFormRef" :model="searchForm" :inline="true" style="width:100%">
                           <el-row>
                               <el-col :span="6">
-                                  <el-form-item label="姓名" prop="userName">
+                                  <el-form-item label="用户组名称" prop="userName">
                                       <el-input v-model.userName="searchForm.groupName"
                                       @input = "loadGroupListPage()"  
-                                      clearable  placeholder="请输入姓名" />
+                                      clearable  placeholder="请输入用户组名称" />
                                   </el-form-item>
                               </el-col>
                               <el-col :span="12">

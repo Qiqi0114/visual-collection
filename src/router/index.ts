@@ -37,7 +37,7 @@ const routes: Array<RouteRecordRaw> = [
                 path: "/home/administrator",
                 name: "administrator",
                 meta: {
-                    title: "账号管理",
+                    title: "用户管理",
                     key:"sub1-1",
                     icon:"Setting"
                 },

@@ -19,7 +19,7 @@
                                       <!-- <el-button type="success" @click="selectForm(searchFormRef)">查询</el-button>
                                       <el-button @click="resetForm()" type="info">重置</el-button> -->
                                       <el-button type="primary" @click="addUserManagement()">添加</el-button>
-                                      <el-button @click="exportUserExcel()" type="primary">导入模板</el-button>
+                                      <el-button @click="exportUserExcel()" type="primary">导出模板</el-button>
                                       <el-upload 
                                         style="margin-left:50px"
                                         :limit=limitNum
