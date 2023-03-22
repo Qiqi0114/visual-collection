@@ -99,12 +99,12 @@ const searchFormRef = ref<FormInstance>()
 //查询系z参数
 const searchForm = reactive({
      departmentId:"",
-     yearId:"1",
+     yearId:"2",
 })
 const searchZFormRef = ref<FormInstance>()
 //查询总系参数
 const searchZForm = reactive({
-     yearId:"1",
+     yearId:"2",
 })
 
 //系选中
@@ -266,7 +266,6 @@ const workLoadList = async() =>{
             temp.push(res.data.data[key].总计)
             sourceData.push(temp);
           }
-            console.log(sourceData);
             change();
         }else{
             
@@ -301,7 +300,7 @@ const getYearByZ = async() =>{
             zData.push(temp);
           }
           for(let key = 1; key < zData.length; key++ ){
-            zData[key].unshift(name[key - 1],0)
+            zData[key].unshift(name[key - 1])
           }
           changeZ();
         }else{

@@ -37,7 +37,7 @@
                     </el-select>
                   </el-form-item>
                 </el-col>
-                <el-col :span="6">
+                <el-col :span="8">
                   <el-form-item style="float: right">
                     <el-upload drag
                       :limit=limitNum
@@ -134,10 +134,10 @@ const fileList = ref<any[]>([]);
 const imgs = ref<boolean>(false);
 // 文件超出个数限制时的钩子
 const exceedFile = (files:any, fileList:any) => {
-        ElMessage.warning(`只能选择 ${limitNum.value} 个文件，当前共选择了 ${files.length + fileList.length} 个`);
+        ElMessage.warning(`只能选择 ${limitNum.value} 个文件，请删除上一个文件`);
       }
-      // 文件状态改变时的钩子
-      const fileChange = (files:any, fileList:any) => {
+// 文件状态改变时的钩子
+const fileChange = (files:any, fileList:any) => {
         console.log(files.raw);
         console.log(fileList);
         if (fileList.length === 0){
@@ -153,13 +153,21 @@ const exceedFile = (files:any, fileList:any) => {
             form.append('file', files.raw);
             form.append('xId', searchForm.xId);
             form.append('yId', searchForm.yId);
-            
-            importWorkloadAPI(form).then(
-              res=>{
-
-              },err =>{
-              });
+            //校验选项
+            if(searchForm.xId === "" || searchForm.yId === "") {
+              ElMessage.warning((searchForm.xId === "" || searchForm.yId === "") ? '选项未选' :'')
               searchForm.xId = "";
+              searchForm.yId = "";
+              fileList.value = [];
+              return
+            }
+            const res =await importWorkloadAPI(form)
+            if(res.data.code == '200'){
+              ElMessage.success(res.data.msg);
+            }else{
+              ElMessage.error(res.data.msg);
+            }
+            searchForm.xId = "";
             searchForm.yId = "";
             fileList.value = [];
           })
