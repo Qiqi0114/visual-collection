@@ -99,12 +99,12 @@ const searchFormRef = ref<FormInstance>()
 //查询系z参数
 const searchForm = reactive({
      departmentId:"",
-     yearId:"1",
+     yearId:"2",
 })
 const searchZFormRef = ref<FormInstance>()
 //查询总系参数
 const searchZForm = reactive({
-     yearId:"1",
+     yearId:"2",
 })
 
 //系选中
@@ -291,13 +291,13 @@ const getYearByZ = async() =>{
             let temp :string[] = [];
             temp.push(res.data.data[key].s1)
             temp.push(res.data.data[key].f)
-            temp.push(res.data.data[key].z)
+            temp.push(res.data.data[key].Z)
             zData.push(temp);
           }
+          //array.unshift(item1, item2, ..., itemX) item1, item2, ..., itemX必需。要添加到数组开头的项。
           for(let key = 1; key < zData.length; key++ ){
-            zData[key].unshift(name[key - 1],0)
+            zData[key].unshift(name[key - 1])
           }
-          console.log(zData);
           changeZ();
         }else{
             
