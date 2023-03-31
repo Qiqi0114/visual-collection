@@ -64,9 +64,9 @@ export function deleteGroupAPI(
       id:string,
   }) {
   return request({
-    url: '/UserGroupService/UserGroup/deleteUserGroup',
+    url: '/UserGroupService/UserGroup/deleteUserGroupGp',
     method: 'delete',
-    data:param
+    params:param
   })
 }
 
