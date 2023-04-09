@@ -3,7 +3,7 @@ import request from "../utils/request";
 // 获取教学工作量
 export function getTeachingWokingInfoList(
   param:{
-    pageNum:any,
+    pageNum:number
     pageSize:any,
     //名称
     userName:any,
