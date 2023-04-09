@@ -62,7 +62,7 @@ const loadTeachingWokingInfoList = async () => {
   loading.value = true;
   try {
     const res = await getTeachingWokingInfoList({
-      pageNum:queryRouter.pageNum,
+      pageNum:1,
       pageSize:queryRouter.pageSize,
       userName:queryRouter.userName,
       departmentId:queryRouter.departmentId,
